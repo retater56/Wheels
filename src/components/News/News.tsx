@@ -18,9 +18,8 @@ const News = ({navigation}: any) => {
 
   const fetchNews = async () => {
     try {
-      const newsData = await axios.get('http://localhost:8080/news');
-      //   console.log(newsData.data[0]);
-      setNews(newsData.data);
+      const newsData = await axios.get('https://newsdata.io/api/1/news?apikey=pub_5257b286ff40d984dfea206caea9b5dbb764&q=car&language=en&category=business,sports,technology');
+      setNews(newsData.data.results);
       setIsFetching(false);
     } catch (error) {
       console.log(error);
