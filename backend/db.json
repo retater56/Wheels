@@ -1,0 +1,89 @@
+{
+  "users": [],
+  "cars": [
+    {
+      "id": "RSQXIoMFjA",
+      "name": "Mercedes GLE Automatic (J4)",
+      "url": "https://grcrentals.com/wp-content/uploads/2019/11/GLE43W4_040.png",
+      "fuel": "Diesel",
+      "doors": "5",
+      "transmission": "Automatic",
+      "seats": "5 Passenger",
+      "baggageCapacity": "5",
+      "capacity": "2.2 L",
+      "facilities": ["A/C", "Clima"]
+    },
+    {
+      "id": "4gEgv6NtC_",
+      "name": "Jaguar F Pace Automatic (J4)",
+      "url": "https://grcrentals.com/wp-content/uploads/2019/11/fc778f126bf73866a3c259582a97e1f9.png",
+      "fuel": "Diesel",
+      "doors": "5",
+      "transmission": "Automatic",
+      "seats": "5 Passenger",
+      "baggageCapacity": "4",
+      "capacity": "2.2 L",
+      "facilities": ["A/C", "Clima"]
+    },
+    {
+      "id": "Hl9Gjdgb-Y",
+      "name": "Mercedes S Class Automatic (I4)",
+      "url": "https://grcrentals.com/wp-content/uploads/2019/11/mercedes-amg-54-s-class-317-s-63.png",
+      "fuel": "Petrol Unleaded",
+      "doors": "4",
+      "transmission": "Automatic",
+      "seats": "5 Passenger",
+      "baggageCapacity": "4",
+      "capacity": "3.5 L",
+      "facilities": ["A/C", "Clima"]
+    },
+    {
+      "id": "ZnNm57eP17",
+      "name": "Range Rover Evoque Cabrio Automatic (D2)",
+      "url": "https://grcrentals.com/wp-content/uploads/2019/11/evoquec.png",
+      "fuel": "Petrol Unleaded",
+      "doors": "3",
+      "transmission": "Automatic",
+      "seats": "4 Passenger",
+      "baggageCapacity": "2",
+      "capacity": "1.6 L",
+      "facilities": ["A/C", "Clima"]
+    },
+    {
+      "id": "C8jgkrHpcd",
+      "name": "Audi Q3 Manual (D4)",
+      "url": "https://grcrentals.com/wp-content/uploads/2019/11/2017-Audi-Q3-Premium-2.0-TFSI-min-20170419-840x480.png",
+      "fuel": "Petrol Unleaded",
+      "doors": "5",
+      "transmission": "Automatic",
+      "seats": "5 Passenger",
+      "baggageCapacity": "3",
+      "capacity": "2.0 L",
+      "facilities": ["A/C", "Clima"]
+    },
+    {
+      "id": "AanRv_0V66",
+      "name": "BMW 116 Automatic (A4)",
+      "url": "https://grcrentals.com/wp-content/uploads/2019/11/bmw-116.png",
+      "fuel": "Diesel",
+      "doors": "5",
+      "transmission": "Automatic",
+      "seats": "5 Passenger",
+      "baggageCapacity": "3",
+      "capacity": "1.6 L",
+      "facilities": ["A/C", "Clima"]
+    },
+    {
+      "id": "BfmBJwLNgo",
+      "name": "Audi A3 Cabrio Automatic (B2)",
+      "url": "https://grcrentals.com/wp-content/uploads/2019/11/audi-a3-cabrio.png",
+      "fuel": "Petrol Unleaded",
+      "doors": "5",
+      "transmission": "Automatic",
+      "seats": "4 Passenger",
+      "baggageCapacity": "2",
+      "capacity": "1.6 L",
+      "facilities": ["A/C", "Clima"]
+    }
+  ]
+}
