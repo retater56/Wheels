@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import {Alert, Button, StyleSheet, TextInput} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../redux/actions/users';
 import colors from '../../styles/colors';
 
 const Registration = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const createUser = async (
     userName: string,
@@ -25,10 +28,13 @@ const Registration = () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(JSON.stringify(object));
     if (response.status === 400) {
       const responseText = await response.text();
       Alert.alert(responseText);
+    } else if (response.status === 201) {
+      const responseText = await response.json();
+      console.log(responseText.accessToken);
+      dispatch(addUser())
     }
   };
 
