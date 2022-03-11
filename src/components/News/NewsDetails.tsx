@@ -1,9 +1,13 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
+import { RootTabParamList } from '../../types';
 
-const NewsDetails = ({route}: any) => {
+type Props = NativeStackScreenProps<RootTabParamList, 'NewsDetails'>
+
+const NewsDetails = ({route}: Props) => {
   const {item} = route.params;
 
   console.log(item);

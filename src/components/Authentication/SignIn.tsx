@@ -1,6 +1,8 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {Button, SafeAreaView, StyleSheet, TextInput} from 'react-native';
+import {Alert, Button, SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import colors from '../../styles/colors';
+import { RootTabParamList } from '../../types';
 
 const createUser = async (userEmail: string, userPassword: string) => {
   const object = {email: userEmail, password: userPassword};
@@ -11,22 +13,24 @@ const createUser = async (userEmail: string, userPassword: string) => {
       'Content-Type': 'application/json',
     },
   });
-  console.log(JSON.stringify(object));
-  const responseText = await response.text();
-  console.log(responseText);
+  if (response.status === 400) {
+    const responseText = await response.text();
+    Alert.alert(responseText);
+  }
 };
 
-const SignIn = ({navigation}: any) => {
+type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>
+
+const SignIn = ({navigation}: Props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const onSignIn = () => {
     if (email === '') {
-      return console.log('incorrect email');
+      Alert.alert('Incorrect email');
     } else if (password === '') {
-      return console.log('incorrect password');
+      Alert.alert('Incorrect password');
     } else {
-      console.log(`${email} ${password}`);
       createUser(email, password);
     }
   };
@@ -36,6 +40,7 @@ const SignIn = ({navigation}: any) => {
       <TextInput
         placeholderTextColor={colors.white}
         placeholder="Email"
+        autoCapitalize="none"
         style={styles.input}
         onChangeText={setEmail}></TextInput>
       <TextInput

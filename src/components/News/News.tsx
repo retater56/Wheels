@@ -11,10 +11,15 @@ import {
 import colors from '../../styles/colors';
 import axios from 'axios';
 import fontSizes from '../../styles/fontSizes';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootTabParamList } from '../../types';
+import INewsDetail from './types';
 
-const News = ({navigation}: any) => {
+type Props = NativeStackScreenProps<RootTabParamList, "News">
+
+const News = ({navigation}: Props) => {
   const [isFetching, setIsFetching] = useState(false);
-  const [news, setNews] = useState<any[]>([]);
+  const [news, setNews] = useState<INewsDetail[]>([]);
 
   const fetchNews = async () => {
     try {
