@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {Alert, Button, SafeAreaView, StyleSheet, TextInput} from 'react-native';
+import {Alert, Button, StyleSheet, TextInput, View} from 'react-native';
 import { useDispatch } from 'react-redux';
 import { logInUser } from '../../redux/actions/users';
 import colors from '../../styles/colors';
@@ -44,7 +44,7 @@ const SignIn = ({navigation}: Props) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TextInput
         placeholderTextColor={colors.white}
         placeholder="Email"
@@ -61,7 +61,7 @@ const SignIn = ({navigation}: Props) => {
       <Button
         title="Don't have account?"
         onPress={() => navigation.navigate('Registration')}></Button>
-    </SafeAreaView>
+    </View>
   );
 };
 

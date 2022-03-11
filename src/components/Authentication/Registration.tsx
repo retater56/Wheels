@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Button, StyleSheet, TextInput} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {Alert, Button, StyleSheet, TextInput, View} from 'react-native';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../redux/actions/users';
 import colors from '../../styles/colors';
@@ -51,7 +50,7 @@ const Registration = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TextInput
         placeholderTextColor={colors.white}
         placeholder="Name"
@@ -70,7 +69,7 @@ const Registration = () => {
         style={styles.input}
         onChangeText={setPassword}></TextInput>
       <Button title="Register" onPress={onRegistration}></Button>
-    </SafeAreaView>
+    </View>
   );
 };
 

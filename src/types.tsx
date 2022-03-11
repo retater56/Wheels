@@ -6,12 +6,13 @@ export type RootTabParamList = {
   NewsDetails: {
       item: INewsDetail
     };
-  Registration: undefined;
+  Account: undefined;
   Search: undefined;
   SearchDetails: {
       item: ICar
   },
   Ads: undefined;
+  Registration: undefined;
 
   
 

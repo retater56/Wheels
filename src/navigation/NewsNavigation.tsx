@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator();
 const NewsNavigation = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="News" component={News} />
+      <Stack.Screen name="Today's news" component={News} />
       <Stack.Screen name="NewsDetails" component={NewsDetails} />
     </Stack.Navigator>
   );

@@ -6,7 +6,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  SafeAreaView,
 } from 'react-native';
 import colors from '../../styles/colors';
 import axios from 'axios';
@@ -57,7 +56,6 @@ const News = ({navigation}: Props) => {
   }, []);
 
   return (
-    <SafeAreaView>
       <View style={styles.container}>
         <FlatList
           data={news}
@@ -66,19 +64,18 @@ const News = ({navigation}: Props) => {
           onRefresh={onRefresh}
           refreshing={isFetching}></FlatList>
       </View>
-    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     alignItems: 'center',
     backgroundColor: colors.primaryDark
   },
   card: {
     width: '95%',
     padding: 10,
+    margin: 10,
     backgroundColor: colors.primaryLight,
     borderRadius: 5,
     marginTop: 10,
