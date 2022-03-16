@@ -13,22 +13,10 @@ export type RootTabParamList = {
   },
   Ads: undefined;
   Registration: undefined;
-
-  
-
-//   SELLING?: {
-//     shouldOpenOffers: boolean;
-//   };
-//   BUY?: {
-//     shouldOpenOffers: boolean;
-//   };
-//   PORTFOLIO?: {
-//     shouldEnterSelectMode?: boolean;
-//   };
-//   CAPITAL: undefined;
+  Create: undefined;
+  CreateAdDetails: {
+    mark?: string,
+    paramType: string,
+    onSelect: (paramType: string, item: string) => void,
+  };
 };
-
-// export type RootTabScreen<RouteName extends keyof RootTabParamList = any> = CompositeScreenProps<
-//   BottomTabScreenProps<RootTabParamList, RouteName>,
-//   RootDrawerScreen<'TABS'>
-// >;
