@@ -33,7 +33,7 @@ const Registration = () => {
     } else if (response.status === 201) {
       const responseText = await response.json();
       console.log(responseText.accessToken);
-      dispatch(addUser())
+      dispatch(addUser(userName))
     }
   };
 

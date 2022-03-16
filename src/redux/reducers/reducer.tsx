@@ -2,14 +2,16 @@ import {ADD_USER, LOGIN_USER, LOGOUT_USER} from '../constants';
 
 const initialState = {
   isLoggedIn: false,
+  userName: ''
 };
 
-const reducer = (state = initialState, action: {type: string}) => {
+const reducer = (state = initialState, action: {type: string, payload: string}) => {
   switch (action.type) {
     case ADD_USER:
       return {
         ...state,
         isLoggedIn: true,
+        userName: action.payload
       };
     case LOGIN_USER:
       return {
@@ -20,6 +22,7 @@ const reducer = (state = initialState, action: {type: string}) => {
       return {
         ...state,
         isLoggedIn: false,
+        userName: action.payload
       };
     default:
       return state;
