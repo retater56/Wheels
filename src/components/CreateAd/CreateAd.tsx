@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,6 @@ import {
   ScrollView,
   TextInput,
   Image,
-  Dimensions,
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -25,13 +24,14 @@ import colors from '../../styles/colors';
 
 import {useFormik} from 'formik';
 import {useSelector} from 'react-redux';
-import {RootState} from '../../redux/reducers/reducer';
 import {CreateAdSchema} from './validation';
+import {API_CARS, getName} from '../../constants';
+import {fuelData, transmissionData} from './constants';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 
 const CreateAd = ({navigation}: Props) => {
-  const accountName = useSelector((state: RootState) => state.userName);
+  const accountName = useSelector(getName);
 
   const {handleChange, handleSubmit, setFieldValue, values, errors, isValid} =
     useFormik({
@@ -55,12 +55,47 @@ const CreateAd = ({navigation}: Props) => {
         resetForm();
       },
     });
+  const memoFuelData = useMemo(() => {
+    return fuelData;
+  }, []);
+
+  const memoTransmissionData = useMemo(() => {
+    return transmissionData;
+  }, []);
+
+  const memoImageSource = useMemo(() => {
+    return {
+      uri: `data:image/jpeg;base64,${values.imgSourceBase64}`,
+    };
+  }, [values.imgSourceBase64]);
+
+  useEffect(() => {
+    console.log('base64');
+  }, [values]);
+
+  const onPressMark = useCallback(() => {
+    navigation.navigate('CreateAdDetails', {
+      paramType: 'mark',
+      onSelect: onSelect,
+    });
+  }, []);
+
+  const onPressModel = useCallback(() => {
+    if (!values.mark) {
+      return Alert.alert('Please, choose mark');
+    }
+    navigation.navigate('CreateAdDetails', {
+      mark: values.mark,
+      paramType: 'model',
+      onSelect: onSelect,
+    });
+  }, [values.mark]);
 
   const addCar = async (params: ICar) => {
     params.capacity = `${params.capacity} L`;
     params.seats = `${params.seats} Passangers`;
 
-    const response = await fetch(`http://localhost:3000/cars`, {
+    const response = await fetch(API_CARS, {
       method: 'POST',
       body: JSON.stringify({...params, user: accountName}),
       headers: {
@@ -71,6 +106,7 @@ const CreateAd = ({navigation}: Props) => {
     if (response.status === 400) {
       Alert.alert(responseText);
     } else if (response.status === 201) {
+      Alert.alert('Your car added');
     }
   };
 
@@ -102,11 +138,9 @@ const CreateAd = ({navigation}: Props) => {
           {values.imgSourceBase64 !== '' ? (
             <View>
               <Image
-                source={{
-                  uri: `data:image/jpeg;base64,${values.imgSourceBase64}`,
-                }}
+                source={memoImageSource}
                 style={[styles.photoData, {width: 300}]}
-                />
+              />
             </View>
           ) : (
             <TouchableOpacity style={styles.photoData} onPress={onChoosePhoto}>
@@ -121,32 +155,14 @@ const CreateAd = ({navigation}: Props) => {
         </View>
         <Text style={styles.title}>Mark</Text>
         <View style={styles.centerContainer}>
-          <TouchableOpacity
-            style={styles.inputData}
-            onPress={() => {
-              navigation.navigate('CreateAdDetails', {
-                paramType: 'mark',
-                onSelect: onSelect,
-              });
-            }}>
+          <TouchableOpacity style={styles.inputData} onPress={onPressMark}>
             <Text>{values.mark}</Text>
           </TouchableOpacity>
           {errors.mark && <Text style={styles.errors}>{errors.mark}</Text>}
         </View>
         <Text style={styles.title}>Model</Text>
         <View style={styles.centerContainer}>
-          <TouchableOpacity
-            style={styles.inputData}
-            onPress={() => {
-              if (!values.mark) {
-                return Alert.alert('Please, choose mark');
-              }
-              navigation.navigate('CreateAdDetails', {
-                mark: values.mark,
-                paramType: 'model',
-                onSelect: onSelect,
-              });
-            }}>
+          <TouchableOpacity style={styles.inputData} onPress={onPressModel}>
             <Text>{values.model}</Text>
           </TouchableOpacity>
           {errors.model && <Text style={styles.errors}>{errors.model}</Text>}
@@ -158,12 +174,7 @@ const CreateAd = ({navigation}: Props) => {
             style={pickerStyle}
             onValueChange={handleChange('fuel')}
             placeholder={{label: 'Select an item...', value: ''}}
-            items={[
-              {label: 'Petrol', value: 'Petrol'},
-              {label: 'Diesel', value: 'Diesel'},
-              {label: 'Gas', value: 'Gas'},
-              {label: 'Electric', value: 'Electric'},
-            ]}
+            items={memoFuelData}
           />
           {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
         </View>
@@ -183,11 +194,7 @@ const CreateAd = ({navigation}: Props) => {
             style={pickerStyle}
             onValueChange={handleChange('transmission')}
             placeholder={{label: 'Select an item...', value: ''}}
-            items={[
-              {label: 'Automatic', value: 'Automatic'},
-              {label: 'Manual', value: 'Manual'},
-              {label: 'Automated manual', value: 'Automated Manual'},
-            ]}
+            items={memoTransmissionData}
           />
           {errors.transmission && (
             <Text style={styles.errors}>{errors.transmission}</Text>
@@ -272,14 +279,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const dim = Dimensions.get('screen');
-
 const pickerStyle = {
   inputIOS: {
     padding: 10,
     height: 40,
     color: colors.black,
-    marginHorizontal: (dim.width / 2) * 0.1,
+    marginHorizontal: 20,
     borderRadius: 5,
     backgroundColor: colors.primaryLight,
   },

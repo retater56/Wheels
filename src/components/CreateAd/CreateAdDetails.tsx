@@ -1,7 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator} from 'react-native';
+import { API_MARKS, API_MODELS } from '../../constants';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 import {RootTabParamList} from '../../types';
@@ -18,19 +18,21 @@ const CreateAdDetails = ({route, navigation}: Props) => {
 
   let url = '';
   if (paramType === 'mark') {
-    url = 'http://localhost:3000/marks';
-  } else if (paramType === 'model') {
-    url =
-      `https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeyear/make/${mark}/modelyear/2021?format=json`;
+    url = API_MARKS;
+  } else if (paramType === 'model' && mark) {
+    url = API_MODELS(mark);
   }
 
   const fetchParams = async () => {
     try {
-      const paramData = await axios.get(url);
+      const response = await fetch(url, {
+        method: 'GET',
+      });
+      const responseData = await response.json();
       if (paramType === 'mark') {
-        setMarks(paramData.data);
+        setMarks(responseData);
       } else if (paramType === 'model') {
-        setModels(paramData.data.Results);
+        setModels(responseData.Results);
       }
       setIsFetching(false);
     } catch (error) {
