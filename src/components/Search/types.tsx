@@ -1,7 +1,9 @@
 export default interface ICar {
   id: string;
-  name: string;
-  url: string;
+  mark: string;
+  model: string;
+  imageSource: string;
+  imgSourceBase64?: string;
   fuel: string;
   doors: string;
   transmission: string;
