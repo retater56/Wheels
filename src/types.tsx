@@ -14,4 +14,10 @@ export type RootTabParamList = {
   SearchItem: undefined;
   Ads: undefined;
   Registration: undefined;
+  Create: undefined;
+  CreateAdDetails: {
+    mark?: string,
+    paramType: string,
+    onSelect: (paramType: string, item: string) => void,
+  };
 };

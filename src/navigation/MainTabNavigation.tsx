@@ -6,6 +6,7 @@ import AdsNavigation from './AdsNavigation';
 import SearchNavigation from './SearchNavigation';
 import {RootTabParamList} from '../types';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CreateAdNavigation from './CreateAdNavigation';
 Icon.loadFont();
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -31,6 +32,15 @@ const MainTabNavigation = () => {
         options={{
           tabBarIcon: ({size, color}) => (
             <Icon name={'search'} color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Create"
+        component={CreateAdNavigation}
+        options={{
+          tabBarIcon: ({size, color}) => (
+            <Icon name={'plus-square-o'} color={color} size={size} />
           ),
         }}
       />
