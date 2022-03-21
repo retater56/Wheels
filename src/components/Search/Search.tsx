@@ -1,23 +1,11 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  Image,
-  View,
-  FlatList,
-} from 'react-native';
-import { API_CARS } from '../../constants';
+import {StyleSheet, SafeAreaView, View, FlatList} from 'react-native';
+import {API_CARS} from '../../constants';
 import colors from '../../styles/colors';
-import fontSizes from '../../styles/fontSizes';
-import {RootTabParamList} from '../../types';
-import ICar from './types';
+import SearchItem from './SearchItem';
+import {ICar} from './types';
 
-type Props = NativeStackScreenProps<RootTabParamList, 'Search'>;
-
-const Search = ({navigation}: Props) => {
+const Search = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [cars, setCars] = useState<ICar[]>([]);
 
@@ -39,26 +27,9 @@ const Search = ({navigation}: Props) => {
     fetchCars();
   };
 
-  const renderItem = ({item}: any) => (
-    <TouchableOpacity
-      style={styles.card}
-      key={item.id}
-      onPress={() => {
-        navigation.navigate('SearchDetails', {item});
-      }}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: `${
-            item.imageSource
-              ? item.imageSource
-              : `data:image/jpeg;base64,${item.imgSourceBase64}`
-          }`,
-        }}
-      />
-      <Text style={styles.text}>{item.mark} {item.model}</Text>
-    </TouchableOpacity>
-  );
+  const renderItem = ({item}: {item: ICar}) => {
+    return <SearchItem item={item} />;
+  };
 
   useEffect(() => {
     fetchCars();
@@ -82,24 +53,6 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     backgroundColor: colors.primaryDark,
-  },
-  card: {
-    padding: 10,
-    backgroundColor: colors.primaryLight,
-    borderRadius: 5,
-    marginVertical: 10,
-    marginHorizontal: 20,
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 5,
-    resizeMode: 'contain',
-  },
-  text: {
-    padding: 10,
-    color: colors.textPrimary,
-    fontSize: fontSizes.medium,
   },
 });
 

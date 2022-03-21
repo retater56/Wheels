@@ -1,34 +1,17 @@
-import INewsDetail from "./components/News/types";
-import ICar from "./components/Search/types";
+import INewsDetail from './components/News/types';
+import {ICar} from './components/Search/types';
 
 export type RootTabParamList = {
   News: undefined;
   NewsDetails: {
-      item: INewsDetail
-    };
+    item: INewsDetail;
+  };
   Account: undefined;
   Search: undefined;
   SearchDetails: {
-      item: ICar
-  },
+    item: ICar;
+  };
+  SearchItem: undefined;
   Ads: undefined;
   Registration: undefined;
-
-  
-
-//   SELLING?: {
-//     shouldOpenOffers: boolean;
-//   };
-//   BUY?: {
-//     shouldOpenOffers: boolean;
-//   };
-//   PORTFOLIO?: {
-//     shouldEnterSelectMode?: boolean;
-//   };
-//   CAPITAL: undefined;
 };
-
-// export type RootTabScreen<RouteName extends keyof RootTabParamList = any> = CompositeScreenProps<
-//   BottomTabScreenProps<RootTabParamList, RouteName>,
-//   RootDrawerScreen<'TABS'>
-// >;

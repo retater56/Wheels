@@ -1,4 +1,4 @@
-export default interface ICar {
+export interface ICar {
   id: string;
   mark: string;
   model: string;
@@ -11,4 +11,8 @@ export default interface ICar {
   baggageCapacity: string;
   capacity: string;
   facilities: string[];
+}
+
+export interface Navigation {
+  [desc: string]: any;
 }
