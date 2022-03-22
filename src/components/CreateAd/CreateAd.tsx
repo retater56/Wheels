@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,6 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import PickerSelect from 'react-native-picker-select';
 import fontSizes from '../../styles/fontSizes';
-import {ICar} from './types';
 import {
   ImageLibraryOptions,
   launchImageLibrary,
@@ -23,15 +22,15 @@ import {RootTabParamList} from '../../types';
 import colors from '../../styles/colors';
 
 import {useFormik} from 'formik';
-import {useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {CreateAdSchema} from './validation';
-import {API_CARS, getName} from '../../constants';
 import {fuelData, transmissionData} from './constants';
+import {addCar} from '../../redux/actions/createAd';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 
 const CreateAd = ({navigation}: Props) => {
-  const accountName = useSelector(getName);
+  const dispatch = useDispatch();
 
   const {handleChange, handleSubmit, setFieldValue, values, errors, isValid} =
     useFormik({
@@ -51,7 +50,7 @@ const CreateAd = ({navigation}: Props) => {
       validateOnBlur: false,
       validationSchema: CreateAdSchema,
       onSubmit: (values, {resetForm}) => {
-        addCar(values);
+        dispatch(addCar(values));
         resetForm();
       },
     });
@@ -68,10 +67,6 @@ const CreateAd = ({navigation}: Props) => {
       uri: `data:image/jpeg;base64,${values.imgSourceBase64}`,
     };
   }, [values.imgSourceBase64]);
-
-  useEffect(() => {
-    console.log('base64');
-  }, [values]);
 
   const onPressMark = useCallback(() => {
     navigation.navigate('CreateAdDetails', {
@@ -90,25 +85,6 @@ const CreateAd = ({navigation}: Props) => {
       onSelect: onSelect,
     });
   }, [values.mark]);
-
-  const addCar = async (params: ICar) => {
-    params.capacity = `${params.capacity} L`;
-    params.seats = `${params.seats} Passangers`;
-
-    const response = await fetch(API_CARS, {
-      method: 'POST',
-      body: JSON.stringify({...params, user: accountName}),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const responseText = await response.text();
-    if (response.status === 400) {
-      Alert.alert(responseText);
-    } else if (response.status === 201) {
-      Alert.alert('Your car added');
-    }
-  };
 
   const onSelect = (paramType: string, item: string) => {
     setFieldValue(paramType, item);

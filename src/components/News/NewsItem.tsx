@@ -1,27 +1,30 @@
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useMemo} from 'react';
 import {TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
+import fontSizes from '../../styles/fontSizes';
+import {Navigation} from '../Search/types';
 
-type data = {
-  pubDate: React.Key | null | undefined;
-  image_url: string;
-  title: string;
-};
+const NewsItem = ({item}: any) => {
+  const navigation = useNavigation<Navigation>();
+  const {publishedAt, urlToImage, title} = item;
 
-const NewsItem = (item: data) => {
+  const memoImageSource = useMemo(() => {
+    return {
+      uri: urlToImage,
+    };
+  }, []);
+
   return (
-    <TouchableOpacity style={styles.card} key={item.pubDate}>
-      {item.image_url ? (
-        <Image
-          style={styles.image}
-          source={{
-            uri: `${item.image_url}`,
-          }}></Image>
-      ) : (
-        <></>
-      )}
-      <Text style={styles.text}>{item.title}</Text>
-      <Text style={styles.text}>{item.pubDate}</Text>
+    <TouchableOpacity
+      style={styles.card}
+      key={publishedAt}
+      onPress={() => {
+        navigation.navigate('NewsDetails', {item: item});
+      }}>
+      <Image style={styles.image} source={memoImageSource} />
+      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.textInfo}>{publishedAt.substring(0, 10)}</Text>
     </TouchableOpacity>
   );
 };
@@ -30,6 +33,7 @@ const styles = StyleSheet.create({
   card: {
     width: '95%',
     padding: 10,
+    margin: 10,
     backgroundColor: colors.primaryLight,
     borderRadius: 5,
     marginTop: 10,
@@ -43,7 +47,12 @@ const styles = StyleSheet.create({
   text: {
     padding: 10,
     color: colors.textPrimary,
-    fontSize: 18,
+    fontSize: fontSizes.medium,
+  },
+  textInfo: {
+    textAlign: 'right',
+    color: colors.textSecondary,
+    fontSize: fontSizes.small,
   },
 });
 

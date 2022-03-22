@@ -1,8 +1,8 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {Alert, Button, StyleSheet, TextInput, View} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { logInUser } from '../../redux/actions/users';
+import {useDispatch} from 'react-redux';
+import {logInUser} from '../../redux/actions/users';
 import colors from '../../styles/colors';
 import {RootTabParamList} from '../../types';
 
@@ -14,32 +14,13 @@ const SignIn = ({navigation}: Props) => {
 
   const dispatch = useDispatch();
 
-  const createUser = async (userEmail: string, userPassword: string) => {
-    const object = {email: userEmail, password: userPassword};
-    const response = await fetch('http://localhost:3000/login', {
-      method: 'POST',
-      body: JSON.stringify(object),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (response.status === 400) {
-      const responseText = await response.text();
-      Alert.alert(responseText);
-    } else if (response.status === 200) {
-      const responseText = await response.text();
-      Alert.alert(responseText);
-      dispatch(logInUser())
-    }
-  };
-
   const onSignIn = () => {
     if (email === '') {
       Alert.alert('Incorrect email');
     } else if (password === '') {
       Alert.alert('Incorrect password');
     } else {
-      createUser(email, password);
+      dispatch(logInUser({email, password}));
     }
   };
 

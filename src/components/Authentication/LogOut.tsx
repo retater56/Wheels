@@ -1,26 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { logOutUser } from '../../redux/actions/users';
-import { RootState } from '../../redux/reducers/reducer';
+import {View, Text, StyleSheet, Button} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {getLoggedIn, getUserName} from '../../constants';
+import {logOutUser} from '../../redux/actions/users';
 
 const LogOut = () => {
+  const isLoggedIn = useSelector(getLoggedIn);
+  const userName = useSelector(getUserName);
+  const dispatch = useDispatch();
 
-    const dispath = useDispatch()
+  return (
+    <View>
+      <Text>{JSON.stringify(isLoggedIn)}</Text>
+      <Text>{userName}</Text>
+      <Text>LogOut</Text>
+      <Button title="Log Out" onPress={() => dispatch(logOutUser())}></Button>
+    </View>
+  );
+};
 
-    const isLoggedIn = useSelector((state: RootState) => state.isLoggedIn)
-
-    return (
-        <View>
-            <Text>{isLoggedIn}</Text>
-            <Text>LogOut</Text>
-            <Button title='Log Out' onPress={() => dispath(logOutUser())}></Button>
-        </View>    
-    );
-}
-
-const styles = StyleSheet.create({
-    
-})
+const styles = StyleSheet.create({});
 
 export default LogOut;
