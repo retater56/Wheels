@@ -4,6 +4,7 @@ import {TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 import {Navigation} from '../Search/types';
+import moment from 'moment';
 
 const NewsItem = ({item}: any) => {
   const navigation = useNavigation<Navigation>();
@@ -15,6 +16,10 @@ const NewsItem = ({item}: any) => {
     };
   }, []);
 
+  const date = useMemo(() => {
+    return moment(publishedAt).format('YYYY-MM-DD h:mm a');
+  }, [publishedAt]);
+
   return (
     <TouchableOpacity
       style={styles.card}
@@ -22,9 +27,9 @@ const NewsItem = ({item}: any) => {
       onPress={() => {
         navigation.navigate('NewsDetails', {item: item});
       }}>
-      <Image style={styles.image} source={memoImageSource} />
+      {urlToImage && <Image style={styles.image} source={memoImageSource} />}
       <Text style={styles.text}>{title}</Text>
-      <Text style={styles.textInfo}>{publishedAt.substring(0, 10)}</Text>
+      <Text style={styles.textInfo}>{date}</Text>
     </TouchableOpacity>
   );
 };

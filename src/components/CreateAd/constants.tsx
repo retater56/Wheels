@@ -10,16 +10,3 @@ export const transmissionData = [
   {label: 'Manual', value: 'Manual'},
   {label: 'Automated manual', value: 'Automated Manual'},
 ];
-
-export const initState = {
-  imgSourceBase64: '',
-  mark: '',
-  model: '',
-  fuel: '',
-  doors: '',
-  transmission: '',
-  seats: '',
-  baggageCapacity: '',
-  capacity: '',
-  // facilities: [],
-};

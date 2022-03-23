@@ -1,10 +1,15 @@
+import { ICar } from '../../components/Search/types';
 import {
-  REQUESTED_CARS,
+  FETCHED_CARS,
   REQUESTED_CARS_FAILED,
   REQUESTED_CARS_SUCCEEDED,
 } from '../constants';
 
-const defaultState = {
+const defaultState: {
+  carsIsFething: boolean,
+  dataCars: ICar[],
+  error: boolean,
+} = {
   carsIsFething: false,
   dataCars: [],
   error: false,
@@ -15,10 +20,9 @@ export const carsReducer = (
   action: {type: string; payload: []},
 ) => {
   switch (action.type) {
-    case REQUESTED_CARS:
+    case FETCHED_CARS:
       return {
         ...state,
-        dataCars: action.payload,
         carsIsFething: true,
         error: false,
       };

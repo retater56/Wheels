@@ -1,6 +1,13 @@
-import { ADD_CAR, ADD_CAR_FAILED, ADD_CAR_SUCCESS } from "../constants";
+import {ICar} from '../../components/CreateAd/types';
+import {ADD_CAR, ADD_CAR_FAILED, ADD_CAR_SUCCESS} from '../constants';
 
-const defaultState = {
+const defaultState: {
+  createAdIsLoading: boolean;
+  dataCar: ICar;
+  error: boolean;
+} = {
+  createAdIsLoading: false,
+  dataCar: {
     imgSourceBase64: '',
     mark: '',
     model: '',
@@ -10,21 +17,11 @@ const defaultState = {
     seats: '',
     baggageCapacity: '',
     capacity: '',
+  },
+  error: false,
 };
 
-export interface ICar {
-    imgSourceBase64: string,
-    mark: string,
-    model: string,
-    fuel: string,
-    doors: string,
-    transmission: string,
-    seats: string,
-    baggageCapacity: string,
-    capacity: string,
-  }
-
-export const userReducer = (
+export const createAdReducer = (
   state = defaultState,
   action: {
     type: string;
@@ -33,23 +30,24 @@ export const userReducer = (
 ) => {
   switch (action.type) {
     case ADD_CAR:
-        return {
-          ...state,
-          isLoading: true,
-        };
-      case ADD_CAR_SUCCESS:
-        return {
-          ...state,
-          userName: action.payload,
-          isLoggedIn: true,
-          error: false,
-        };
-      case ADD_CAR_FAILED:
-        return {
-          ...state,
-          error: true,
-        };
+      return {
+        ...state,
+        dataCar: action.payload,
+        isLoading: true,
+        error: false,
+      };
+    case ADD_CAR_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case ADD_CAR_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+        error: true,
+      };
     default:
-        return state;
+      return state;
   }
 };

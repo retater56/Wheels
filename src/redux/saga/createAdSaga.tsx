@@ -1,33 +1,22 @@
 import {useSelector} from 'react-redux';
 import {call, put, takeEvery} from 'redux-saga/effects';
+import {ICar} from '../../components/CreateAd/types';
 import {API_CARS, getUserName} from '../../constants';
-import {addCarFailed} from '../actions/createAd';
+import {addCar, addCarFailed, addCarSuccess} from '../actions/createAd';
 import {ADD_CAR} from '../constants';
 
 //   const accountName = useSelector(getUserName);
 
-export interface IUser {
-  accessToken: string;
-  user: {email: string; id: number};
-}
-
-export interface IUserData {
-  email: string;
-  password: string;
-  userName: string;
-  id: number;
-}
-
-function* addCarAsync(payload: any) {
+function* addCarAsync(action: ReturnType<typeof addCar>) {
   console.log('addCarAsync');
 
-  payload.capacity = `${payload.capacity} L`;
-  payload.seats = `${payload.seats} Passangers`;
+  action.payload.capacity = `${action.payload.capacity} L`;
+  action.payload.seats = `${action.payload.seats} Passangers`;
 
-  const carData = {...payload.payload};
+  const carData = {...action.payload};
 
   try {
-    const response: IUser = yield call(async () => {
+    const response: ICar = yield call(async () => {
       console.log(carData);
       const data = await fetch(API_CARS, {
         method: 'POST',
@@ -41,7 +30,7 @@ function* addCarAsync(payload: any) {
       console.log(response);
       return response;
     });
-    // yield put(addCarSuccess(user));
+    yield put(addCarSuccess())
   } catch (error: any) {
     yield put(addCarFailed(error.message));
   }

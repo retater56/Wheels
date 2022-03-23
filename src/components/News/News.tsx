@@ -1,45 +1,40 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import colors from '../../styles/colors';
 import INewsDetail from './types';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchNews} from '../../redux/actions/news';
-import {RootState} from '../../redux/reducers/rootReducer';
 import NewsItem from './NewsItem';
-
-
-export const getNews = (state: RootState) => state.news.dataNews;
+import {getNews, getNewsIsFetching} from '../../constants';
 
 const News = () => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [news, setNews] = useState<INewsDetail[]>([]);
+  const news = useSelector(getNews);
+  const isFetching = useSelector(getNewsIsFetching);
   const dispatch = useDispatch();
-  const data = useSelector(getNews);
-
-  const onRefresh = () => {
-    setIsFetching(true);
-    dispatch(fetchNews());
-  };
 
   useEffect(() => {
     dispatch(fetchNews());
   }, []);
 
-  useEffect(() => {
-    setIsFetching(false);
-    setNews(data);
-  }, [data]);
+  const onRefresh = () => {
+    dispatch(fetchNews());
+  };
 
-  const renderItem = ({item}: {item: INewsDetail}) => <NewsItem item={item} />;
+  const renderItem = useCallback(({item}: {item: INewsDetail}) => {
+    return <NewsItem item={item} />;
+  }, []);
+
+  const keyItem = useCallback(item => item.title, []);
 
   return (
     <View style={styles.container}>
       <FlatList
         data={news}
         renderItem={renderItem}
-        keyExtractor={item => item.title}
+        keyExtractor={keyItem}
         onRefresh={onRefresh}
-        refreshing={isFetching}></FlatList>
+        refreshing={isFetching}
+      />
     </View>
   );
 };

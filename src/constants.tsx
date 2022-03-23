@@ -14,5 +14,15 @@ export const API_GET_USER_BY_EMAIL = (email: string) => {
   return `http://localhost:3000/users?email=${email}`;
 };
 
-export const getLoggedIn = (state: RootState) => state.user.isLoggedIn;
+export const getNews = (state: RootState) => state.news.dataNews;
+export const getNewsIsFetching = (state: RootState) => state.news.newsIsFetching;
+export const getNewsError = (state: RootState) => state.news.error;
+
+export const getCars = (state: RootState) => state.cars.dataCars;
+export const getCarsIsFetching = (state: RootState) => state.cars.carsIsFething;
+export const getCarsError = (state: RootState) => state.cars.error;
+
 export const getUserName = (state: RootState) => state.user.userName;
+export const getLoggedIn = (state: RootState) => state.user.isLoggedIn;
+
+

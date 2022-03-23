@@ -1,11 +1,16 @@
+import INewsDetail from '../../components/News/types';
 import {
-  REQUESTED_NEWS,
+  FETCHED_NEWS,
   REQUESTED_NEWS_FAILED,
   REQUESTED_NEWS_SUCCEEDED,
 } from '../constants';
 
-const defaultState = {
-  newsIsFething: false,
+const defaultState: {
+  newsIsFetching: boolean,
+  dataNews: INewsDetail[],
+  error: boolean
+} = {
+  newsIsFetching: false,
   dataNews: [],
   error: false
 };
@@ -15,23 +20,23 @@ export const newsReducer = (
   action: {type: string; payload: []},
 ) => {
   switch (action.type) {
-    case REQUESTED_NEWS:
+    case FETCHED_NEWS:
       return {
         ...state,
-        newsIsFething: true,
+        newsIsFetching: true,
         error: false,
       };
     case REQUESTED_NEWS_SUCCEEDED:
       return {
         ...state,
         dataNews: action.payload,
-        newsIsFething: false,
+        newsIsFetching: false,
         error: false,
       };
     case REQUESTED_NEWS_FAILED:
       return {
         ...state,
-        newsIsFething: false,
+        newsIsFetching: false,
         error: true,
       };
     default:

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getLoggedIn, getUserName} from '../../constants';
@@ -9,12 +9,16 @@ const LogOut = () => {
   const userName = useSelector(getUserName);
   const dispatch = useDispatch();
 
+  const onLogOut = useCallback(() => {
+    dispatch(logOutUser());
+  }, []);
+
   return (
     <View>
       <Text>{JSON.stringify(isLoggedIn)}</Text>
       <Text>{userName}</Text>
       <Text>LogOut</Text>
-      <Button title="Log Out" onPress={() => dispatch(logOutUser())}></Button>
+      <Button title="Log Out" onPress={onLogOut}></Button>
     </View>
   );
 };

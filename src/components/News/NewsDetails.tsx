@@ -10,7 +10,7 @@ type Props = NativeStackScreenProps<RootTabParamList, 'NewsDetails'>;
 const NewsDetails = ({route}: Props) => {
   const {item} = route.params;
 
-  const {publishedAt, urlToImage, title, description, content, source} = item;
+  const {urlToImage, title, description, content, source} = item;
 
   const memoImageSource = useMemo(() => {
     return {
@@ -22,10 +22,8 @@ const NewsDetails = ({route}: Props) => {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.textTitle}>"{title}"</Text>
-        <Image style={styles.image} source={memoImageSource} />
-        <Text style={styles.textInfo}>
-          Author: {source.name}, {publishedAt.substring(11, 16)}
-        </Text>
+        {urlToImage && <Image style={styles.image} source={memoImageSource} />}
+        <Text style={styles.textInfo}>Author: {source.name}</Text>
         {description ? (
           <Text style={styles.textDescription}>{description}</Text>
         ) : (

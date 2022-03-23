@@ -5,8 +5,10 @@ import {
   API_USER_REGISTER,
 } from '../../constants';
 import {
+  IUserData,
   logInUserFailed,
   logInUserSuccess,
+  registerUser,
   registerUserFailed,
   registerUserSuccess,
 } from '../actions/users';
@@ -17,16 +19,9 @@ export interface IUser {
   user: {email: string; id: number};
 }
 
-export interface IUserData {
-  email: string;
-  password: string;
-  userName: string;
-  id: number;
-}
-
-function* registerUserAsync(payload: any) {
+function* registerUserAsync(action: ReturnType<typeof registerUser>) {
   console.log('registerUserAsync');
-  const userData = {...payload.payload};
+  const userData = {...action.payload};
   try {
     const response: IUser = yield call(async () => {
       console.log(userData);

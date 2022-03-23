@@ -13,6 +13,7 @@ export interface IUserData {
   email: string;
   password: string;
   userName: string;
+  id?: number
 }
 
 export function registerUser(data: IUserData) {

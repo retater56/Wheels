@@ -1,38 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {StyleSheet, SafeAreaView, View, FlatList, Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {getCars, getCarsIsFetching} from '../../constants';
 import {fetchCars} from '../../redux/actions/cars';
-import {RootState} from '../../redux/reducers/rootReducer';
 import colors from '../../styles/colors';
 import SearchItem from './SearchItem';
 import {ICar} from './types';
 
-export const getCars = (state: RootState) => state.cars.dataCars;
-
 const Search = () => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [cars, setCars] = useState<ICar[]>([]);
-
+  const cars = useSelector(getCars);
+  const isFetching = useSelector(getCarsIsFetching);
   const dispatch = useDispatch();
-  const data = useSelector(getCars);
-
-  const onRefresh = () => {
-    setIsFetching(true);
-    dispatch(fetchCars());
-  };
 
   useEffect(() => {
     dispatch(fetchCars());
   }, []);
 
-  useEffect(() => {
-    setIsFetching(false);
-    setCars(data);
-  }, [data]);
-
-  const renderItem = ({item}: {item: ICar}) => {
-    return <SearchItem item={item} />;
+  const onRefresh = () => {
+    dispatch(fetchCars());
   };
+
+  const renderItem = useCallback(({item}: {item: ICar}) => {
+    return <SearchItem item={item} />;
+  }, []);
+
+  const keyItem = useCallback(item => item.id, []);
 
   return (
     <SafeAreaView>
@@ -40,7 +32,7 @@ const Search = () => {
         <FlatList
           data={cars}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={keyItem}
           onRefresh={onRefresh}
           refreshing={isFetching}></FlatList>
       </View>
