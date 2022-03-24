@@ -1,11 +1,8 @@
-import {useSelector} from 'react-redux';
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {ICar} from '../../components/CreateAd/types';
-import {API_CARS, getUserName} from '../../constants';
+import {API_CARS} from '../../constants';
 import {addCar, addCarFailed, addCarSuccess} from '../actions/createAd';
 import {ADD_CAR} from '../constants';
-
-//   const accountName = useSelector(getUserName);
 
 function* addCarAsync(action: ReturnType<typeof addCar>) {
   console.log('addCarAsync');
@@ -24,13 +21,12 @@ function* addCarAsync(action: ReturnType<typeof addCar>) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({...carData}),
-        // body: JSON.stringify({...carData, user: accountName}),
       });
       const response = await data.json();
       console.log(response);
       return response;
     });
-    yield put(addCarSuccess())
+    yield put(addCarSuccess());
   } catch (error: any) {
     yield put(addCarFailed(error.message));
   }

@@ -17,6 +17,7 @@ const defaultState: {
     seats: '',
     baggageCapacity: '',
     capacity: '',
+    owner: ''
   },
   error: false,
 };
