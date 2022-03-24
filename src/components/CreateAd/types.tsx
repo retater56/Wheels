@@ -6,6 +6,7 @@ export interface IModel {
 }
 
 export interface ICar {
+  owner: string,
   imgSourceBase64: string,
   mark: string,
   model: string,

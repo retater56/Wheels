@@ -2,6 +2,7 @@ import {combineReducers} from 'redux';
 import {carsReducer} from './carsReducer';
 import {createAdReducer} from './createAdReducer';
 import {newsReducer} from './newsReducer';
+import {ownerCarsReducer} from './ownerCarsReducer';
 import {userReducer} from './userReducer';
 
 export const rootReducer = combineReducers({
@@ -9,6 +10,7 @@ export const rootReducer = combineReducers({
   cars: carsReducer,
   user: userReducer,
   createAd: createAdReducer,
+  ownerCars: ownerCarsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

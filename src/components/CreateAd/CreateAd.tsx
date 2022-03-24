@@ -22,15 +22,17 @@ import {RootTabParamList} from '../../types';
 import colors from '../../styles/colors';
 
 import {useFormik} from 'formik';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {CreateAdSchema} from './validation';
 import {fuelData, transmissionData} from './constants';
 import {addCar} from '../../redux/actions/createAd';
+import {getUserName} from '../../constants';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 
 const CreateAd = ({navigation}: Props) => {
   const dispatch = useDispatch();
+  const owner = useSelector(getUserName);
 
   const {handleChange, handleSubmit, setFieldValue, values, errors, isValid} =
     useFormik({
@@ -44,13 +46,12 @@ const CreateAd = ({navigation}: Props) => {
         seats: '',
         baggageCapacity: '',
         capacity: '',
-        // facilities: [],
       },
       validateOnChange: false,
       validateOnBlur: false,
       validationSchema: CreateAdSchema,
       onSubmit: (values, {resetForm}) => {
-        dispatch(addCar(values));
+        dispatch(addCar({...values, owner}));
         resetForm();
       },
     });
