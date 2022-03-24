@@ -1,31 +1,34 @@
-import React, {useState} from 'react';
-import {Alert, Button, StyleSheet, TextInput, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Alert, Button, StyleSheet, TextInput, View, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {registerUser} from '../../redux/actions/users';
 import colors from '../../styles/colors';
+import {useFormik} from 'formik';
+import {RegistrationSchema} from './validation';
+import fontSizes from '../../styles/fontSizes';
 
 const Registration = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
-  const onRegistration = () => {
-    if (name === '') {
-      Alert.alert('Incorrect name');
-    } else if (email === '') {
-      Alert.alert('Incorrect email');
-    } else if (password === '') {
-      Alert.alert('Incorrect password');
-    } else {
-      const data = {
-        userName: name,
-        email: email,
-        password: password,
-      };
-      dispatch(registerUser(data));
-    }
-  };
+  const {handleChange, handleSubmit, errors} = useFormik({
+    initialValues: {
+      userName: '',
+      email: '',
+      password: '',
+    },
+    validateOnChange: false,
+    validateOnBlur: false,
+    validationSchema: RegistrationSchema,
+    onSubmit: (values, {resetForm}) => {
+      console.log(values);
+      dispatch(registerUser(values));
+      resetForm();
+    },
+  });
+
+  const onSubmit = useCallback(() => {
+    handleSubmit();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -33,20 +36,26 @@ const Registration = () => {
         placeholderTextColor={colors.white}
         placeholder="Name"
         style={styles.input}
-        onChangeText={setName}></TextInput>
+        onChangeText={handleChange('userName')}
+      />
+      {errors.userName && <Text style={styles.errors}>{errors.userName}</Text>}
       <TextInput
         placeholderTextColor={colors.white}
         placeholder="Email"
         autoCapitalize="none"
         style={styles.input}
-        onChangeText={setEmail}></TextInput>
+        onChangeText={handleChange('email')}
+      />
+      {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
       <TextInput
         placeholderTextColor={colors.white}
         placeholder="Password"
         secureTextEntry
         style={styles.input}
-        onChangeText={setPassword}></TextInput>
-      <Button title="Register" onPress={onRegistration}></Button>
+        onChangeText={handleChange('password')}
+      />
+      {errors.password && <Text style={styles.errors}>{errors.password}</Text>}
+      <Button title="Register" onPress={onSubmit}></Button>
     </View>
   );
 };
@@ -63,6 +72,10 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: colors.primaryLight,
     color: colors.white,
+  },
+  errors: {
+    fontSize: fontSizes.small,
+    color: 'red',
   },
 });
 
