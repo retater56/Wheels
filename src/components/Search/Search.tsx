@@ -1,39 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, SafeAreaView, View, FlatList} from 'react-native';
-import {API_CARS} from '../../constants';
+import React, {useCallback, useEffect} from 'react';
+import {StyleSheet, SafeAreaView, View, FlatList, Text} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCars, getCarsIsFetching} from '../../constants';
+import {fetchCars} from '../../redux/actions/cars';
 import colors from '../../styles/colors';
 import SearchItem from './SearchItem';
 import {ICar} from './types';
 
 const Search = () => {
-  const [isFetching, setIsFetching] = useState(false);
-  const [cars, setCars] = useState<ICar[]>([]);
-
-  const fetchCars = async () => {
-    try {
-      const response = await fetch(API_CARS, {
-        method: 'GET',
-      });
-      const responseData = await response.json();
-      setCars(responseData);
-      setIsFetching(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onRefresh = () => {
-    setIsFetching(true);
-    fetchCars();
-  };
-
-  const renderItem = ({item}: {item: ICar}) => {
-    return <SearchItem item={item} />;
-  };
+  const cars = useSelector(getCars);
+  const isFetching = useSelector(getCarsIsFetching);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchCars();
+    dispatch(fetchCars());
   }, []);
+
+  const onRefresh = () => {
+    dispatch(fetchCars());
+  };
+
+  const renderItem = useCallback(({item}: {item: ICar}) => {
+    return <SearchItem item={item} />;
+  }, []);
+
+  const keyItem = useCallback(item => item.id, []);
 
   return (
     <SafeAreaView>
@@ -41,7 +32,7 @@ const Search = () => {
         <FlatList
           data={cars}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={keyItem}
           onRefresh={onRefresh}
           refreshing={isFetching}></FlatList>
       </View>

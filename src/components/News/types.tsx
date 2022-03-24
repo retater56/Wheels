@@ -1,8 +1,13 @@
 export default interface INewsDetail {
-    title: string,
-    image_url: string,
-    category: string[],
-    pubDate: string,
-    description: string,
-    content: string
+  source: {
+    id: string;
+    name: string;
+  };
+  author: string;
+  title: string;
+  description: string;
+  url: string;
+  urlToImage: string;
+  publishedAt: string;
+  content: string | null;
 }

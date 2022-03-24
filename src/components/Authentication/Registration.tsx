@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Alert, Button, StyleSheet, TextInput, View} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { addUser } from '../../redux/actions/users';
+import {useDispatch} from 'react-redux';
+import {registerUser} from '../../redux/actions/users';
 import colors from '../../styles/colors';
 
 const Registration = () => {
@@ -9,33 +9,6 @@ const Registration = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-
-  const createUser = async (
-    userName: string,
-    userEmail: string,
-    userPassword: string,
-  ) => {
-    const object = {
-      userName: userName,
-      email: userEmail,
-      password: userPassword,
-    };
-    const response = await fetch('http://localhost:3000/register', {
-      method: 'POST',
-      body: JSON.stringify(object),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (response.status === 400) {
-      const responseText = await response.text();
-      Alert.alert(responseText);
-    } else if (response.status === 201) {
-      const responseText = await response.json();
-      console.log(responseText.accessToken);
-      dispatch(addUser(userName))
-    }
-  };
 
   const onRegistration = () => {
     if (name === '') {
@@ -45,7 +18,12 @@ const Registration = () => {
     } else if (password === '') {
       Alert.alert('Incorrect password');
     } else {
-      createUser(name, email, password);
+      const data = {
+        userName: name,
+        email: email,
+        password: password,
+      };
+      dispatch(registerUser(data));
     }
   };
 
