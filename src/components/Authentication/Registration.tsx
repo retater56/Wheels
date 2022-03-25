@@ -1,11 +1,11 @@
-import React, {useCallback, useState} from 'react';
-import {Alert, Button, StyleSheet, TextInput, View, Text} from 'react-native';
+import React, {useCallback} from 'react';
+import {Button, StyleSheet, TextInput, View, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {registerUser} from '../../redux/actions/users';
 import colors from '../../styles/colors';
 import {useFormik} from 'formik';
 import {RegistrationSchema} from './validation';
 import fontSizes from '../../styles/fontSizes';
+import {registerUser} from '../../redux/reducers/userReducer';
 
 const Registration = () => {
   const dispatch = useDispatch();

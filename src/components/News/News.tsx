@@ -3,9 +3,9 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import colors from '../../styles/colors';
 import INewsDetail from './types';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchNews} from '../../redux/actions/news';
 import NewsItem from './NewsItem';
 import {getNews, getNewsIsFetching} from '../../constants';
+import {fetchNews} from '../../redux/reducers/newsReducer';
 
 const News = () => {
   const news = useSelector(getNews);

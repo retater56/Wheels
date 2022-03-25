@@ -1,9 +1,5 @@
+import {createSlice} from '@reduxjs/toolkit';
 import {ICar} from '../../components/CreateAd/types';
-import {
-  FETCHED_OWNER_CARS,
-  REQUESTED_OWNER_CARS_FAILED,
-  REQUESTED_OWNER_CARS_SUCCEEDED,
-} from '../constants';
 
 const defaultState: {
   owner: string;
@@ -17,33 +13,29 @@ const defaultState: {
   error: false,
 };
 
-export const ownerCarsReducer = (
-  state = defaultState,
-  action: {type: string; payload: any},
-) => {
-  switch (action.type) {
-    case FETCHED_OWNER_CARS:
-      return {
-        ...state,
-        owner: action.payload,
-        carsIsFething: true,
-        error: false,
-      };
-    case REQUESTED_OWNER_CARS_FAILED:
-      return {
-        ...state,
-        dataCars: action.payload,
-        carsIsFething: false,
-        error: false,
-      };
-    case REQUESTED_OWNER_CARS_SUCCEEDED:
-      return {
-        ...state,
-        dataCars: action.payload,
-        carsIsFething: false,
-        error: true,
-      };
-    default:
-      return state;
-  }
-};
+export const ownerCarsSlice = createSlice({
+  name: 'ownerCars',
+  initialState: defaultState,
+  reducers: {
+    fetchOwnerCars(state, action) {
+      (state.owner = action.payload),
+        (state.carsIsFething = true),
+        (state.error = false);
+    },
+    requestOwnerCarsSuccess(state, action) {
+      (state.dataCars = action.payload),
+        (state.carsIsFething = false),
+        (state.error = false);
+    },
+    requestOwnerCarsError(state) {
+      (state.carsIsFething = false), (state.error = true);
+    },
+  },
+});
+
+const {actions, reducer} = ownerCarsSlice;
+
+export const {fetchOwnerCars, requestOwnerCarsSuccess, requestOwnerCarsError} =
+  actions;
+
+export default reducer;

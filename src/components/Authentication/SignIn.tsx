@@ -2,12 +2,12 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
 import {Button, StyleSheet, TextInput, View, Text} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {logInUser} from '../../redux/actions/users';
 import colors from '../../styles/colors';
 import {RootTabParamList} from '../../types';
 import {useFormik} from 'formik';
 import {SignInSchema} from './validation';
 import fontSizes from '../../styles/fontSizes';
+import {logInUser} from '../../redux/reducers/userReducer';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 

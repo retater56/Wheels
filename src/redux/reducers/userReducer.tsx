@@ -1,12 +1,4 @@
-import {
-  REGISTER_USER,
-  LOGIN_USER,
-  LOGOUT_USER,
-  REGISTER_USER_FAILED,
-  REGISTER_USER_SUCCESS,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_FAILED,
-} from '../constants';
+import {createSlice} from '@reduxjs/toolkit';
 
 const defaultState = {
   isLoading: false,
@@ -22,55 +14,48 @@ export interface IUserData {
   id: number;
 }
 
-export const userReducer = (
-  state = defaultState,
-  action: {
-    type: string;
-    payload: IUserData;
+export const userSlice = createSlice({
+  name: 'userSlice',
+  initialState: defaultState,
+  reducers: {
+    registerUser(state, action) {
+      state.isLoading = true;
+    },
+    registerUserSuccess(state, action) {
+      (state.userName = action.payload.userName),
+        (state.isLoggedIn = true),
+        (state.error = false);
+    },
+    registerUserFailed(state) {
+      state.error = true;
+    },
+    logInUser(state, action) {
+      state.isLoading = true;
+    },
+    logInUserSuccess(state, action) {
+      (state.userName = action.payload.userName),
+        (state.isLoggedIn = true),
+        (state.error = false);
+    },
+    logInUserFailed(state) {
+      state.error = true;
+    },
+    logOutUser(state) {
+      (state.isLoggedIn = false), (state.userName = '');
+    },
   },
-) => {
-  switch (action.type) {
-    case REGISTER_USER:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case REGISTER_USER_SUCCESS:
-      return {
-        ...state,
-        userName: action.payload.userName,
-        isLoggedIn: true,
-        error: false,
-      };
-    case REGISTER_USER_FAILED:
-      return {
-        ...state,
-        error: true,
-      };
-    case LOGIN_USER:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case LOGIN_USER_SUCCESS:
-      return {
-        ...state,
-        userName: action.payload.userName,
-        isLoggedIn: true,
-        error: false,
-      };
-    case LOGIN_USER_FAILED:
-      return {
-        ...state,
-        error: true,
-      };
-    case LOGOUT_USER:
-      return {
-        ...state,
-        isLoggedIn: false,
-        userName: '',
-      };
-    default:
-      return state;
-  }
-};
+});
+
+const {actions, reducer} = userSlice;
+
+export const {
+  registerUser,
+  registerUserSuccess,
+  registerUserFailed,
+  logInUser,
+  logInUserSuccess,
+  logInUserFailed,
+  logOutUser,
+} = actions;
+
+export default reducer;

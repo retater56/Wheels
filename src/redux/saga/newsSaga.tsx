@@ -2,10 +2,10 @@ import {call, put, takeEvery} from 'redux-saga/effects';
 import INewsDetail from '../../components/News/types';
 import {API_NEWS} from '../../constants';
 import {
+  fetchNews,
   requestNewsError,
   requestNewsSuccess,
-} from '../actions/news';
-import {FETCHED_NEWS} from '../constants';
+} from '../reducers/newsReducer';
 
 function* fetchNewsAsync() {
   console.log('fetchNewsAsync');
@@ -15,6 +15,7 @@ function* fetchNewsAsync() {
       const res = await data.json();
       return res.articles;
     });
+    console.log(newsData);
     yield put(requestNewsSuccess(newsData));
   } catch (error) {
     yield put(requestNewsError());
@@ -23,5 +24,5 @@ function* fetchNewsAsync() {
 
 export function* watchFetchNews() {
   console.log('watchFetchNews');
-  yield takeEvery(FETCHED_NEWS, fetchNewsAsync);
+  yield takeEvery(fetchNews, fetchNewsAsync);
 }

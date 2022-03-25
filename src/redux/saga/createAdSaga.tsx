@@ -1,8 +1,7 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {ICar} from '../../components/CreateAd/types';
 import {API_CARS} from '../../constants';
-import {addCar, addCarFailed, addCarSuccess} from '../actions/createAd';
-import {ADD_CAR} from '../constants';
+import {addCar, addCarFailed, addCarSuccess} from '../reducers/createAdReducer';
 
 function* addCarAsync(action: ReturnType<typeof addCar>) {
   console.log('addCarAsync');
@@ -27,12 +26,12 @@ function* addCarAsync(action: ReturnType<typeof addCar>) {
       return response;
     });
     yield put(addCarSuccess());
-  } catch (error: any) {
-    yield put(addCarFailed(error.message));
+  } catch (error) {
+    yield put(addCarFailed());
   }
 }
 
 export function* watchCreateAd() {
   console.log('watchCreateAd');
-  yield takeEvery(ADD_CAR, addCarAsync);
+  yield takeEvery(addCar, addCarAsync);
 }
