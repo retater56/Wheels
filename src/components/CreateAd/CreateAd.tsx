@@ -25,8 +25,8 @@ import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreateAdSchema} from './validation';
 import {fuelData, transmissionData} from './constants';
-import {addCar} from '../../redux/actions/createAd';
 import {getUserName} from '../../constants';
+import {addCar} from '../../redux/reducers/createAdReducer';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 

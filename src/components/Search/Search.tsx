@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect} from 'react';
-import {StyleSheet, SafeAreaView, View, FlatList, Text} from 'react-native';
+import {StyleSheet, SafeAreaView, View, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCars, getCarsIsFetching} from '../../constants';
-import {fetchCars} from '../../redux/actions/cars';
+import {fetchCars} from '../../redux/reducers/carsReducer';
 import colors from '../../styles/colors';
 import SearchItem from './SearchItem';
 import {ICar} from './types';

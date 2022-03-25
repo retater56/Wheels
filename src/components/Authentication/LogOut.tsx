@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getLoggedIn, getUserName} from '../../constants';
-import {logOutUser} from '../../redux/actions/users';
+import { logOutUser } from '../../redux/reducers/userReducer';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 

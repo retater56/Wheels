@@ -7,7 +7,7 @@ import {
   getOwnerCarsIsFetching,
   getUserName,
 } from '../../constants';
-import {fetchOwnerCars} from '../../redux/actions/ownerAds';
+import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 import {ICar} from '../CreateAd/types';
@@ -27,6 +27,7 @@ const OwnerAds = () => {
 
   const onRefresh = () => {
     dispatch(fetchOwnerCars(userName));
+    console.log(cars)
   };
 
   const renderItem = useCallback(({item}: {item: ICar}) => {

@@ -1,12 +1,12 @@
 import {ICar} from '../../components/CreateAd/types';
-import {ADD_CAR, ADD_CAR_FAILED, ADD_CAR_SUCCESS} from '../constants';
+import {createSlice} from '@reduxjs/toolkit';
 
 const defaultState: {
-  createAdIsLoading: boolean;
+  isLoading: boolean;
   dataCar: ICar;
   error: boolean;
 } = {
-  createAdIsLoading: false,
+  isLoading: false,
   dataCar: {
     imgSourceBase64: '',
     mark: '',
@@ -17,38 +17,32 @@ const defaultState: {
     seats: '',
     baggageCapacity: '',
     capacity: '',
-    owner: ''
+    owner: '',
   },
   error: false,
 };
 
-export const createAdReducer = (
-  state = defaultState,
-  action: {
-    type: string;
-    payload: ICar;
+export const createAdSlice = createSlice({
+  name: 'createAd',
+  initialState: defaultState,
+  reducers: {
+    addCar(state, action) {
+      state.dataCar = action.payload;
+      state.isLoading = true;
+      state.error = false;
+    },
+    addCarSuccess(state) {
+      state.isLoading = false;
+    },
+    addCarFailed(state) {
+      state.isLoading = false;
+      state.error = true;
+    },
   },
-) => {
-  switch (action.type) {
-    case ADD_CAR:
-      return {
-        ...state,
-        dataCar: action.payload,
-        isLoading: true,
-        error: false,
-      };
-    case ADD_CAR_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-      };
-    case ADD_CAR_FAILED:
-      return {
-        ...state,
-        isLoading: false,
-        error: true,
-      };
-    default:
-      return state;
-  }
-};
+});
+
+const {actions, reducer} = createAdSlice;
+
+export const {addCar, addCarSuccess, addCarFailed} = actions;
+
+export default reducer;

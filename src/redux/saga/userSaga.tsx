@@ -6,13 +6,13 @@ import {
 } from '../../constants';
 import {
   IUserData,
+  logInUser,
   logInUserFailed,
   logInUserSuccess,
   registerUser,
   registerUserFailed,
   registerUserSuccess,
-} from '../actions/users';
-import {LOGIN_USER, REGISTER_USER} from '../constants';
+} from '../reducers/userReducer';
 
 export interface IUser {
   accessToken: string;
@@ -43,7 +43,7 @@ function* registerUserAsync(action: ReturnType<typeof registerUser>) {
     });
     yield put(registerUserSuccess(user[0]));
   } catch (error: any) {
-    yield put(registerUserFailed(error.message));
+    yield put(registerUserFailed());
   }
 }
 
@@ -70,12 +70,12 @@ function* logInUserAsync(payload: any) {
     });
     yield put(logInUserSuccess(user[0]));
   } catch (error: any) {
-    yield put(logInUserFailed(error.message));
+    yield put(logInUserFailed());
   }
 }
 
 export function* watchUser() {
   console.log('watchFetchUser');
-  yield takeEvery(REGISTER_USER, registerUserAsync);
-  yield takeEvery(LOGIN_USER, logInUserAsync);
+  yield takeEvery(registerUser, registerUserAsync);
+  yield takeEvery(logInUser, logInUserAsync);
 }

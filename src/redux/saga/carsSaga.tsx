@@ -2,10 +2,10 @@ import {call, put, takeEvery} from 'redux-saga/effects';
 import {ICar} from '../../components/Search/types';
 import {API_CARS} from '../../constants';
 import {
+  fetchCars,
   requestCarsError,
   requestCarsSuccess,
-} from '../actions/cars';
-import {FETCHED_CARS} from '../constants';
+} from '../reducers/carsReducer';
 
 function* fetchCarsAsync() {
   try {
@@ -23,5 +23,5 @@ function* fetchCarsAsync() {
 
 export function* watchFetchCars() {
   console.log('watchFetchCars');
-  yield takeEvery(FETCHED_CARS, fetchCarsAsync);
+  yield takeEvery(fetchCars, fetchCarsAsync);
 }
