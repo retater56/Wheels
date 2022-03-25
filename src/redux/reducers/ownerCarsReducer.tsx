@@ -18,17 +18,18 @@ export const ownerCarsSlice = createSlice({
   initialState: defaultState,
   reducers: {
     fetchOwnerCars(state, action) {
-      (state.owner = action.payload),
-        (state.carsIsFething = true),
-        (state.error = false);
+      state.owner = action.payload;
+      state.carsIsFething = true;
+      state.error = false;
     },
     requestOwnerCarsSuccess(state, action) {
-      (state.dataCars = action.payload),
-        (state.carsIsFething = false),
-        (state.error = false);
+      state.dataCars = action.payload;
+      state.carsIsFething = false;
+      state.error = false;
     },
     requestOwnerCarsError(state) {
-      (state.carsIsFething = false), (state.error = true);
+      state.carsIsFething = false;
+      state.error = true;
     },
   },
 });

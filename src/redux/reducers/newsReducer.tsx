@@ -20,9 +20,9 @@ export const newsSlice = createSlice({
       state.error = false;
     },
     requestNewsSuccess(state, action) {
-      (state.dataNews = action.payload),
-        (state.newsIsFetching = false),
-        (state.error = false);
+      state.dataNews = action.payload;
+      state.newsIsFetching = false;
+      state.error = false;
     },
     requestNewsError(state) {
       state.newsIsFetching = false;

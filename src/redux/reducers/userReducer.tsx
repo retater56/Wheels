@@ -22,9 +22,9 @@ export const userSlice = createSlice({
       state.isLoading = true;
     },
     registerUserSuccess(state, action) {
-      (state.userName = action.payload.userName),
-        (state.isLoggedIn = true),
-        (state.error = false);
+      state.userName = action.payload.userName;
+      state.isLoggedIn = true;
+      state.error = false;
     },
     registerUserFailed(state) {
       state.error = true;
@@ -33,15 +33,16 @@ export const userSlice = createSlice({
       state.isLoading = true;
     },
     logInUserSuccess(state, action) {
-      (state.userName = action.payload.userName),
-        (state.isLoggedIn = true),
-        (state.error = false);
+      state.userName = action.payload.userName;
+      state.isLoggedIn = true;
+      state.error = false;
     },
     logInUserFailed(state) {
       state.error = true;
     },
     logOutUser(state) {
-      (state.isLoggedIn = false), (state.userName = '');
+      state.isLoggedIn = false;
+      state.userName = '';
     },
   },
 });

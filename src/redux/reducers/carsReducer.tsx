@@ -16,15 +16,17 @@ export const carsSlice = createSlice({
   initialState: defaultState,
   reducers: {
     fetchCars(state) {
-      (state.carsIsFething = true), (state.error = false);
+      state.carsIsFething = true;
+      state.error = false;
     },
     requestCarsSuccess(state, action) {
-      (state.dataCars = action.payload),
-        (state.carsIsFething = false),
-        (state.error = false);
+      state.dataCars = action.payload;
+      state.carsIsFething = false;
+      state.error = false;
     },
     requestCarsError(state) {
-      (state.carsIsFething = false), (state.error = true);
+      state.carsIsFething = false;
+      state.error = true;
     },
   },
 });

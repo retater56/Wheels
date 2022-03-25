@@ -27,15 +27,16 @@ export const createAdSlice = createSlice({
   initialState: defaultState,
   reducers: {
     addCar(state, action) {
-      (state.dataCar = action.payload),
-        (state.isLoading = true),
-        (state.error = false);
+      state.dataCar = action.payload;
+      state.isLoading = true;
+      state.error = false;
     },
     addCarSuccess(state) {
       state.isLoading = false;
     },
     addCarFailed(state) {
-      (state.isLoading = false), (state.error = true);
+      state.isLoading = false;
+      state.error = true;
     },
   },
 });
