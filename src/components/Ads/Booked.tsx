@@ -40,7 +40,6 @@ const Booked = () => {
     <>
       {isLoggedIn ? (
         <View style={styles.container}>
-          <Text>{JSON.stringify(cars)}</Text>
           <FlatList
             data={cars}
             renderItem={renderItem}

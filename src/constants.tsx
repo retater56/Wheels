@@ -1,35 +1,36 @@
+import {ICar} from './components/Search/types';
 import {RootState} from './redux/reducers/rootReducer';
+
+const API_LINK = 'http://localhost:3000';
 
 export const API_NEWS =
   'https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=0f0c55d8f06347cc981c74f7426cf2f9';
-export const API_CARS = 'http://localhost:3000/cars';
-export const API_MARKS = 'http://localhost:3000/marks';
+export const API_CARS = `${API_LINK}/cars`;
+export const API_MARKS = `${API_LINK}/marks`;
 export const API_MODELS = (mark: string) => {
   return `https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformakeyear/make/${mark}/modelyear/2021?format=json`;
 };
-export const API_USER_REGISTER = 'http://localhost:3000/register';
-export const API_USER_LOGIN = 'http://localhost:3000/login';
+export const API_USER_REGISTER = `${API_LINK}/register`;
+export const API_USER_LOGIN = `${API_LINK}/login`;
 
 export const API_GET_USER_NAME = (name: string) => {
-  return `http://localhost:3000/users?userName=${name}`;
-};
-
-export const GET_USER_ID_BY_NAME = async (name: string) => {
-  const userData = await fetch(`http://localhost:3000/users?userName=${name}`);
-  const res = await userData.json();
-  return res[0].id;
+  return `${API_LINK}/users?userName=${name}`;
 };
 
 export const API_GET_USER_BY_EMAIL = (email: string) => {
-  return `http://localhost:3000/users?email=${email}`;
+  return `${API_LINK}/users?email=${email}`;
 };
 
 export const API_GET_CUSTOMER_CARS_BY_NAME = (name: string) => {
-  return `http://localhost:3000/users?userName=${name}`;
+  return `${API_LINK}/users?userName=${name}`;
 };
 
 export const API_GET_CAR_BY_ID = (id: string) => {
-  return `http://localhost:3000/cars/${id}`;
+  return `${API_LINK}/cars/${id}`;
+};
+
+export const API_GET_USER_BY_ID = (id: string) => {
+  return `${API_LINK}/users/${id}`;
 };
 
 export const getNews = (state: RootState) => state.news.dataNews;
@@ -57,3 +58,9 @@ export const getCustomerCarsError = (state: RootState) =>
   state.customerCars.error;
 
 export const getBookedTime = (state: RootState) => state.bookingCar.bookedTime;
+
+export const getImgSource = (item: ICar) => {
+  return item.imageSource
+    ? item.imageSource
+    : 'data:image/jpeg;base64,' + item.imgSourceBase64;
+};

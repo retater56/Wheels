@@ -9,8 +9,8 @@ import {
 } from '../reducers/bookingCarReducer';
 import {
   API_GET_CAR_BY_ID,
+  API_GET_USER_BY_ID,
   API_GET_USER_NAME,
-  GET_USER_ID_BY_NAME,
 } from '../../constants';
 import {rentData} from '../../components/Search/constants';
 
@@ -72,11 +72,13 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
     });
     console.log(JSON.stringify(userBookingData));
     const responseUser: ICar = yield call(async () => {
-      const userId = await GET_USER_ID_BY_NAME(customerName);
-      const response = await fetch(`http://localhost:3000/users/${userId}`);
+      const getUserData = await fetch(API_GET_USER_NAME(customerName));
+      const userData = await getUserData.json();
+      const userId = userData[0].id;
+      const response = await fetch(API_GET_USER_BY_ID(userId));
       const responseData = await response.json();
       const prevRentUserDate = responseData.booked;
-      const data = await fetch(`http://localhost:3000/users/${userId}`, {
+      const data = await fetch(API_GET_USER_BY_ID(userId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

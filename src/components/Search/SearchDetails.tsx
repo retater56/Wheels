@@ -1,6 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo, useState} from 'react';
 import {ScrollView, Text, StyleSheet, Image, View} from 'react-native';
+import {getImgSource} from '../../constants';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 import {RootTabParamList} from '../../types';
@@ -12,7 +13,6 @@ const SearchDetails = ({route}: Props) => {
   const {item} = route.params;
   const {
     id,
-    imageSource,
     mark,
     model,
     fuel,
@@ -21,14 +21,12 @@ const SearchDetails = ({route}: Props) => {
     seats,
     baggageCapacity,
     capacity,
-    imgSourceBase64,
   } = item;
   const [imgSource, setImgSource] = useState('');
 
   useEffect(() => {
-    imageSource
-      ? setImgSource(imageSource)
-      : setImgSource('data:image/jpeg;base64,' + imgSourceBase64);
+    const imgSource = getImgSource(item);
+    setImgSource(imgSource);
   }, []);
 
   const memoImageSource = useMemo(() => {

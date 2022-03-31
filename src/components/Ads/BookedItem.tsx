@@ -1,18 +1,17 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {StyleSheet, TouchableOpacity, Image, Text} from 'react-native';
+import {getImgSource} from '../../constants';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 
 const BookedItem = ({item}: any) => {
-  const {id, mark, imgSourceBase64, model, imageSource, rentDate, rentTime} =
-    item;
+  const {id, mark, model, rentDate, rentTime} = item;
 
   const [imgSource, setImgSource] = useState('');
 
   useEffect(() => {
-    item.imageSource
-      ? setImgSource(imageSource)
-      : setImgSource('data:image/jpeg;base64,' + imgSourceBase64);
+    const imgSource = getImgSource(item);
+    setImgSource(imgSource);
   }, []);
 
   const memoImageSource = useMemo(() => {

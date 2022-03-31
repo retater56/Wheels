@@ -15,7 +15,6 @@ import {
   endOfYear,
   formatDate,
   formatDateApi,
-  rentData,
   today,
 } from './constants';
 import PickerSelect from 'react-native-picker-select';
@@ -73,7 +72,7 @@ const SearchRent = ({carId}: any) => {
   }, [values.rentDate]);
 
   const memoDate = useMemo(() => {
-    return moment(values.rentDate).format('YYYY / DD / MM');
+    return formatDate(values.rentDate);
   }, [values.rentDate]);
 
   const onOpenModal = useCallback(() => {
