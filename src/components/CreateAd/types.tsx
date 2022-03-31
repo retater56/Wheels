@@ -6,14 +6,17 @@ export interface IModel {
 }
 
 export interface ICar {
-  owner: string,
-  imgSourceBase64: string,
-  mark: string,
-  model: string,
-  fuel: string,
-  doors: string,
-  transmission: string,
-  seats: string,
-  baggageCapacity: string,
-  capacity: string,
+  owner: string;
+  imgSourceBase64: string;
+  mark: string;
+  model: string;
+  fuel: string;
+  doors: string;
+  transmission: string;
+  seats: string;
+  baggageCapacity: string;
+  capacity: string;
+  booking: {};
+  rentDate?: '';
+  rentTime?: '';
 }

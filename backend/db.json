@@ -12,10 +12,7 @@
       "seats": "5 Passenger",
       "baggageCapacity": "5",
       "capacity": "2.2 L",
-      "facilities": [
-        "A/C",
-        "Clima"
-      ]
+      "booking": {}
     },
     {
       "id": "4gEgv6NtC_",
@@ -28,10 +25,7 @@
       "seats": "5 Passenger",
       "baggageCapacity": "4",
       "capacity": "2.2 L",
-      "facilities": [
-        "A/C",
-        "Clima"
-      ]
+      "booking": {}
     },
     {
       "id": "Hl9Gjdgb-Y",
@@ -44,10 +38,7 @@
       "seats": "5 Passenger",
       "baggageCapacity": "4",
       "capacity": "3.5 L",
-      "facilities": [
-        "A/C",
-        "Clima"
-      ]
+      "booking": {}
     },
     {
       "id": "ZnNm57eP17",
@@ -60,10 +51,7 @@
       "seats": "4 Passenger",
       "baggageCapacity": "2",
       "capacity": "1.6 L",
-      "facilities": [
-        "A/C",
-        "Clima"
-      ]
+      "booking": {}
     },
     {
       "id": "C8jgkrHpcd",
@@ -76,10 +64,11 @@
       "seats": "5 Passenger",
       "baggageCapacity": "3",
       "capacity": "2.0 L",
-      "facilities": [
-        "A/C",
-        "Clima"
-      ]
+      "booking": {
+        "20223004": {
+          "secondPart": "Vlad"
+        }
+      }
     },
     {
       "id": "AanRv_0V66",
@@ -92,10 +81,7 @@
       "seats": "5 Passenger",
       "baggageCapacity": "3",
       "capacity": "1.6 L",
-      "facilities": [
-        "A/C",
-        "Clima"
-      ]
+      "booking": {}
     },
     {
       "id": "BfmBJwLNgo",
@@ -108,10 +94,7 @@
       "seats": "4 Passenger",
       "baggageCapacity": "2",
       "capacity": "1.6 L",
-      "facilities": [
-        "A/C",
-        "Clima"
-      ]
+      "booking": {}
     }
   ],
   "marks": [

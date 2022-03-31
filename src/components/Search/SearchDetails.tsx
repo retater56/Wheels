@@ -1,20 +1,32 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo, useState} from 'react';
-import {ScrollView, Text, StyleSheet, Image, View, Button} from 'react-native';
+import {ScrollView, Text, StyleSheet, Image, View} from 'react-native';
+import {getImgSource} from '../../constants';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 import {RootTabParamList} from '../../types';
+import SearchRent from './SearchRent';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'SearchDetails'>;
 
 const SearchDetails = ({route}: Props) => {
   const {item} = route.params;
+  const {
+    id,
+    mark,
+    model,
+    fuel,
+    doors,
+    transmission,
+    seats,
+    baggageCapacity,
+    capacity,
+  } = item;
   const [imgSource, setImgSource] = useState('');
 
   useEffect(() => {
-    item.imageSource
-      ? setImgSource(item.imageSource)
-      : setImgSource('data:image/jpeg;base64,' + item.imgSourceBase64);
+    const imgSource = getImgSource(item);
+    setImgSource(imgSource);
   }, []);
 
   const memoImageSource = useMemo(() => {
@@ -32,41 +44,34 @@ const SearchDetails = ({route}: Props) => {
           <></>
         )}
         <Text style={styles.textTitle}>
-          {item.mark} {item.model}
+          {mark} {model}
         </Text>
         <View style={styles.textContent}>
           <Text style={styles.textInfo}>Fuel type</Text>
-          <Text style={styles.textInfo}>{item.fuel}</Text>
+          <Text style={styles.textInfo}>{fuel}</Text>
         </View>
         <View style={styles.textContent}>
           <Text style={styles.textInfo}>Doors count</Text>
-          <Text style={styles.textInfo}>{item.doors}</Text>
+          <Text style={styles.textInfo}>{doors}</Text>
         </View>
         <View style={styles.textContent}>
           <Text style={styles.textInfo}>Transmission type</Text>
-          <Text style={styles.textInfo}>{item.transmission}</Text>
+          <Text style={styles.textInfo}>{transmission}</Text>
         </View>
         <View style={styles.textContent}>
           <Text style={styles.textInfo}>Seats count</Text>
-          <Text style={styles.textInfo}>{item.seats}</Text>
+          <Text style={styles.textInfo}>{seats}</Text>
         </View>
         <View style={styles.textContent}>
           <Text style={styles.textInfo}>Baggage Capacity</Text>
-          <Text style={styles.textInfo}>{item.baggageCapacity}</Text>
+          <Text style={styles.textInfo}>{baggageCapacity}</Text>
         </View>
         <View style={styles.textContent}>
           <Text style={styles.textInfo}>Capacity</Text>
-          <Text style={styles.textInfo}>{item.capacity}</Text>
+          <Text style={styles.textInfo}>{capacity}</Text>
         </View>
-        <View style={[styles.textContent, {justifyContent: 'space-around'}]}>
-          {/* {item.facilities.map(facil => (
-            <Text key={facil} style={styles.textInfo}>
-            {facil}
-          </Text>
-        ))} */}
-        </View>
-        <Button title="Rent a car" onPress={() => {}}></Button>
       </View>
+      <SearchRent carId={id} />
     </ScrollView>
   );
 };
@@ -102,5 +107,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-
 export default SearchDetails;
