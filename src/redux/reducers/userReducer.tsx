@@ -12,6 +12,7 @@ export interface IUserData {
   password: string;
   userName: string;
   id: number;
+  booked: {};
 }
 
 export const userSlice = createSlice({

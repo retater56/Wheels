@@ -46,6 +46,7 @@ const CreateAd = ({navigation}: Props) => {
         seats: '',
         baggageCapacity: '',
         capacity: '',
+        booking: {},
       },
       validateOnChange: false,
       validateOnBlur: false,

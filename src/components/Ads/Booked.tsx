@@ -1,29 +1,73 @@
-import React from 'react';
-import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
+import React, {useCallback, useEffect} from 'react';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  getLoggedIn,
+  getCustomerCars,
+  getUserName,
+  getCustomerCarsIsFetching,
+} from '../../constants';
+import {fetchCustomerCars} from '../../redux/reducers/customerCarsReducer';
 import colors from '../../styles/colors';
+import fontSizes from '../../styles/fontSizes';
+import {ICar} from '../CreateAd/types';
+import BookedItem from './BookedItem';
 
 const Booked = () => {
-    return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.card}>
-          <Text>Booked</Text>
+  const cars = useSelector(getCustomerCars);
+  const isLoggedIn = useSelector(getLoggedIn);
+  const userName = useSelector(getUserName);
+  const isFetching = useSelector(getCustomerCarsIsFetching);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCustomerCars(userName));
+  }, []);
+
+  const onRefresh = () => {
+    dispatch(fetchCustomerCars(userName));
+    console.log(cars);
+  };
+
+  const renderItem = useCallback(({item}: {item: ICar}) => {
+    return <BookedItem item={item} />;
+  }, []);
+
+  const keyItem = useCallback(item => item.id + item.rentTime, []);
+
+  return (
+    <>
+      {isLoggedIn ? (
+        <View style={styles.container}>
+          <Text>{JSON.stringify(cars)}</Text>
+          <FlatList
+            data={cars}
+            renderItem={renderItem}
+            keyExtractor={keyItem}
+            onRefresh={onRefresh}
+            refreshing={isFetching}></FlatList>
         </View>
-      </SafeAreaView>
-    );
-}
+      ) : (
+        <View style={styles.container}>
+          <Text style={styles.infoText}>You aren't authorized yet...</Text>
+        </View>
+      )}
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.primary,
-      alignItems: 'center'
-    },
-    card: {
-      width: '90%',
-      height: 200,
-      margin: 10,
-      backgroundColor: colors.primaryLight,
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: colors.primary,
+  },
+  infoText: {
+    color: colors.textPrimary,
+    fontSize: fontSizes.large,
+    textAlign: 'center',
+    padding: 20,
+  },
+});
 
 export default Booked;

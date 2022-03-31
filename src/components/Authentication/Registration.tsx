@@ -15,6 +15,7 @@ const Registration = () => {
       userName: '',
       email: '',
       password: '',
+      booked: {}
     },
     validateOnChange: false,
     validateOnBlur: false,

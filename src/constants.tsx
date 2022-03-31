@@ -10,12 +10,26 @@ export const API_MODELS = (mark: string) => {
 export const API_USER_REGISTER = 'http://localhost:3000/register';
 export const API_USER_LOGIN = 'http://localhost:3000/login';
 
+export const API_GET_USER_NAME = (name: string) => {
+  return `http://localhost:3000/users?userName=${name}`;
+};
+
+export const GET_USER_ID_BY_NAME = async (name: string) => {
+  const userData = await fetch(`http://localhost:3000/users?userName=${name}`);
+  const res = await userData.json();
+  return res[0].id;
+};
+
 export const API_GET_USER_BY_EMAIL = (email: string) => {
   return `http://localhost:3000/users?email=${email}`;
 };
 
-export const API_GET_CARS_BY_NAME = (name: string) => {
-  return `http://localhost:3000/cars?owner=${name}`;
+export const API_GET_CUSTOMER_CARS_BY_NAME = (name: string) => {
+  return `http://localhost:3000/users?userName=${name}`;
+};
+
+export const API_GET_CAR_BY_ID = (id: string) => {
+  return `http://localhost:3000/cars/${id}`;
 };
 
 export const getNews = (state: RootState) => state.news.dataNews;
@@ -31,5 +45,15 @@ export const getUserName = (state: RootState) => state.user.userName;
 export const getLoggedIn = (state: RootState) => state.user.isLoggedIn;
 
 export const getOwnerCars = (state: RootState) => state.ownerCars.dataCars;
-export const getOwnerCarsIsFetching = (state: RootState) => state.ownerCars.carsIsFething;
+export const getOwnerCarsIsFetching = (state: RootState) =>
+  state.ownerCars.carsIsFething;
 export const getOwnerCarsError = (state: RootState) => state.ownerCars.error;
+
+export const getCustomerCars = (state: RootState) =>
+  state.customerCars.dataCars;
+export const getCustomerCarsIsFetching = (state: RootState) =>
+  state.customerCars.carsIsFething;
+export const getCustomerCarsError = (state: RootState) =>
+  state.customerCars.error;
+
+export const getBookedTime = (state: RootState) => state.bookingCar.bookedTime;

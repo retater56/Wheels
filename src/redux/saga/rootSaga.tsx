@@ -1,6 +1,8 @@
 import {all} from 'redux-saga/effects';
+import {watchBookingCar} from './bookingCarSaga';
 import {watchFetchCars} from './carsSaga';
 import {watchCreateAd} from './createAdSaga';
+import {watchFetchCustomerCars} from './customerCarsSaga';
 import {watchFetchNews} from './newsSaga';
 import {watchFetchOwnerCars} from './ownerCarsSaga';
 import {watchUser} from './userSaga';
@@ -12,5 +14,7 @@ export function* rootWatcher() {
     watchUser(),
     watchCreateAd(),
     watchFetchOwnerCars(),
+    watchFetchCustomerCars(),
+    watchBookingCar(),
   ]);
 }
