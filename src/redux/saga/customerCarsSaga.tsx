@@ -31,9 +31,9 @@ function* fetchCustomerCarsAsync(action: ReturnType<typeof fetchCustomerCars>) {
           const car = await fetch(API_GET_CAR_BY_ID(carId));
           const res = await car.json();
           carData = {...res, ...{rentTime: time}};
+          carData = {...carData, ...{rentDate: rentDate}};
+          carsArray.push(carData);
         }
-        carData = {...carData, ...{rentDate: rentDate}};
-        carsArray.push(carData);
       }
       return carsArray;
     });
