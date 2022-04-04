@@ -49,7 +49,7 @@ const Booked = () => {
         </View>
       ) : (
         <View style={styles.container}>
-          <Text style={styles.infoText}>You aren't authorized yet...</Text>
+          <Text style={styles.infoText}>Sorry, but you aren't authorized yet...</Text>
         </View>
       )}
     </>
@@ -59,11 +59,12 @@ const Booked = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background,
   },
   infoText: {
-    color: colors.textPrimary,
+    color: colors.black,
     fontSize: fontSizes.large,
+    fontWeight: '500',
     textAlign: 'center',
     padding: 20,
   },

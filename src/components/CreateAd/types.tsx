@@ -16,6 +16,8 @@ export interface ICar {
   seats: string;
   baggageCapacity: string;
   capacity: string;
+  cost: string;
+  description: string;
   booking: {};
   rentDate?: '';
   rentTime?: '';

@@ -7,7 +7,6 @@ function* addCarAsync(action: ReturnType<typeof addCar>) {
   console.log('addCarAsync');
 
   action.payload.capacity = `${action.payload.capacity} L`;
-  action.payload.seats = `${action.payload.seats} Passangers`;
 
   const carData = {...action.payload};
 

@@ -9,9 +9,11 @@
       "fuel": "Diesel",
       "doors": "5",
       "transmission": "Automatic",
-      "seats": "5 Passenger",
+      "seats": "5",
       "baggageCapacity": "5",
       "capacity": "2.2 L",
+      "cost": "65",
+      "description": "",
       "booking": {}
     },
     {
@@ -22,9 +24,11 @@
       "fuel": "Diesel",
       "doors": "5",
       "transmission": "Automatic",
-      "seats": "5 Passenger",
+      "seats": "5",
       "baggageCapacity": "4",
       "capacity": "2.2 L",
+      "cost": "55",
+      "description": "",
       "booking": {}
     },
     {
@@ -32,25 +36,29 @@
       "mark": "Mercedes",
       "model": "S Class",
       "imageSource": "https://grcrentals.com/wp-content/uploads/2019/11/mercedes-amg-54-s-class-317-s-63.png",
-      "fuel": "Petrol Unleaded",
+      "fuel": "Petrol",
       "doors": "4",
       "transmission": "Automatic",
-      "seats": "5 Passenger",
+      "seats": "5",
       "baggageCapacity": "4",
       "capacity": "3.5 L",
+      "cost": "60",
+      "description": "",
       "booking": {}
     },
     {
       "id": "ZnNm57eP17",
       "mark": "Range Rover",
-      "model": "Evoque Cabrio",
+      "model": "Evoque",
       "imageSource": "https://grcrentals.com/wp-content/uploads/2019/11/evoquec.png",
-      "fuel": "Petrol Unleaded",
+      "fuel": "Petrol",
       "doors": "3",
       "transmission": "Automatic",
-      "seats": "4 Passenger",
+      "seats": "4",
       "baggageCapacity": "2",
       "capacity": "1.6 L",
+      "cost": "65",
+      "description": "",
       "booking": {}
     },
     {
@@ -58,17 +66,15 @@
       "mark": "Audi",
       "model": "Q3",
       "imageSource": "https://grcrentals.com/wp-content/uploads/2019/11/2017-Audi-Q3-Premium-2.0-TFSI-min-20170419-840x480.png",
-      "fuel": "Petrol Unleaded",
+      "fuel": "Petrol",
       "doors": "5",
       "transmission": "Manual",
-      "seats": "5 Passenger",
+      "seats": "5",
       "baggageCapacity": "3",
       "capacity": "2.0 L",
-      "booking": {
-        "20223004": {
-          "secondPart": "Vlad"
-        }
-      }
+      "cost": "55",
+      "description": "",
+      "booking": {}
     },
     {
       "id": "AanRv_0V66",
@@ -78,9 +84,11 @@
       "fuel": "Diesel",
       "doors": "5",
       "transmission": "Automatic",
-      "seats": "5 Passenger",
+      "seats": "5",
       "baggageCapacity": "3",
       "capacity": "1.6 L",
+      "cost": "50",
+      "description": "",
       "booking": {}
     },
     {
@@ -88,12 +96,14 @@
       "mark": "Audi",
       "model": "A3",
       "imageSource": "https://grcrentals.com/wp-content/uploads/2019/11/audi-a3-cabrio.png",
-      "fuel": "Petrol Unleaded",
+      "fuel": "Petrol",
       "doors": "5",
       "transmission": "Automatic",
-      "seats": "4 Passenger",
+      "seats": "4",
       "baggageCapacity": "2",
       "capacity": "1.6 L",
+      "cost": "55",
+      "description": "",
       "booking": {}
     }
   ],

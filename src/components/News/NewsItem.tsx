@@ -36,27 +36,39 @@ const NewsItem = ({item}: any) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: '95%',
-    padding: 10,
     margin: 10,
-    backgroundColor: colors.primaryLight,
-    borderRadius: 5,
+    backgroundColor: colors.white,
+    borderRadius: 30,
     marginTop: 10,
     marginBottom: 10,
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
   },
   image: {
     width: '100%',
     height: 200,
-    borderRadius: 5,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: colors.secondary,
   },
   text: {
-    padding: 10,
-    color: colors.textPrimary,
+    marginTop: 10,
+    paddingHorizontal: 20,
+    color: colors.black,
+    fontWeight: '500',
     fontSize: fontSizes.medium,
   },
   textInfo: {
+    paddingVertical: 10,
+    paddingHorizontal: 30,
     textAlign: 'right',
-    color: colors.textSecondary,
+    color: colors.gray,
     fontSize: fontSizes.small,
   },
 });

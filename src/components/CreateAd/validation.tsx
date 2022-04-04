@@ -22,4 +22,7 @@ export const CreateAdSchema = Yup.object().shape({
   .min(1, 'Fix capacity count!')
   .max(12, 'Fix capacity count!')
   .required('Required'),
+  cost: Yup.number()
+  .min(1, 'Fix cost!')
+  .required('Required'),
 });

@@ -1,11 +1,19 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, FlatList, ActivityIndicator} from 'react-native';
-import { API_MARKS, API_MODELS } from '../../constants';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
+import {API_MARKS, API_MODELS} from '../../constants';
 import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 import {RootTabParamList} from '../../types';
-import {IModel} from './types'
+import CustomTouchableOpacity from '../common/CustomTouchableOpacity';
+import {IModel} from './types';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'CreateAdDetails'>;
 
@@ -41,27 +49,31 @@ const CreateAdDetails = ({route, navigation}: Props) => {
   };
 
   const renderMarks = ({item}: any) => (
-    <TouchableOpacity
-      style={styles.item}
-      key={item}
-      onPress={() => {
-        navigation.goBack();
-        onSelect(paramType, item);
-      }}>
-      <Text style={styles.text}>{item}</Text>
-    </TouchableOpacity>
+    <View style={styles.itemContainer}>
+      <TouchableOpacity
+        style={[styles.item, styles.shadow]}
+        key={item}
+        onPress={() => {
+          navigation.goBack();
+          onSelect(paramType, item);
+        }}>
+        <Text style={styles.text}>{item}</Text>
+      </TouchableOpacity>
+    </View>
   );
 
   const renderModels = ({item}: any) => {
     return (
-      <TouchableOpacity
-        style={styles.item}
-        key={item.Model_Name}
-        onPress={() => {
-          navigation.goBack(), onSelect(paramType, item.Model_Name);
-        }}>
-        <Text style={styles.text}>{item.Model_Name}</Text>
-      </TouchableOpacity>
+      <View style={styles.itemContainer}>
+        <TouchableOpacity
+          style={[styles.item, styles.shadow]}
+          key={item.Model_Name}
+          onPress={() => {
+            navigation.goBack(), onSelect(paramType, item.Model_Name);
+          }}>
+          <Text style={styles.text}>{item.Model_Name}</Text>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -72,7 +84,7 @@ const CreateAdDetails = ({route, navigation}: Props) => {
 
   return (
     <View style={styles.container}>
-      {isFetching ? <ActivityIndicator style={styles.loading}/> : <></>}
+      {isFetching ? <ActivityIndicator style={styles.loading} /> : <></>}
       {paramType === 'mark' ? (
         <FlatList
           data={marks}
@@ -92,26 +104,36 @@ const CreateAdDetails = ({route, navigation}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.background,
+  },
+  itemContainer: {
+    alignItems: 'center',
   },
   item: {
-    padding: 10,
-    margin: 10,
-    backgroundColor: colors.primaryDark,
+    padding: 20,
+    width: '90%',
+    backgroundColor: colors.white,
     borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 10,
   },
   text: {
-    padding: 10,
-    color: colors.textPrimary,
+    color: colors.black,
     fontSize: fontSizes.medium,
   },
   loading: {
     flex: 1,
-    justifyContent: "center",
-  }
+    justifyContent: 'center',
+  },
+  shadow: {
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
+  },
 });
 
 export default CreateAdDetails;

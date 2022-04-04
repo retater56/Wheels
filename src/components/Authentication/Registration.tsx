@@ -1,11 +1,13 @@
 import React, {useCallback} from 'react';
-import {Button, StyleSheet, TextInput, View, Text} from 'react-native';
+import {StyleSheet, View, Text, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import {useDispatch} from 'react-redux';
 import colors from '../../styles/colors';
 import {useFormik} from 'formik';
 import {RegistrationSchema} from './validation';
 import fontSizes from '../../styles/fontSizes';
 import {registerUser} from '../../redux/reducers/userReducer';
+import CustomTextInput from '../common/CustomTextInput';
+import CustomButton from '../common/CustomButton';
 
 const Registration = () => {
   const dispatch = useDispatch();
@@ -32,32 +34,18 @@ const Registration = () => {
   }, []);
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
-      <TextInput
-        placeholderTextColor={colors.white}
-        placeholder="Name"
-        style={styles.input}
-        onChangeText={handleChange('userName')}
-      />
+      <Text style={styles.textTitle}>Create An Account!</Text>
+      <CustomTextInput placeholder='Full Name' onChangeText={handleChange('userName')}/>
       {errors.userName && <Text style={styles.errors}>{errors.userName}</Text>}
-      <TextInput
-        placeholderTextColor={colors.white}
-        placeholder="Email"
-        autoCapitalize="none"
-        style={styles.input}
-        onChangeText={handleChange('email')}
-      />
+      <CustomTextInput placeholder='Email' autoCapitalize='none' onChangeText={handleChange('email')}/>
       {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
-      <TextInput
-        placeholderTextColor={colors.white}
-        placeholder="Password"
-        secureTextEntry
-        style={styles.input}
-        onChangeText={handleChange('password')}
-      />
+      <CustomTextInput placeholder='Password' secureTextEntry onChangeText={handleChange('password')}/>
       {errors.password && <Text style={styles.errors}>{errors.password}</Text>}
-      <Button title="Register" onPress={onSubmit}></Button>
+      <CustomButton title='Sign Up' onPress={onSubmit} />
     </View>
+  </TouchableWithoutFeedback>
   );
 };
 
@@ -65,7 +53,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background,
   },
   input: {
     width: '80%',
@@ -73,6 +61,12 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: colors.primaryLight,
     color: colors.white,
+  },
+  textTitle: {
+    color: colors.black,
+    fontSize: fontSizes.big,
+    fontWeight: '700',
+    margin: 20,
   },
   errors: {
     fontSize: fontSizes.small,

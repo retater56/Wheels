@@ -8,5 +8,4 @@ export const fuelData = [
 export const transmissionData = [
   {label: 'Automatic', value: 'Automatic'},
   {label: 'Manual', value: 'Manual'},
-  {label: 'Automated manual', value: 'Automated Manual'},
 ];

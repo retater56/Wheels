@@ -1,6 +1,12 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback} from 'react';
-import {Button, StyleSheet, TextInput, View, Text} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
 import colors from '../../styles/colors';
 import {RootTabParamList} from '../../types';
@@ -8,13 +14,15 @@ import {useFormik} from 'formik';
 import {SignInSchema} from './validation';
 import fontSizes from '../../styles/fontSizes';
 import {logInUser} from '../../redux/reducers/userReducer';
+import CustomTextInput from '../common/CustomTextInput';
+import CustomButton from '../common/CustomButton';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 
 const SignIn = ({navigation}: Props) => {
   const dispatch = useDispatch();
 
-  const {handleChange, handleSubmit, errors} = useFormik({
+  const {handleChange, handleSubmit, values, errors} = useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -34,28 +42,31 @@ const SignIn = ({navigation}: Props) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholderTextColor={colors.white}
-        placeholder="Email"
-        autoCapitalize="none"
-        style={styles.input}
-        onChangeText={handleChange('email')}
-      />
-      {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
-      <TextInput
-        placeholderTextColor={colors.white}
-        placeholder="Password"
-        secureTextEntry
-        style={styles.input}
-        onChangeText={handleChange('password')}
-      />
-      {errors.password && <Text style={styles.errors}>{errors.password}</Text>}
-      <Button title="Sign In" onPress={onSubmit}></Button>
-      <Button
-        title="Don't have account?"
-        onPress={() => navigation.navigate('Registration')}></Button>
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.textTitle}>Welcome Back!</Text>
+        <CustomTextInput
+          placeholder="Email"
+          autoCapitalize="none"
+          onChangeText={handleChange('email')}
+          value={values.email}
+        />
+        {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
+        <CustomTextInput
+          placeholder="Password"
+          secureTextEntry
+          onChangeText={handleChange('password')}
+        />
+        {errors.password && (
+          <Text style={styles.errors}>{errors.password}</Text>
+        )}
+        <CustomButton title="Log In" onPress={onSubmit} />
+        <CustomButton
+          title="Don't have account?"
+          onPress={() => navigation.navigate('Registration')}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -63,14 +74,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background,
   },
-  input: {
-    width: '80%',
+  textTitle: {
+    color: colors.black,
+    fontSize: fontSizes.big,
+    fontWeight: '700',
     margin: 20,
-    padding: 10,
-    backgroundColor: colors.primaryLight,
-    color: colors.white,
   },
   errors: {
     fontSize: fontSizes.small,

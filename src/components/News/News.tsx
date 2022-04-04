@@ -42,7 +42,7 @@ const News = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: colors.primaryDark,
+    backgroundColor: colors.background,
   },
 });
 
