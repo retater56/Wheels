@@ -6,6 +6,7 @@ import ownerCarsReducer from './ownerCarsReducer';
 import userReducer from './userReducer';
 import bookingCarReducer from './bookingCarReducer';
 import customerCarsReducer from './customerCarsReducer';
+import cancelBookingReducer from './cancelBookingReducer';
 
 export const rootReducer = combineReducers({
   news: newsReducer,
@@ -15,6 +16,7 @@ export const rootReducer = combineReducers({
   ownerCars: ownerCarsReducer,
   customerCars: customerCarsReducer,
   bookingCar: bookingCarReducer,
+  cancelBooking: cancelBookingReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

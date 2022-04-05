@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {Text, View, StyleSheet, FlatList, Button} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getLoggedIn,
@@ -49,7 +49,9 @@ const Booked = () => {
         </View>
       ) : (
         <View style={styles.container}>
-          <Text style={styles.infoText}>Sorry, but you aren't authorized yet...</Text>
+          <Text style={styles.infoText}>
+            Sorry, but you aren't authorized yet...
+          </Text>
         </View>
       )}
     </>
