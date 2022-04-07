@@ -6,7 +6,6 @@ export interface IModel {
 }
 
 export interface ICar {
-  owner: string;
   imgSourceBase64: string;
   mark: string;
   model: string;
@@ -19,6 +18,8 @@ export interface ICar {
   cost: string;
   description: string;
   booking: {};
-  rentDate?: '';
-  rentTime?: '';
+  owner?: string;
+  userName?: string;
+  rentDate?: string;
+  rentTime?: string;
 }
