@@ -16,6 +16,7 @@ export interface ICar {
   baggageCapacity: string;
   capacity: string;
   cost: string;
+  position: string;
   description: string;
   booking: {};
   owner?: string;

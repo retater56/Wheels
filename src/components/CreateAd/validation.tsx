@@ -25,4 +25,6 @@ export const CreateAdSchema = Yup.object().shape({
   cost: Yup.number()
   .min(1, 'Fix cost!')
   .required('Required'),
+  position: Yup.string().required('Required'),
+  description: Yup.string().min(10, 'Too short!').required('Required')
 });
