@@ -10,6 +10,7 @@ import {
   cancelBookingFailed,
   cancelBookingSuccess,
 } from '../reducers/cancelBookingReducer';
+import { fetchCustomerCars } from '../reducers/customerCarsReducer';
 
 function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
   console.log('cancelBookingAsync');
@@ -85,6 +86,7 @@ function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
       // return responseCar;
     });
     yield put(cancelBookingSuccess());
+    yield put(fetchCustomerCars(userName))
   } catch (error) {
     yield put(cancelBookingFailed());
   }
