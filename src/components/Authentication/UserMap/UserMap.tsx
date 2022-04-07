@@ -21,14 +21,7 @@ const UserMap = () => {
 
   useEffect(() => {
     dispatch(fetchOwnerCars(userName));
-    // console.log(cars)
   }, []);
-
-  // const location = useCallback<any>((position: any) => {
-  //   const [lat, long] = position.split('/');
-  //   // return {latitude: Number(lat), longitude: Number(long)};
-  //   return {latitude: Number(position.split('/')[0]), longitude: Number(position.split('/')[1])};
-  // }, []);
 
   return (
     <MapView
