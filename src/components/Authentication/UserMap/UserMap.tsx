@@ -1,21 +1,18 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Alert, SafeAreaView, StyleSheet, View} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
-import {Text} from 'react-native';
+import React, {useEffect, useMemo} from 'react';
+import MapView from 'react-native-maps';
 import {useDispatch, useSelector} from 'react-redux';
-import { getLoggedIn, getOwnerCars, getOwnerCarsIsFetching, getUserName } from '../../../constants';
-import { fetchOwnerCars } from '../../../redux/reducers/ownerCarsReducer';
-import colors from '../../../styles/colors';
-import fontSizes from '../../../styles/fontSizes';
+import {
+  exampleUserLocation,
+  getOwnerCars,
+  getUserName,
+} from '../../../constants';
+import {fetchOwnerCars} from '../../../redux/reducers/ownerCarsReducer';
 import CustomMarker from './CustomMarker';
-
+import {StyleSheet} from 'react-native';
 
 const UserMap = () => {
-  const [markers, setMarkers] = useState([]);
   const cars = useSelector(getOwnerCars);
-  const isLoggedIn = useSelector(getLoggedIn);
   const userName = useSelector(getUserName);
-  const isFetching = useSelector(getOwnerCarsIsFetching);
 
   const dispatch = useDispatch();
 
@@ -23,32 +20,22 @@ const UserMap = () => {
     dispatch(fetchOwnerCars(userName));
   }, []);
 
+  const userLocation = useMemo(() => {
+    return exampleUserLocation;
+  }, []);
+
   return (
-    <MapView
-      style={{flex: 1}}
-      initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }}>
+    <MapView style={styles.mapView} initialRegion={userLocation}>
       {cars.map(car => (
-        <CustomMarker item={car}/>
+        <CustomMarker item={car} />
       ))}
     </MapView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  mapView: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.background,
-  },
-  textTitle: {
-    color: colors.black,
-    fontSize: fontSizes.big,
   },
 });
 

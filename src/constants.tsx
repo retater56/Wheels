@@ -64,3 +64,10 @@ export const getImgSource = (item: ICar) => {
     ? item.imageSource
     : 'data:image/jpeg;base64,' + item.imgSourceBase64;
 };
+
+export const exampleUserLocation = {
+  latitude: 37.78825,
+  longitude: -122.4324,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
+};

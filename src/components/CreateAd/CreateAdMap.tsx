@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import CustomButton from '../common/CustomButton';
@@ -6,7 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootTabParamList} from '../../types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../styles/colors';
-import {Text} from 'react-native';
+import {exampleUserLocation} from '../../constants';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'CreateAdDetails'>;
 
@@ -26,16 +26,15 @@ const CreateAdMap = ({route, navigation}: Props) => {
     onSelect(paramType, `${latitude}/${longitude}`);
   };
 
+  const location = useMemo(() => {
+    return exampleUserLocation;
+  }, []);
+
   return (
-    <View style={styles.map}>
+    <View style={styles.mapView}>
       <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
+        style={styles.mapView}
+        initialRegion={location}
         onRegionChangeComplete={onRegionChange}
       />
       <View style={styles.markerFixed}>
@@ -49,7 +48,7 @@ const CreateAdMap = ({route, navigation}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  map: {
+  mapView: {
     flex: 1,
   },
   markerFixed: {
