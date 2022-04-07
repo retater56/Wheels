@@ -97,7 +97,7 @@ const CreateAd = ({navigation}: Props) => {
 
   const onPressMap = useCallback(() => {
     navigation.navigate('CreateAdMap', {
-      paramType: 'position',
+      paramLocation: 'position',
       onSelect: onSelect,
     });
   }, []);

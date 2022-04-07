@@ -8,13 +8,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../styles/colors';
 import {exampleUserLocation} from '../../constants';
 
-type Props = NativeStackScreenProps<RootTabParamList, 'CreateAdDetails'>;
+type Props = NativeStackScreenProps<RootTabParamList, 'CreateAdMap'>;
 
 const CreateAdMap = ({route, navigation}: Props) => {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
 
-  const {paramType, onSelect} = route.params;
+  const {paramLocation, onSelect} = route.params;
 
   const onRegionChange = (region: any) => {
     setLatitude(region.latitude);
@@ -23,7 +23,7 @@ const CreateAdMap = ({route, navigation}: Props) => {
 
   const onPosition = () => {
     navigation.goBack();
-    onSelect(paramType, `${latitude}/${longitude}`);
+    onSelect(paramLocation, `${latitude}/${longitude}`);
   };
 
   const location = useMemo(() => {

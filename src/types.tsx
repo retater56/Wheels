@@ -23,7 +23,7 @@ export type RootTabParamList = {
   LogOut: undefined;
   UserMap: undefined;
   CreateAdMap: {
-    paramType: string;
-    onSelect: (paramType: string, item: string) => void
+    paramLocation: string;
+    onSelect: (paramLocation: string, item: string) => void
   };
 };
