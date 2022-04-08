@@ -5,6 +5,7 @@ import Registration from '../components/Authentication/Registration';
 import LogOut from '../components/Authentication/LogOut';
 import {useSelector} from 'react-redux';
 import {getLoggedIn, getUserName} from '../constants';
+import UserMap from '../components/Authentication/UserMap/UserMap';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,10 @@ const AuthNavigation = () => {
   return (
     <Stack.Navigator>
       {isLoggedIn ? (
-        <Stack.Screen name="Log Out" component={LogOut} />
+        <>
+          <Stack.Screen name="Log Out" component={LogOut} />
+          <Stack.Screen name="UserMap" component={UserMap} />
+        </>
       ) : (
         <>
           <Stack.Screen name="Sign In" component={SignIn} />

@@ -49,6 +49,7 @@ const CreateAd = ({navigation}: Props) => {
         baggageCapacity: '',
         capacity: '',
         cost: '',
+        position: '',
         description: '',
         booking: {},
       },
@@ -56,6 +57,7 @@ const CreateAd = ({navigation}: Props) => {
       validateOnBlur: false,
       validationSchema: CreateAdSchema,
       onSubmit: (values, {resetForm}) => {
+        console.log(values);
         dispatch(addCar({...values, owner}));
         resetForm();
       },
@@ -92,6 +94,13 @@ const CreateAd = ({navigation}: Props) => {
       onSelect: onSelect,
     });
   }, [values.mark]);
+
+  const onPressMap = useCallback(() => {
+    navigation.navigate('CreateAdMap', {
+      paramLocation: 'position',
+      onSelect: onSelect,
+    });
+  }, []);
 
   const onSelect = (paramType: string, item: string) => {
     setFieldValue(paramType, item);
@@ -170,7 +179,11 @@ const CreateAd = ({navigation}: Props) => {
           items={memoFuelData}
         />
         {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
-        <CustomTextInput keyboardType={'numeric'} placeholder="Doors" />
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Doors"
+          onChangeText={handleChange('doors')}
+        />
         {errors.doors && <Text style={styles.errors}>{errors.doors}</Text>}
         <PickerSelect
           value={values.transmission}
@@ -182,29 +195,56 @@ const CreateAd = ({navigation}: Props) => {
         {errors.transmission && (
           <Text style={styles.errors}>{errors.transmission}</Text>
         )}
-        <CustomTextInput keyboardType={'numeric'} placeholder="Seats" />
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Seats"
+          onChangeText={handleChange('seats')}
+        />
         {errors.seats && <Text style={styles.errors}>{errors.seats}</Text>}
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Baggage Capacity"
+          onChangeText={handleChange('baggageCapacity')}
         />
         {errors.baggageCapacity && (
           <Text style={styles.errors}>{errors.baggageCapacity}</Text>
         )}
-        <CustomTextInput keyboardType={'numeric'} placeholder="Capacity" />
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Capacity"
+          onChangeText={handleChange('capacity')}
+        />
         {errors.capacity && (
           <Text style={styles.errors}>{errors.capacity}</Text>
         )}
-        <CustomTextInput keyboardType={'numeric'} placeholder="Your cost" />
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Your cost"
+          onChangeText={handleChange('cost')}
+        />
         {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
+      </View>
+      <Text style={styles.title}>Car place</Text>
+      <View style={styles.centerContainer}>
+        <CustomTouchableOpacity onPress={onPressMap}>
+          {values.position ? (
+            <Text>Position setted</Text>
+          ) : (
+            <Text style={styles.colorGray}>Position</Text>
+          )}
+        </CustomTouchableOpacity>
+        {errors.position && (
+          <Text style={styles.errors}>{errors.position}</Text>
+        )}
       </View>
       <Text style={styles.title}>Your description...</Text>
       <View style={styles.centerContainer}>
         <TextInput
+          onChangeText={handleChange('description')}
           style={[styles.inputDescription, styles.shadow]}
           multiline
           placeholder="Please, give some description about your add..."></TextInput>
-        {errors.capacity && (
+        {errors.description && (
           <Text style={styles.errors}>{errors.description}</Text>
         )}
         <CustomButton title="Create Add" onPress={onSubmit} />
