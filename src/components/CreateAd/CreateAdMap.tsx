@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {SafeAreaView, StyleSheet, View} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView from 'react-native-maps';
 import CustomButton from '../common/CustomButton';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootTabParamList} from '../../types';

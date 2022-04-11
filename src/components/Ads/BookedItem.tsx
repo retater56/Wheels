@@ -4,14 +4,15 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getImgSource, getUserName} from '../../constants';
 import {cancelBooking} from '../../redux/reducers/cancelBookingReducer';
 import {fetchCustomerCars} from '../../redux/reducers/customerCarsReducer';
-import colors from '../../styles/colors';
-import fontSizes from '../../styles/fontSizes';
+import {useTheme} from '../../ThemeProvider';
 import CustomButton from '../common/CustomButton';
+import commonStyles from '../common/styles';
 import {formatDate, rentData} from '../Search/constants';
 
 const BookedItem = ({item}: any) => {
   const dispatch = useDispatch();
   const userName = useSelector(getUserName);
+  const {colors} = useTheme();
 
   const {id, mark, model, rentDate, rentTime, cost} = item;
 
@@ -39,29 +40,35 @@ const BookedItem = ({item}: any) => {
 
   const onCancelRent = useCallback(() => {
     dispatch(cancelBooking({item, userName}));
-    dispatch(fetchCustomerCars(userName))
+    dispatch(fetchCustomerCars(userName));
   }, []);
 
   return (
-    <View style={[styles.card, styles.shadow]} key={id + rentTime}>
-      <Text style={styles.textDate}>{memoRentDate}</Text>
+    <View
+      style={[styles.card, {backgroundColor: colors.background}]}
+      key={id + rentTime}>
+      <Text style={[styles.textDate, {color: colors.text}]}>
+        {memoRentDate}
+      </Text>
       {imgSource !== '' ? (
         <Image source={memoImageSource} style={styles.image} />
       ) : (
         <></>
       )}
-      <Text style={styles.textModel}>
+      <Text style={[styles.textModel, {color: colors.text}]}>
         {mark} {model}
       </Text>
 
-      <Text style={styles.textSubTitle}>Details</Text>
+      <Text style={[styles.textSubTitle, {color: colors.text}]}>Details</Text>
       <View style={styles.containerDetails}>
-        <Text style={styles.textDetails}>Picked time:</Text>
-        <Text style={styles.textDetailsValue}>{memoRentTime}</Text>
+        <Text style={[styles.textDetails, {color: colors.text}]}>
+          Picked time:
+        </Text>
+        <Text style={{color: colors.text}}>{memoRentTime}</Text>
       </View>
       <View style={styles.containerDetails}>
-        <Text style={styles.textDetails}>Cost:</Text>
-        <Text style={styles.textDetailsValue}>{cost}$ / 4 hours</Text>
+        <Text style={[styles.textDetails, {color: colors.text}]}>Cost:</Text>
+        <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
       </View>
       <CustomButton title="Cancel rent" onPress={onCancelRent} />
     </View>
@@ -72,10 +79,10 @@ const styles = StyleSheet.create({
   card: {
     alignItems: 'center',
     padding: 10,
-    backgroundColor: colors.background,
     borderRadius: 30,
     marginVertical: 10,
     marginHorizontal: 20,
+    ...commonStyles.shadow,
   },
   image: {
     width: '100%',
@@ -84,10 +91,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   textSubTitle: {
-    color: colors.black,
-    fontSize: fontSizes.medium,
     margin: 10,
-    fontWeight: '500',
+    ...commonStyles.mediumText,
   },
   containerDetails: {
     width: '90%',
@@ -96,31 +101,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textDate: {
-    color: colors.black,
-    fontSize: fontSizes.large,
-    fontWeight: '700',
+    ...commonStyles.largeText,
   },
   textDetails: {
-    color: colors.black,
-    fontSize: fontSizes.medium,
+    ...commonStyles.mediumText,
   },
   textDetailsValue: {},
   textModel: {
     textAlign: 'center',
     paddingLeft: 10,
-    color: colors.black,
-    fontSize: fontSizes.large,
-    fontWeight: '700',
-  },
-  shadow: {
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
+    ...commonStyles.largeText,
   },
 });
 

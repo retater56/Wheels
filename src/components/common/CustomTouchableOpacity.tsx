@@ -4,7 +4,9 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
-import colors from '../../styles/colors';
+import {useTheme} from '../../ThemeProvider';
+import {Text} from 'react-native';
+import commonStyles from './styles';
 
 const CustomTouchableOpacity = (
   props: JSX.IntrinsicAttributes &
@@ -12,7 +14,15 @@ const CustomTouchableOpacity = (
     Readonly<TouchableOpacityProps> &
     Readonly<{children?: React.ReactNode}>,
 ) => {
-  return <TouchableOpacity {...props} style={styles.container} />;
+  const {colors} = useTheme();
+
+  return (
+    <TouchableOpacity
+      {...props}
+      style={[styles.container, {backgroundColor: colors.background}]}>
+      <Text style={[styles.text, {color: colors.text}]}>{props.children}</Text>
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -21,25 +31,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '90%',
-    padding: 10,
     marginBottom: 20,
-    backgroundColor: colors.white,
-    paddingHorizontal: 20,
     borderRadius: 5,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
+    ...commonStyles.shadow
   },
   text: {
     paddingLeft: 20,
     paddingVertical: 10,
     width: '90%',
-    color: colors.gray,
   },
 });
 

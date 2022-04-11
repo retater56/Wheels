@@ -1,14 +1,15 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {useMemo} from 'react';
 import {TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
-import colors from '../../styles/colors';
-import fontSizes from '../../styles/fontSizes';
 import {Navigation} from '../Search/types';
 import moment from 'moment';
+import {useTheme} from '../../ThemeProvider';
+import commonStyles from '../common/styles';
 
 const NewsItem = ({item}: any) => {
   const navigation = useNavigation<Navigation>();
   const {publishedAt, urlToImage, title} = item;
+  const {colors} = useTheme();
 
   const memoImageSource = useMemo(() => {
     return {
@@ -22,14 +23,21 @@ const NewsItem = ({item}: any) => {
 
   return (
     <TouchableOpacity
-      style={styles.card}
+      style={[styles.card, {backgroundColor: colors.backgroundLight}]}
       key={publishedAt}
       onPress={() => {
         navigation.navigate('NewsDetails', {item: item});
       }}>
-      {urlToImage && <Image style={styles.image} source={memoImageSource} />}
-      <Text style={styles.text}>{title}</Text>
-      <Text style={styles.textInfo}>{date}</Text>
+      {urlToImage && (
+        <Image
+          style={[styles.image, {borderColor: colors.secondary}]}
+          source={memoImageSource}
+        />
+      )}
+      <Text style={[styles.text, {color: colors.text}]}>{title}</Text>
+      <Text style={[styles.textInfo, {color: colors.secondaryText}]}>
+        {date}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -37,39 +45,25 @@ const NewsItem = ({item}: any) => {
 const styles = StyleSheet.create({
   card: {
     margin: 10,
-    backgroundColor: colors.white,
     borderRadius: 30,
-    marginTop: 10,
-    marginBottom: 10,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
+    ...commonStyles.shadow,
   },
   image: {
     width: '100%',
     height: 200,
     borderRadius: 30,
     borderWidth: 2,
-    borderColor: colors.secondary,
   },
   text: {
     marginTop: 10,
     paddingHorizontal: 20,
-    color: colors.black,
-    fontWeight: '500',
-    fontSize: fontSizes.medium,
+    ...commonStyles.mediumText,
   },
   textInfo: {
     paddingVertical: 10,
     paddingHorizontal: 30,
     textAlign: 'right',
-    color: colors.gray,
-    fontSize: fontSizes.small,
+    ...commonStyles.smallText,
   },
 });
 

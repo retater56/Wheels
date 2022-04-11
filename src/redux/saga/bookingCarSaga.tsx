@@ -13,6 +13,7 @@ import {
   API_GET_USER_NAME,
 } from '../../constants';
 import {rentData} from '../../components/Search/constants';
+import { fetchCustomerCars } from '../reducers/customerCarsReducer';
 
 function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
   console.log('bookingCarAsync');
@@ -128,6 +129,7 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
       // return response;
     });
     yield put(bookingCarSuccess());
+    yield put(fetchCustomerCars(customerName))
   } catch (error) {
     console.log(error);
     yield put(bookingCarFailed());

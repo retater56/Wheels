@@ -1,5 +1,18 @@
 {
-  "users": [],
+  "users": [
+    {
+      "email": "asd@asd.asd",
+      "password": "$2a$10$bmfqSJPIAJGm7J4Gdukpe.MTZ0AkVhAI42nb2Tvm73jvYlBoZ1IsC",
+      "userName": "ASD",
+      "booked": {
+        "20221104": {
+          "firstPart": "RSQXIoMFjA",
+          "fourthPart": "RSQXIoMFjA"
+        }
+      },
+      "id": 1
+    }
+  ],
   "cars": [
     {
       "id": "RSQXIoMFjA",
@@ -14,7 +27,12 @@
       "capacity": "2.2 L",
       "cost": "65",
       "description": "",
-      "booking": {}
+      "booking": {
+        "20221104": {
+          "firstPart": "ASD",
+          "fourthPart": "ASD"
+        }
+      }
     },
     {
       "id": "4gEgv6NtC_",

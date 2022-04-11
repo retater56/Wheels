@@ -8,19 +8,20 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import colors from '../../styles/colors';
 import {RootTabParamList} from '../../types';
 import {useFormik} from 'formik';
 import {SignInSchema} from './validation';
-import fontSizes from '../../styles/fontSizes';
 import {logInUser} from '../../redux/reducers/userReducer';
 import CustomTextInput from '../common/CustomTextInput';
 import CustomButton from '../common/CustomButton';
+import {useTheme} from '../../ThemeProvider';
+import commonStyles from '../common/styles';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 
 const SignIn = ({navigation}: Props) => {
   const dispatch = useDispatch();
+  const {setScheme, isDark, colors} = useTheme();
 
   const {handleChange, handleSubmit, values, errors} = useFormik({
     initialValues: {
@@ -44,7 +45,9 @@ const SignIn = ({navigation}: Props) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.textTitle}>Welcome Back!</Text>
+        <Text style={[styles.textTitle, {color: colors.text}]}>
+          Welcome Back!
+        </Text>
         <CustomTextInput
           placeholder="Email"
           autoCapitalize="none"
@@ -65,6 +68,12 @@ const SignIn = ({navigation}: Props) => {
           title="Don't have account?"
           onPress={() => navigation.navigate('Registration')}
         />
+        <CustomButton
+          title="change theme"
+          onPress={() => {
+            isDark ? setScheme('light') : setScheme('dark');
+          }}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -74,17 +83,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: colors.background,
   },
   textTitle: {
-    color: colors.black,
-    fontSize: fontSizes.big,
-    fontWeight: '700',
     margin: 20,
+    ...commonStyles.bigText,
   },
   errors: {
-    fontSize: fontSizes.small,
-    color: 'red',
+    ...commonStyles.errorText,
   },
 });
 

@@ -1,11 +1,12 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import MainTabNavigation from './src/navigation/MainTabNavigation';
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 import IntroNavigation from './src/navigation/IntroNavigation';
 import {getFirstOpen} from './src/components/Intro/checkFirstInstall';
-import {ActivityIndicator} from 'react-native';
+import {AppearanceProvider} from 'react-native-appearance';
+import {ThemeProvider} from './src/ThemeProvider';
+import LoadingScreen from './src/components/common/LoadingScreen';
 
 const App = () => {
   const [opened, setOpened] = useState<string>('');
@@ -19,19 +20,20 @@ const App = () => {
 
   useEffect(() => {
     checkUser();
-    console.log(opened);
   }, []);
 
   if (isLoading) {
-    return <ActivityIndicator style={{alignItems: 'center', flex: 1}} />;
+    return <LoadingScreen />;
   }
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        {opened == '' ? <IntroNavigation /> : <MainTabNavigation />}
-      </NavigationContainer>
-    </Provider>
+    <AppearanceProvider>
+      <ThemeProvider>
+        <Provider store={store}>
+          {opened == '' ? <IntroNavigation /> : <MainTabNavigation />}
+        </Provider>
+      </ThemeProvider>
+    </AppearanceProvider>
   );
 };
 

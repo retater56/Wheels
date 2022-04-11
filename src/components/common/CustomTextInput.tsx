@@ -1,8 +1,14 @@
-// import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import React, { useCallback, useState } from 'react';
-import { TextInput, TextInputProps, StyleSheet, View, TouchableOpacity } from 'react-native';
-import colors from '../../styles/colors';
+import React, {useCallback, useState} from 'react';
+import {
+  TextInput,
+  TextInputProps,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import {useTheme} from '../../ThemeProvider';
+import commonStyles from './styles';
 
 interface IProps {
   secureTextEntry?: boolean;
@@ -12,16 +18,17 @@ const CustomTextInput = (
   props: JSX.IntrinsicAttributes &
     JSX.IntrinsicClassAttributes<TextInput> &
     Readonly<TextInputProps> &
-    Readonly<{ children?: React.ReactNode }> &
-    IProps
+    Readonly<{children?: React.ReactNode}> &
+    IProps,
 ) => {
+  const {colors} = useTheme();
   const [inputFocus, setInputFocus] = useState({
     borderColor: colors.white,
   });
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIcon, setRightIcon] = useState<'eye' | 'eye-slash'>('eye');
 
-  const { secureTextEntry } = props;
+  const {secureTextEntry} = props;
 
   const handlePasswordVisibility = useCallback(() => {
     if (rightIcon === 'eye') {
@@ -41,31 +48,36 @@ const CustomTextInput = (
 
   const onInputBlur = useCallback(() => {
     setInputFocus({
-      borderColor: colors.white,
+      borderColor: colors.background,
     });
   }, []);
 
   return (
-    <View style={[styles.container, inputFocus]}>
+    <View
+      style={[
+        styles.container,
+        inputFocus,
+        {backgroundColor: colors.background},
+      ]}>
       {secureTextEntry ? (
         <>
           <TextInput
             {...props}
-            style={styles.text}
+            style={[styles.text, {color: colors.text}]}
             placeholderTextColor={colors.gray}
             onFocus={onInputFocus}
             onBlur={onInputBlur}
             secureTextEntry={passwordVisibility}
           />
           <TouchableOpacity onPress={handlePasswordVisibility}>
-            <Icon name={rightIcon} size={22} color={colors.primaryDark} />
+            <Icon name={rightIcon} size={22} color={colors.text} />
           </TouchableOpacity>
         </>
       ) : (
         <TextInput
           {...props}
           editable={true}
-          style={styles.text}
+          style={[styles.text, {color: colors.text}]}
           placeholderTextColor={colors.gray}
           onFocus={onInputFocus}
           onBlur={onInputBlur}
@@ -82,24 +94,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '90%',
     marginBottom: 20,
-    backgroundColor: colors.white,
     paddingRight: 20,
     borderBottomWidth: 1,
     borderRadius: 5,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
+    ...commonStyles.shadow,
   },
   text: {
     paddingLeft: 20,
     paddingVertical: 10,
     width: '90%',
-    color: colors.black,
   },
 });
 

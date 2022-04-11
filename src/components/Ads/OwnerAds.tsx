@@ -8,8 +8,9 @@ import {
   getUserName,
 } from '../../constants';
 import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
-import colors from '../../styles/colors';
-import fontSizes from '../../styles/fontSizes';
+import {useTheme} from '../../ThemeProvider';
+import NotLoggedScreen from '../common/NotLoggedScreen';
+import commonStyles from '../common/styles';
 import {ICar} from '../CreateAd/types';
 import SearchItem from '../Search/SearchItem';
 
@@ -18,6 +19,7 @@ const OwnerAds = () => {
   const isLoggedIn = useSelector(getLoggedIn);
   const userName = useSelector(getUserName);
   const isFetching = useSelector(getOwnerCarsIsFetching);
+  const {colors} = useTheme();
 
   const dispatch = useDispatch();
 
@@ -27,7 +29,7 @@ const OwnerAds = () => {
 
   const onRefresh = () => {
     dispatch(fetchOwnerCars(userName));
-    console.log(cars)
+    console.log(cars);
   };
 
   const renderItem = useCallback(({item}: {item: ICar}) => {
@@ -36,20 +38,24 @@ const OwnerAds = () => {
 
   const keyItem = useCallback(item => item.id, []);
 
+  if (!isLoggedIn) {
+    return <NotLoggedScreen />;
+  }
+
   return (
     <>
-      {isLoggedIn ? (
+      {cars.length === 0 ? (
+        <Text style={[styles.text, {color: colors.text}]}>
+          Your own cars will be displayed here...
+        </Text>
+      ) : (
         <View style={styles.container}>
           <FlatList
             data={cars}
             renderItem={renderItem}
             keyExtractor={keyItem}
             onRefresh={onRefresh}
-            refreshing={isFetching}></FlatList>
-        </View>
-      ) : (
-        <View style={styles.container}>
-          <Text style={styles.infoText}>Sorry, but you aren't authorized yet...</Text>
+            refreshing={isFetching} />
         </View>
       )}
     </>
@@ -59,14 +65,11 @@ const OwnerAds = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
-  infoText: {
-    color: colors.black,
-    fontSize: fontSizes.large,
-    fontWeight: '500',
+  text: {
     textAlign: 'center',
     padding: 20,
+    ...commonStyles.largeText,
   },
 });
 

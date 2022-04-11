@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList, Button} from 'react-native';
+import {Text, View, StyleSheet, FlatList} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getLoggedIn,
@@ -8,8 +8,9 @@ import {
   getCustomerCarsIsFetching,
 } from '../../constants';
 import {fetchCustomerCars} from '../../redux/reducers/customerCarsReducer';
-import colors from '../../styles/colors';
-import fontSizes from '../../styles/fontSizes';
+import {useTheme} from '../../ThemeProvider';
+import NotLoggedScreen from '../common/NotLoggedScreen';
+import commonStyles from '../common/styles';
 import {ICar} from '../CreateAd/types';
 import BookedItem from './BookedItem';
 
@@ -18,6 +19,7 @@ const Booked = () => {
   const isLoggedIn = useSelector(getLoggedIn);
   const userName = useSelector(getUserName);
   const isFetching = useSelector(getCustomerCarsIsFetching);
+  const {colors} = useTheme();
 
   const dispatch = useDispatch();
 
@@ -27,7 +29,6 @@ const Booked = () => {
 
   const onRefresh = () => {
     dispatch(fetchCustomerCars(userName));
-    console.log(cars);
   };
 
   const renderItem = useCallback(({item}: {item: ICar}) => {
@@ -36,22 +37,25 @@ const Booked = () => {
 
   const keyItem = useCallback(item => item.id + item.rentTime, []);
 
+  if (!isLoggedIn) {
+    return <NotLoggedScreen />;
+  }
+
   return (
     <>
-      {isLoggedIn ? (
-        <View style={styles.container}>
+      {cars.length === 0 ? (
+        <Text style={[styles.text, {color: colors.text}]}>
+          Your booked cars will be displayed here...
+        </Text>
+      ) : (
+        <View style={[styles.container]}>
           <FlatList
             data={cars}
             renderItem={renderItem}
             keyExtractor={keyItem}
             onRefresh={onRefresh}
-            refreshing={isFetching}></FlatList>
-        </View>
-      ) : (
-        <View style={styles.container}>
-          <Text style={styles.infoText}>
-            Sorry, but you aren't authorized yet...
-          </Text>
+            refreshing={isFetching}
+          />
         </View>
       )}
     </>
@@ -61,14 +65,11 @@ const Booked = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
-  infoText: {
-    color: colors.black,
-    fontSize: fontSizes.large,
-    fontWeight: '500',
+  text: {
     textAlign: 'center',
     padding: 20,
+    ...commonStyles.largeText,
   },
 });
 
