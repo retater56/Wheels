@@ -3,8 +3,9 @@ import {RootState} from './redux/reducers/rootReducer';
 
 const API_LINK = 'http://localhost:3000';
 
-export const API_NEWS =
-  'https://newsapi.org/v2/everything?q=supercar&apiKey=0f0c55d8f06347cc981c74f7426cf2f9';
+export const API_NEWS = (keyword: string) => {
+  return `https://newsapi.org/v2/everything?q=${keyword}&apiKey=0f0c55d8f06347cc981c74f7426cf2f9`;
+};
 export const API_CARS = `${API_LINK}/cars`;
 export const API_MARKS = `${API_LINK}/marks`;
 export const API_MODELS = (mark: string) => {
@@ -34,6 +35,7 @@ export const API_GET_USER_BY_ID = (id: string) => {
 };
 
 export const getNews = (state: RootState) => state.news.dataNews;
+export const getNewsTheme = (state: RootState) => state.news.currentTheme;
 export const getNewsIsFetching = (state: RootState) =>
   state.news.newsIsFetching;
 export const getNewsError = (state: RootState) => state.news.error;

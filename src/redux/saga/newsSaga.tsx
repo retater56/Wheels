@@ -7,11 +7,13 @@ import {
   requestNewsSuccess,
 } from '../reducers/newsReducer';
 
-function* fetchNewsAsync() {
+function* fetchNewsAsync(action: ReturnType<typeof fetchNews>) {
   console.log('fetchNewsAsync');
+  const keyword = action.payload;
+
   try {
     const newsData: INewsDetail[] = yield call(async () => {
-      const data = await fetch(API_NEWS);
+      const data = await fetch(API_NEWS(keyword));
       const res = await data.json();
       return res.articles;
     });
