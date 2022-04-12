@@ -2,10 +2,12 @@ import {createSlice} from '@reduxjs/toolkit';
 import INewsDetail from '../../components/News/types';
 
 const defaultState: {
+  currentTheme: string;
   newsIsFetching: boolean;
   dataNews: INewsDetail[];
   error: boolean;
 } = {
+  currentTheme: '',
   newsIsFetching: false,
   dataNews: [],
   error: false,
@@ -15,7 +17,8 @@ export const newsSlice = createSlice({
   name: 'news',
   initialState: defaultState,
   reducers: {
-    fetchNews(state) {
+    fetchNews(state, action) {
+      state.currentTheme = action.payload;
       state.newsIsFetching = true;
       state.error = false;
     },
