@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {fetchNews} from '../../redux/reducers/newsReducer';
@@ -19,10 +19,6 @@ const NewsSource = () => {
     dispatch(fetchNews(item.keyword));
   }, []);
 
-  const links = useMemo(() => {
-    return newsSourceArray;
-  }, []);
-
   const renderLinks = useCallback(({item}) => {
     return (
       <View style={styles.container}>
@@ -39,7 +35,7 @@ const NewsSource = () => {
         You can choose another news topic
       </Text>
       <FlatList
-        data={links}
+        data={newsSourceArray}
         renderItem={renderLinks}
         keyExtractor={item => item.keyword}
       />
