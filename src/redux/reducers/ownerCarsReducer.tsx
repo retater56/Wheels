@@ -22,6 +22,14 @@ export const ownerCarsSlice = createSlice({
       state.carsIsFething = true;
       state.error = false;
     },
+    deleteOwnerCar(state, action) {
+      state.carsIsFething = true;
+      state.error = false;
+    },
+    deleteOwnerCarFailed(state) {
+      state.carsIsFething = false;
+      state.error = true;
+    },
     requestOwnerCarsSuccess(state, action) {
       state.dataCars = action.payload;
       state.carsIsFething = false;
@@ -36,7 +44,12 @@ export const ownerCarsSlice = createSlice({
 
 const {actions, reducer} = ownerCarsSlice;
 
-export const {fetchOwnerCars, requestOwnerCarsSuccess, requestOwnerCarsError} =
-  actions;
+export const {
+  fetchOwnerCars,
+  deleteOwnerCar,
+  deleteOwnerCarFailed,
+  requestOwnerCarsSuccess,
+  requestOwnerCarsError,
+} = actions;
 
 export default reducer;

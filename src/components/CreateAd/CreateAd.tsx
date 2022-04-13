@@ -32,6 +32,7 @@ import commonStyles, {
   pickerStyleLight,
 } from '../common/styles';
 import NotLoggedScreen from '../common/NotLoggedScreen';
+import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 
@@ -62,8 +63,8 @@ const CreateAd = ({navigation}: Props) => {
       validateOnBlur: false,
       validationSchema: CreateAdSchema,
       onSubmit: (values, {resetForm}) => {
-        console.log(values);
         dispatch(addCar({...values, owner}));
+        dispatch(fetchOwnerCars(owner));
         resetForm();
       },
     },
@@ -211,8 +212,9 @@ const CreateAd = ({navigation}: Props) => {
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Doors"
-          onChangeText={handleChange('doors')}
-        />
+          onChangeText={handleChange('doors')}>
+          {values.doors}
+        </CustomTextInput>
         {errors.doors && <Text style={styles.errors}>{errors.doors}</Text>}
         <PickerSelect
           value={values.transmission}
@@ -227,30 +229,34 @@ const CreateAd = ({navigation}: Props) => {
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Seats"
-          onChangeText={handleChange('seats')}
-        />
+          onChangeText={handleChange('seats')}>
+          {values.seats}
+        </CustomTextInput>
         {errors.seats && <Text style={styles.errors}>{errors.seats}</Text>}
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Baggage Capacity"
-          onChangeText={handleChange('baggageCapacity')}
-        />
+          onChangeText={handleChange('baggageCapacity')}>
+          {values.baggageCapacity}
+        </CustomTextInput>
         {errors.baggageCapacity && (
           <Text style={styles.errors}>{errors.baggageCapacity}</Text>
         )}
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Capacity"
-          onChangeText={handleChange('capacity')}
-        />
+          onChangeText={handleChange('capacity')}>
+          {values.capacity}
+        </CustomTextInput>
         {errors.capacity && (
           <Text style={styles.errors}>{errors.capacity}</Text>
         )}
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Your cost"
-          onChangeText={handleChange('cost')}
-        />
+          onChangeText={handleChange('cost')}>
+          {values.cost}
+        </CustomTextInput>
         {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
       </View>
       <Text style={[styles.title, {color: colors.text}]}>Car place</Text>
@@ -272,9 +278,10 @@ const CreateAd = ({navigation}: Props) => {
       <View style={styles.centerContainer}>
         <TextInput
           onChangeText={handleChange('description')}
+          value={values.description}
           style={[
             styles.inputDescription,
-            {backgroundColor: colors.background},
+            {backgroundColor: colors.background, color: colors.text},
           ]}
           multiline
           placeholderTextColor={colors.gray}
@@ -288,7 +295,7 @@ const CreateAd = ({navigation}: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
@@ -304,7 +311,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 2,
     borderRadius: 5,
-    ...commonStyles.shadow,
   },
   photoDataCircle: {
     width: 100,
