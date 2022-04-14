@@ -15,7 +15,7 @@ import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreateAdSchema} from '../CreateAd/validation';
 import {fuelData, transmissionData} from '../CreateAd/constants';
-import {getLoggedIn, getUserName} from '../../constants';
+import {getLoggedIn, getUserName, uriImgBase64} from '../../constants';
 import {updateCar} from '../../redux/reducers/createAdReducer';
 import CustomButton from '../common/CustomButton';
 import CustomTextInput from '../common/CustomTextInput';
@@ -80,19 +80,11 @@ const ChangeDetails = ({navigation, route}: Props) => {
       },
     },
   );
-  const memoFuelData = useMemo(() => {
-    return fuelData;
-  }, []);
 
-  const memoTransmissionData = useMemo(() => {
-    return transmissionData;
-  }, []);
-
-  const memoImageSource = useMemo(() => {
-    return {
-      uri: `data:image/jpeg;base64,${values.imgSourceBase64}`,
-    };
-  }, [values.imgSourceBase64]);
+  const memoImageSource = useMemo(
+    () => uriImgBase64(values.imgSourceBase64!),
+    [values.imgSourceBase64],
+  );
 
   const memoStyle = useMemo(() => {
     return isDark ? pickerStyleDark : pickerStyleLight;
@@ -142,17 +134,17 @@ const ChangeDetails = ({navigation, route}: Props) => {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.centerContainer}>
-            <Image
-              source={memoImageSource}
-              style={[
-                styles.photoData,
-                {
-                  backgroundColor: colors.background,
-                  borderColor: colors.secondary,
-                  width: 350,
-                },
-              ]}
-            />
+          <Image
+            source={memoImageSource}
+            style={[
+              styles.photoData,
+              {
+                backgroundColor: colors.background,
+                borderColor: colors.secondary,
+                width: 350,
+              },
+            ]}
+          />
         </View>
         <Text style={[styles.title, {color: colors.text}]}>
           Set Mark and Model
@@ -182,7 +174,7 @@ const ChangeDetails = ({navigation, route}: Props) => {
             style={memoStyle}
             onValueChange={handleChange('fuel')}
             placeholder={{label: 'Choose fuel type...', value: ''}}
-            items={memoFuelData}
+            items={fuelData}
           />
           {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
           <CustomTextInput
@@ -197,7 +189,7 @@ const ChangeDetails = ({navigation, route}: Props) => {
             style={memoStyle}
             onValueChange={handleChange('transmission')}
             placeholder={{label: 'Choose transmission type...', value: ''}}
-            items={memoTransmissionData}
+            items={transmissionData}
           />
           {errors.transmission && (
             <Text style={styles.errors}>{errors.transmission}</Text>

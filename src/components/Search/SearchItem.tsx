@@ -4,25 +4,21 @@ import {StyleSheet, TouchableOpacity, Image, Text, View} from 'react-native';
 import {Navigation} from './types';
 import {useTheme} from '../../ThemeProvider';
 import commonStyles from '../common/styles';
+import {getImgSource, uriImg} from '../../constants';
 
 const SearchItem = ({item}: any) => {
   const navigation = useNavigation<Navigation>();
   const {colors} = useTheme();
-  const {id, mark, imgSourceBase64, model, imageSource, cost} = item;
+  const {id, mark, model, cost} = item;
 
   const [imgSource, setImgSource] = useState('');
 
   useEffect(() => {
-    item.imageSource
-      ? setImgSource(imageSource)
-      : setImgSource('data:image/jpeg;base64,' + imgSourceBase64);
+    const imgSource = getImgSource(item);
+    setImgSource(imgSource);
   }, []);
 
-  const memoImageSource = useMemo(() => {
-    return {
-      uri: imgSource,
-    };
-  }, [imgSource]);
+  const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);
 
   return (
     <View style={styles.container}>

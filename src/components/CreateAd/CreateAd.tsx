@@ -21,7 +21,7 @@ import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreateAdSchema} from './validation';
 import {fuelData, transmissionData} from './constants';
-import {getLoggedIn, getUserName} from '../../constants';
+import {getLoggedIn, getUserName, uriImgBase64} from '../../constants';
 import {addCar} from '../../redux/reducers/createAdReducer';
 import CustomButton from '../common/CustomButton';
 import CustomTextInput from '../common/CustomTextInput';
@@ -69,19 +69,11 @@ const CreateAd = ({navigation}: Props) => {
       },
     },
   );
-  const memoFuelData = useMemo(() => {
-    return fuelData;
-  }, []);
 
-  const memoTransmissionData = useMemo(() => {
-    return transmissionData;
-  }, []);
-
-  const memoImageSource = useMemo(() => {
-    return {
-      uri: `data:image/jpeg;base64,${values.imgSourceBase64}`,
-    };
-  }, [values.imgSourceBase64]);
+  const memoImageSource = useMemo(
+    () => uriImgBase64(values.imgSourceBase64),
+    [],
+  );
 
   const memoStyle = useMemo(() => {
     return isDark ? pickerStyleDark : pickerStyleLight;
@@ -206,7 +198,7 @@ const CreateAd = ({navigation}: Props) => {
           style={memoStyle}
           onValueChange={handleChange('fuel')}
           placeholder={{label: 'Choose fuel type...', value: ''}}
-          items={memoFuelData}
+          items={fuelData}
         />
         {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
         <CustomTextInput
@@ -221,7 +213,7 @@ const CreateAd = ({navigation}: Props) => {
           style={memoStyle}
           onValueChange={handleChange('transmission')}
           placeholder={{label: 'Choose transmission type...', value: ''}}
-          items={memoTransmissionData}
+          items={transmissionData}
         />
         {errors.transmission && (
           <Text style={styles.errors}>{errors.transmission}</Text>

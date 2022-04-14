@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Image, Text, View, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {getImgSource, getUserName} from '../../constants';
+import {getImgSource, getUserName, uriImg} from '../../constants';
 import {
   deleteOwnerCar,
   fetchOwnerCars,
@@ -27,11 +27,7 @@ const OwnerItem = ({item}: any) => {
     setImgSource(imgSource);
   }, []);
 
-  const memoImageSource = useMemo(() => {
-    return {
-      uri: imgSource,
-    };
-  }, [imgSource]);
+  const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);
 
   const onChangeDetails = useCallback(() => {
     navigation.navigate('ChangeDetails', {item});

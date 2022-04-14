@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Image, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {getImgSource, getUserName} from '../../constants';
+import {getImgSource, getUserName, uriImg} from '../../constants';
 import {cancelBooking} from '../../redux/reducers/cancelBookingReducer';
 import {fetchCustomerCars} from '../../redux/reducers/customerCarsReducer';
 import {useTheme} from '../../ThemeProvider';
@@ -23,11 +23,7 @@ const BookedItem = ({item}: any) => {
     setImgSource(imgSource);
   }, []);
 
-  const memoImageSource = useMemo(() => {
-    return {
-      uri: imgSource,
-    };
-  }, [imgSource]);
+  const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);
 
   const memoRentTime = useMemo(() => {
     const rentDataObj = rentData.find(per => per.value === rentTime);
