@@ -21,7 +21,7 @@ import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreateAdSchema} from './validation';
 import {fuelData, transmissionData} from './constants';
-import {getLoggedIn, getUserName} from '../../constants';
+import {getLoggedIn, getUserName, uriImgBase64} from '../../constants';
 import {addCar} from '../../redux/reducers/createAdReducer';
 import CustomButton from '../common/CustomButton';
 import CustomTextInput from '../common/CustomTextInput';
@@ -32,6 +32,7 @@ import commonStyles, {
   pickerStyleLight,
 } from '../common/styles';
 import NotLoggedScreen from '../common/NotLoggedScreen';
+import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 
@@ -62,25 +63,17 @@ const CreateAd = ({navigation}: Props) => {
       validateOnBlur: false,
       validationSchema: CreateAdSchema,
       onSubmit: (values, {resetForm}) => {
-        console.log(values);
         dispatch(addCar({...values, owner}));
+        dispatch(fetchOwnerCars(owner));
         resetForm();
       },
     },
   );
-  const memoFuelData = useMemo(() => {
-    return fuelData;
-  }, []);
 
-  const memoTransmissionData = useMemo(() => {
-    return transmissionData;
-  }, []);
-
-  const memoImageSource = useMemo(() => {
-    return {
-      uri: `data:image/jpeg;base64,${values.imgSourceBase64}`,
-    };
-  }, [values.imgSourceBase64]);
+  const memoImageSource = useMemo(
+    () => uriImgBase64(values.imgSourceBase64),
+    [],
+  );
 
   const memoStyle = useMemo(() => {
     return isDark ? pickerStyleDark : pickerStyleLight;
@@ -205,21 +198,22 @@ const CreateAd = ({navigation}: Props) => {
           style={memoStyle}
           onValueChange={handleChange('fuel')}
           placeholder={{label: 'Choose fuel type...', value: ''}}
-          items={memoFuelData}
+          items={fuelData}
         />
         {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Doors"
-          onChangeText={handleChange('doors')}
-        />
+          onChangeText={handleChange('doors')}>
+          {values.doors}
+        </CustomTextInput>
         {errors.doors && <Text style={styles.errors}>{errors.doors}</Text>}
         <PickerSelect
           value={values.transmission}
           style={memoStyle}
           onValueChange={handleChange('transmission')}
           placeholder={{label: 'Choose transmission type...', value: ''}}
-          items={memoTransmissionData}
+          items={transmissionData}
         />
         {errors.transmission && (
           <Text style={styles.errors}>{errors.transmission}</Text>
@@ -227,30 +221,34 @@ const CreateAd = ({navigation}: Props) => {
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Seats"
-          onChangeText={handleChange('seats')}
-        />
+          onChangeText={handleChange('seats')}>
+          {values.seats}
+        </CustomTextInput>
         {errors.seats && <Text style={styles.errors}>{errors.seats}</Text>}
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Baggage Capacity"
-          onChangeText={handleChange('baggageCapacity')}
-        />
+          onChangeText={handleChange('baggageCapacity')}>
+          {values.baggageCapacity}
+        </CustomTextInput>
         {errors.baggageCapacity && (
           <Text style={styles.errors}>{errors.baggageCapacity}</Text>
         )}
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Capacity"
-          onChangeText={handleChange('capacity')}
-        />
+          onChangeText={handleChange('capacity')}>
+          {values.capacity}
+        </CustomTextInput>
         {errors.capacity && (
           <Text style={styles.errors}>{errors.capacity}</Text>
         )}
         <CustomTextInput
           keyboardType={'numeric'}
           placeholder="Your cost"
-          onChangeText={handleChange('cost')}
-        />
+          onChangeText={handleChange('cost')}>
+          {values.cost}
+        </CustomTextInput>
         {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
       </View>
       <Text style={[styles.title, {color: colors.text}]}>Car place</Text>
@@ -272,9 +270,10 @@ const CreateAd = ({navigation}: Props) => {
       <View style={styles.centerContainer}>
         <TextInput
           onChangeText={handleChange('description')}
+          value={values.description}
           style={[
             styles.inputDescription,
-            {backgroundColor: colors.background},
+            {backgroundColor: colors.background, color: colors.text},
           ]}
           multiline
           placeholderTextColor={colors.gray}
@@ -288,7 +287,7 @@ const CreateAd = ({navigation}: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
@@ -304,7 +303,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 2,
     borderRadius: 5,
-    ...commonStyles.shadow,
   },
   photoDataCircle: {
     width: 100,

@@ -3,7 +3,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {ScrollView, Text, StyleSheet, Image, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
-import {getImgSource, getLoggedIn} from '../../constants';
+import {getImgSource, getLoggedIn, uriImg} from '../../constants';
 import {useTheme} from '../../ThemeProvider';
 import {RootTabParamList} from '../../types';
 import commonStyles from '../common/styles';
@@ -34,11 +34,7 @@ const SearchDetails = ({route}: Props) => {
     setImgSource(imgSource);
   }, []);
 
-  const memoImageSource = useMemo(() => {
-    return {
-      uri: imgSource,
-    };
-  }, [imgSource]);
+  const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);
 
   return (
     <ScrollView>

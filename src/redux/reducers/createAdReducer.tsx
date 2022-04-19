@@ -8,6 +8,7 @@ const defaultState: {
 } = {
   isLoading: false,
   dataCar: {
+    id: '',
     imgSourceBase64: '',
     mark: '',
     model: '',
@@ -17,6 +18,9 @@ const defaultState: {
     seats: '',
     baggageCapacity: '',
     capacity: '',
+    cost: '',
+    position: '',
+    description: '',
     booking: {},
     owner: '',
   },
@@ -28,6 +32,11 @@ export const createAdSlice = createSlice({
   initialState: defaultState,
   reducers: {
     addCar(state, action) {
+      state.dataCar = action.payload;
+      state.isLoading = true;
+      state.error = false;
+    },
+    updateCar(state, action) {
       state.dataCar = action.payload;
       state.isLoading = true;
       state.error = false;
@@ -44,6 +53,6 @@ export const createAdSlice = createSlice({
 
 const {actions, reducer} = createAdSlice;
 
-export const {addCar, addCarSuccess, addCarFailed} = actions;
+export const {addCar, updateCar, addCarSuccess, addCarFailed} = actions;
 
 export default reducer;

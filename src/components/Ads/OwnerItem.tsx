@@ -1,20 +1,24 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {StyleSheet, Image, Text, View} from 'react-native';
+import {StyleSheet, Image, Text, View, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getImgSource, getUserName, uriImg} from '../../constants';
-import {cancelBooking} from '../../redux/reducers/cancelBookingReducer';
-import {fetchCustomerCars} from '../../redux/reducers/customerCarsReducer';
+import {
+  deleteOwnerCar,
+  fetchOwnerCars,
+} from '../../redux/reducers/ownerCarsReducer';
 import {useTheme} from '../../ThemeProvider';
 import CustomButton from '../common/CustomButton';
 import commonStyles from '../common/styles';
-import {formatDate, rentData} from '../Search/constants';
+import {Navigation} from '../Search/types';
 
-const BookedItem = ({item}: any) => {
+const OwnerItem = ({item}: any) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation<Navigation>();
   const userName = useSelector(getUserName);
   const {colors} = useTheme();
 
-  const {id, mark, model, rentDate, rentTime, cost} = item;
+  const {id, mark, model, rentTime, cost} = item;
 
   const [imgSource, setImgSource] = useState('');
 
@@ -25,48 +29,46 @@ const BookedItem = ({item}: any) => {
 
   const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);
 
-  const memoRentTime = useMemo(() => {
-    const rentDataObj = rentData.find(per => per.value === rentTime);
-    return rentDataObj?.label;
-  }, [rentTime]);
+  const onChangeDetails = useCallback(() => {
+    navigation.navigate('ChangeDetails', {item});
+  }, [item]);
 
-  const memoRentDate = useMemo(() => {
-    return formatDate(rentDate);
-  }, [rentDate]);
-
-  const onCancelRent = useCallback(() => {
-    dispatch(cancelBooking({item, userName}));
-    dispatch(fetchCustomerCars(userName));
+  const onDeleteCar = useCallback(() => {
+    Alert.alert('Delete this car?', '', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => {
+          dispatch(deleteOwnerCar(id));
+          dispatch(fetchOwnerCars(userName));
+        },
+      },
+    ]);
   }, []);
 
   return (
     <View
       style={[styles.card, {backgroundColor: colors.background}]}
       key={id + rentTime}>
-      <Text style={[styles.textDate, {color: colors.text}]}>
-        {memoRentDate}
+      <Text style={[styles.textModel, {color: colors.text}]}>
+        {mark} {model}
       </Text>
-      {imgSource !== '' ? (
+      {imgSource ? (
         <Image source={memoImageSource} style={styles.image} />
       ) : (
         <></>
       )}
-      <Text style={[styles.textModel, {color: colors.text}]}>
-        {mark} {model}
-      </Text>
-
-      <Text style={[styles.textSubTitle, {color: colors.text}]}>Details</Text>
       <View style={styles.containerDetails}>
         <Text style={[styles.textDetails, {color: colors.text}]}>
-          Picked time:
+          Current cost:
         </Text>
-        <Text style={{color: colors.text}}>{memoRentTime}</Text>
-      </View>
-      <View style={styles.containerDetails}>
-        <Text style={[styles.textDetails, {color: colors.text}]}>Cost:</Text>
         <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
       </View>
-      <CustomButton title="Cancel rent" onPress={onCancelRent} />
+      <CustomButton title="Change details" onPress={onChangeDetails} />
+      <CustomButton title="Delete car" onPress={onDeleteCar} />
     </View>
   );
 };
@@ -110,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BookedItem;
+export default OwnerItem;

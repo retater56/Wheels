@@ -12,6 +12,7 @@ export interface ICar {
   capacity: string;
   cost: string;
   description: string;
+  position: string;
   facilities: string[];
 }
 

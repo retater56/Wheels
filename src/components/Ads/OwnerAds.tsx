@@ -12,7 +12,7 @@ import {useTheme} from '../../ThemeProvider';
 import NotLoggedScreen from '../common/NotLoggedScreen';
 import commonStyles from '../common/styles';
 import {ICar} from '../CreateAd/types';
-import SearchItem from '../Search/SearchItem';
+import OwnerItem from './OwnerItem';
 
 const OwnerAds = () => {
   const cars = useSelector(getOwnerCars);
@@ -29,11 +29,10 @@ const OwnerAds = () => {
 
   const onRefresh = () => {
     dispatch(fetchOwnerCars(userName));
-    console.log(cars);
   };
 
   const renderItem = useCallback(({item}: {item: ICar}) => {
-    return <SearchItem item={item} />;
+    return <OwnerItem item={item} />;
   }, []);
 
   const keyItem = useCallback(item => item.id, []);
@@ -55,7 +54,8 @@ const OwnerAds = () => {
             renderItem={renderItem}
             keyExtractor={keyItem}
             onRefresh={onRefresh}
-            refreshing={isFetching} />
+            refreshing={isFetching}
+          />
         </View>
       )}
     </>
