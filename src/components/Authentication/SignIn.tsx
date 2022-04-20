@@ -7,7 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootTabParamList} from '../../types';
 import {useFormik} from 'formik';
 import {SignInSchema} from './validation';
@@ -16,11 +16,14 @@ import CustomTextInput from '../common/CustomTextInput';
 import CustomButton from '../common/CustomButton';
 import {useTheme} from '../../ThemeProvider';
 import commonStyles from '../common/styles';
+import {getUserIsFetching} from '../../constants';
+import LoadingScreen from '../common/LoadingScreen';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 
 const SignIn = ({navigation}: Props) => {
   const dispatch = useDispatch();
+  const isFetching = useSelector(getUserIsFetching);
   const {setScheme, isDark, colors} = useTheme();
 
   const {handleChange, handleSubmit, values, errors} = useFormik({
@@ -42,34 +45,38 @@ const SignIn = ({navigation}: Props) => {
     handleSubmit();
   }, []);
 
+  if (isFetching) {
+    return <LoadingScreen />;
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={[styles.textTitle, {color: colors.text}]}>
           Welcome Back!
         </Text>
+        {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
         <CustomTextInput
           placeholder="Email"
           autoCapitalize="none"
           onChangeText={handleChange('email')}
           value={values.email}
         />
-        {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
+        {errors.password && (
+          <Text style={styles.errors}>{errors.password}</Text>
+        )}
         <CustomTextInput
           placeholder="Password"
           secureTextEntry
           onChangeText={handleChange('password')}
         />
-        {errors.password && (
-          <Text style={styles.errors}>{errors.password}</Text>
-        )}
         <CustomButton title="Log In" onPress={onSubmit} />
         <CustomButton
-          title="Don't have account?"
+          title="Don't Have Account?"
           onPress={() => navigation.navigate('Registration')}
         />
         <CustomButton
-          title="change theme"
+          title="Change Theme"
           onPress={() => {
             isDark ? setScheme('light') : setScheme('dark');
           }}

@@ -113,13 +113,15 @@ const SearchDetails = ({route}: Props) => {
           </Text>
         </View>
       </View>
-      {isLoggedIn ? (
-        <SearchRent carId={id} />
-      ) : (
-        <Text style={[styles.textTitle, {color: colors.text}]}>
-          You aren't authorized for rent this car
-        </Text>
-      )}
+      <View style={styles.rentContainer}>
+        {isLoggedIn ? (
+          <SearchRent carId={id} />
+        ) : (
+          <Text style={[styles.textTitle, {color: colors.text}]}>
+            You aren't authorized for rent this car
+          </Text>
+        )}
+      </View>
     </ScrollView>
   );
 };
@@ -177,6 +179,9 @@ const styles = StyleSheet.create({
   },
   textCost: {
     ...commonStyles.largeText,
+  },
+  rentContainer: {
+    paddingBottom: 30,
   },
 });
 export default SearchDetails;

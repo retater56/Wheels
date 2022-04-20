@@ -48,7 +48,7 @@ const CustomTextInput = (
 
   const onInputBlur = useCallback(() => {
     setInputFocus({
-      borderColor: colors.background,
+      borderColor: colors.gray,
     });
   }, []);
 

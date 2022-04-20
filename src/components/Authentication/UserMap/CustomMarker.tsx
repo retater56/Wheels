@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {Marker} from 'react-native-maps';
 
 const CustomMarker = ({item}: any) => {
-  const {id, position, mark, model} = item;
+  const {id, position, mark, model, cost} = item;
 
   const location = useMemo(() => {
     const [lat, long] = position.split('/');
@@ -10,7 +10,7 @@ const CustomMarker = ({item}: any) => {
   }, []);
 
   return (
-    <Marker key={id} coordinate={location} title={mark} description={model} />
+    <Marker key={id} coordinate={location} title={`${mark} ${model}`} description={`${cost}$ / 4 Hours`} />
   );
 };
 
