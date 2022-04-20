@@ -27,7 +27,7 @@ const News = () => {
     return <NewsItem item={item} />;
   }, []);
 
-  const keyItem = useCallback(item => item.title, []);
+  const keyItem = useCallback((item) => item.title, []);
 
   if (isFetching) {
     return <LoadingScreen />;

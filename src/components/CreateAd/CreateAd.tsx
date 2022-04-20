@@ -70,10 +70,9 @@ const CreateAd = ({navigation}: Props) => {
     },
   );
 
-  const memoImageSource = useMemo(
-    () => uriImgBase64(values.imgSourceBase64),
-    [],
-  );
+  const memoImageSource = useMemo(() => uriImgBase64(values.imgSourceBase64), [
+    values.imgSourceBase64,
+  ]);
 
   const memoStyle = useMemo(() => {
     return isDark ? pickerStyleDark : pickerStyleLight;
@@ -121,7 +120,7 @@ const CreateAd = ({navigation}: Props) => {
       includeBase64: true,
     };
 
-    launchImageLibrary(options, response => {
+    launchImageLibrary(options, (response) => {
       if (response.assets) {
         setFieldValue('imgSourceBase64', response.assets[0].base64);
       }

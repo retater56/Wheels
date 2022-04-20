@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 import com.android.build.OutputFile
 
 /**
@@ -81,12 +81,6 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
-project.ext.vectoricons = [
-        iconFontNames: [ 'FontAwesome.ttf', 'FontAwesome5_Regular.ttf',
-             'FontAwesome5_Solid.ttf', 'FontAwesome5_Brands.ttf'] // <-- add this line (1/2)
-]
-
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -120,24 +114,22 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 /**
  * Whether to enable the Hermes VM.
  *
- * This should be set on project.ext.react and that value will be read here. If it is not set
+ * This should be set on project.ext.react and mirrored here.  If it is not set
  * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
-/**
- * Architectures to build native code for in debug.
- */
-def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitectures")
-
 android {
-    ndkVersion rootProject.ext.ndkVersion
-
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
-        applicationId "com.awesometsproject"
+        applicationId "com.mainapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -162,11 +154,6 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            if (nativeArchitectures) {
-                ndk {
-                    abiFilters nativeArchitectures.split(',')
-                }
-            }
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -182,12 +169,11 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // https://developer.android.com/studio/build/configure-apk-splits.html
-            // Example: versionCode 1 will generate 1001 for armeabi-v7a, 1002 for x86, etc.
             def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        defaultConfig.versionCode * 1000 + versionCodes.get(abi)
+                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
 
         }
@@ -201,8 +187,17 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+
+    implementation(project(':react-native-maps')){
+       exclude group: 'com.google.android.gms', module: 'play-services-base'
+       exclude group: 'com.google.android.gms', module: 'play-services-maps'
+    }
+    implementation 'com.google.android.gms:play-services-base:17.2.1'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.fbjni'
+      exclude group:'com.facebook.fbjni'
     }
 
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
@@ -226,7 +221,7 @@ dependencies {
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
-    from configurations.implementation
+    from configurations.compile
     into 'libs'
 }
 

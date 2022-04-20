@@ -17,7 +17,7 @@ function* fetchNewsAsync(action: ReturnType<typeof fetchNews>) {
       const res = await data.json();
       return res.articles;
     });
-    console.log(newsData);
+    // console.log(newsData);
     yield put(requestNewsSuccess(newsData));
   } catch (error) {
     yield put(requestNewsError());
