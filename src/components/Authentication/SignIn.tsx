@@ -7,7 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootTabParamList} from '../../types';
 import {useFormik} from 'formik';
 import {SignInSchema} from './validation';
@@ -16,12 +16,15 @@ import CustomTextInput from '../common/CustomTextInput';
 import CustomButton from '../common/CustomButton';
 import {useTheme} from '../../ThemeProvider';
 import commonStyles from '../common/styles';
+import LoadingScreen from '../common/LoadingScreen';
+import { getUserIsFetching } from '../../constants';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 
 const SignIn = ({navigation}: Props) => {
   const dispatch = useDispatch();
-  const {setScheme, isDark, colors} = useTheme();
+  const isFetching = useSelector(getUserIsFetching);
+  const {colors} = useTheme();
 
   const {handleChange, handleSubmit, values, errors} = useFormik({
     initialValues: {
@@ -41,6 +44,15 @@ const SignIn = ({navigation}: Props) => {
   const onSubmit = useCallback(() => {
     handleSubmit();
   }, []);
+
+  const toRegistration = useCallback(
+    () => navigation.navigate('Registration'),
+    [],
+  );
+
+  if (isFetching) {
+    return <LoadingScreen />;
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -64,16 +76,7 @@ const SignIn = ({navigation}: Props) => {
           <Text style={styles.errors}>{errors.password}</Text>
         )}
         <CustomButton title="Log In" onPress={onSubmit} />
-        <CustomButton
-          title="Don't have account?"
-          onPress={() => navigation.navigate('Registration')}
-        />
-        <CustomButton
-          title="change theme"
-          onPress={() => {
-            isDark ? setScheme('light') : setScheme('dark');
-          }}
-        />
+        <CustomButton title="Don't Have Account?" onPress={toRegistration} />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -94,3 +97,5 @@ const styles = StyleSheet.create({
 });
 
 export default SignIn;
+
+

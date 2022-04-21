@@ -6,7 +6,8 @@ import {
 } from '@react-navigation/native';
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {StatusBar} from 'react-native';
-import {useColorScheme} from 'react-native-appearance';
+import {getUserTheme} from './components/Authentication/UserSettings/checkUserSettings';
+import LoadingScreen from './components/common/LoadingScreen';
 import {LightTheme, DarkTheme, ICustomTheme} from './styles/themes';
 
 type Props = {
@@ -28,12 +29,22 @@ export const ThemeContext = createContext({
 });
 
 export const ThemeProvider = ({children}: Props) => {
-  const colorScheme = useColorScheme();
-  const [isDark, setIsDark] = useState(colorScheme === 'dark');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDark, setIsDark] = useState(false);
+
+  const checkTheme = async () => {
+    const theme = await getUserTheme();
+    setIsDark(theme! === 'dark');
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    setIsDark(colorScheme === 'dark');
-  }, [colorScheme]);
+    checkTheme();
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   const defaultTheme: IDefaultTheme = {
     isDark,

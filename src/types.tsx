@@ -18,6 +18,7 @@ export type RootTabParamList = {
     item: ICar;
   };
   Registration: undefined;
+  UserSettings: undefined;
   Create: undefined;
   CreateAdDetails: {
     mark?: string;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignIn from '../components/Authentication/SignIn';
 import Registration from '../components/Authentication/Registration';
@@ -7,17 +7,33 @@ import {useSelector} from 'react-redux';
 import {getLoggedIn} from '../constants';
 import UserMap from '../components/Authentication/UserMap/UserMap';
 import LogoHeader from '../components/common/LogoHeader';
+import UserSettings from '../components/Authentication/UserSettings/UserSettings';
+import {useNavigation} from '@react-navigation/native';
+import {Navigation} from '../components/Search/types';
+import CustomHeaderButton from '../components/common/CustomHeaderButton';
 
 const Stack = createNativeStackNavigator();
 
 const AuthNavigation = () => {
   const isLoggedIn = useSelector(getLoggedIn);
+  const navigation = useNavigation<Navigation>();
+  const settingsNav = useCallback(() => navigation.navigate(UserSettings), []);
+  const settingsButton = useCallback(
+    () => <CustomHeaderButton onPress={settingsNav} />,
+    [],
+  );
 
   return (
     <Stack.Navigator>
       {isLoggedIn ? (
         <>
-          <Stack.Screen name="Log Out" component={LogOut} />
+          <Stack.Screen
+            name="Log Out"
+            component={LogOut}
+            options={{
+              headerRight: settingsButton,
+            }}
+          />
           <Stack.Screen
             name="UserMap"
             component={UserMap}
@@ -25,11 +41,33 @@ const AuthNavigation = () => {
               headerTitle: LogoHeader,
             }}
           />
+          <Stack.Screen
+            name="UserSettings"
+            component={UserSettings}
+            options={{
+              headerTitle: LogoHeader,
+              presentation: 'modal',
+            }}
+          />
         </>
       ) : (
         <>
-          <Stack.Screen name="Sign In" component={SignIn} />
+          <Stack.Screen
+            name="Sign In"
+            component={SignIn}
+            options={{
+              headerRight: settingsButton,
+            }}
+          />
           <Stack.Screen name="Registration" component={Registration} />
+          <Stack.Screen
+            name="UserSettings"
+            component={UserSettings}
+            options={{
+              headerTitle: LogoHeader,
+              presentation: 'modal',
+            }}
+          />
         </>
       )}
     </Stack.Navigator>
