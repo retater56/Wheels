@@ -44,7 +44,7 @@ export const pickerStyleLight = {
     marginBottom: 20,
     borderRadius: 5,
     backgroundColor: colors.white,
-    ...commonStyles.shadow
+    ...commonStyles.shadow,
   },
   inputAndroid: {
     padding: 10,
@@ -54,7 +54,7 @@ export const pickerStyleLight = {
     marginBottom: 20,
     borderRadius: 10,
     backgroundColor: colors.white,
-    ...commonStyles.shadow
+    ...commonStyles.shadow,
   },
 };
 
@@ -68,7 +68,7 @@ export const pickerStyleDark = {
     marginBottom: 20,
     borderRadius: 5,
     backgroundColor: colors.darkBackground,
-    ...commonStyles.shadow
+    ...commonStyles.shadow,
   },
   inputAndroid: {
     padding: 10,
@@ -78,7 +78,7 @@ export const pickerStyleDark = {
     marginBottom: 20,
     borderRadius: 10,
     backgroundColor: colors.darkBackground,
-    ...commonStyles.shadow
+    ...commonStyles.shadow,
   },
 };
 

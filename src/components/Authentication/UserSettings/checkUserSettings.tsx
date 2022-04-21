@@ -11,7 +11,10 @@ export const setUserTheme = async (value: string) => {
 export const getUserTheme = async () => {
   try {
     const userTheme = await AsyncStorage.getItem('theme');
-    const userThemeValue = String(userTheme);
+    if (userTheme === null) {
+      return 'light';
+    }
+    const userThemeValue = userTheme;
     return userThemeValue;
   } catch (e) {
     console.log(e);
