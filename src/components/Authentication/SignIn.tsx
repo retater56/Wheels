@@ -24,7 +24,7 @@ type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 const SignIn = ({navigation}: Props) => {
   const dispatch = useDispatch();
   const isFetching = useSelector(getUserIsFetching);
-  const {setScheme, isDark, colors} = useTheme();
+  const {colors} = useTheme();
 
   const {handleChange, handleSubmit, values, errors} = useFormik({
     initialValues: {
@@ -44,6 +44,11 @@ const SignIn = ({navigation}: Props) => {
   const onSubmit = useCallback(() => {
     handleSubmit();
   }, []);
+
+  const toRegistration = useCallback(
+    () => navigation.navigate('Registration'),
+    [],
+  );
 
   if (isFetching) {
     return <LoadingScreen />;
@@ -71,16 +76,7 @@ const SignIn = ({navigation}: Props) => {
           onChangeText={handleChange('password')}
         />
         <CustomButton title="Log In" onPress={onSubmit} />
-        <CustomButton
-          title="Don't Have Account?"
-          onPress={() => navigation.navigate('Registration')}
-        />
-        <CustomButton
-          title="Change Theme"
-          onPress={() => {
-            isDark ? setScheme('light') : setScheme('dark');
-          }}
-        />
+        <CustomButton title="Don't Have Account?" onPress={toRegistration} />
       </View>
     </TouchableWithoutFeedback>
   );
