@@ -7,8 +7,6 @@ import {getFirstOpen} from './src/components/Intro/checkFirstInstall';
 import {AppearanceProvider} from 'react-native-appearance';
 import {ThemeProvider} from './src/ThemeProvider';
 import LoadingScreen from './src/components/common/LoadingScreen';
-import {LogBox} from 'react-native';
-LogBox.ignoreAllLogs();
 
 const App = () => {
   const [opened, setOpened] = useState<string>('');

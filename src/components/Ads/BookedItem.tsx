@@ -66,7 +66,7 @@ const BookedItem = ({item}: any) => {
         <Text style={[styles.textDetails, {color: colors.text}]}>Cost:</Text>
         <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
       </View>
-      <CustomButton title="Cancel Rent" onPress={onCancelRent} />
+      <CustomButton title="Cancel rent" onPress={onCancelRent} />
     </View>
   );
 };

@@ -46,7 +46,6 @@ export const getCarsError = (state: RootState) => state.cars.error;
 
 export const getUserName = (state: RootState) => state.user.userName;
 export const getLoggedIn = (state: RootState) => state.user.isLoggedIn;
-export const getUserIsFetching = (state: RootState) => state.user.isLoading;
 
 export const getOwnerCars = (state: RootState) => state.ownerCars.dataCars;
 export const getOwnerCarsIsFetching = (state: RootState) =>

@@ -31,7 +31,7 @@ const LogOut = () => {
       <Text style={[styles.textTitle, {color: colors.text}]}>
         Nice to meet you)
       </Text>
-      <CustomButton title="Check Map" onPress={onCheckMap} />
+      <CustomButton title="Check map" onPress={onCheckMap} />
       <CustomButton title="Log Out" onPress={onLogOut} />
     </View>
   );

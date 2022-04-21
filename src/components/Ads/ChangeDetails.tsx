@@ -257,7 +257,7 @@ const ChangeDetails = ({navigation, route}: Props) => {
           {errors.description && (
             <Text style={styles.errors}>{errors.description}</Text>
           )}
-          <CustomButton title="Save Changes" onPress={onSubmit} />
+          <CustomButton title="Save changes" onPress={onSubmit} />
         </View>
       </View>
     </ScrollView>

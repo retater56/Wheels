@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   },
   textModel: {
     textAlign: 'center',
-    paddingLeft: 20,
+    paddingLeft: 10,
     ...commonStyles.largeText,
   },
   modelContainer: {

@@ -49,7 +49,7 @@ const NewsDetails = ({route}: Props) => {
           <></>
         )}
         <CustomButton title="Read From Source" onPress={onPressLink} />
-        <CustomButton title="Back To News" onPress={onPressBack} />
+        <CustomButton title="Back to news" onPress={onPressBack} />
       </View>
     </ScrollView>
   );
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     alignItems: 'center',
-    paddingBottom: 30
+    paddingBottom: 50
   },
   image: {
     width: '95%',

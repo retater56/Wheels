@@ -3,7 +3,6 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet, Image, Text, View, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getImgSource, getUserName, uriImg} from '../../constants';
-import {fetchCars} from '../../redux/reducers/carsReducer';
 import {
   deleteOwnerCar,
   fetchOwnerCars,
@@ -45,7 +44,6 @@ const OwnerItem = ({item}: any) => {
         onPress: () => {
           dispatch(deleteOwnerCar(id));
           dispatch(fetchOwnerCars(userName));
-          dispatch(fetchCars());
         },
       },
     ]);
@@ -69,8 +67,8 @@ const OwnerItem = ({item}: any) => {
         </Text>
         <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
       </View>
-      <CustomButton title="Change Details" onPress={onChangeDetails} />
-      <CustomButton title="Delete Car" onPress={onDeleteCar} />
+      <CustomButton title="Change details" onPress={onChangeDetails} />
+      <CustomButton title="Delete car" onPress={onDeleteCar} />
     </View>
   );
 };

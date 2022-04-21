@@ -25,11 +25,9 @@ export const userSlice = createSlice({
     registerUserSuccess(state, action) {
       state.userName = action.payload.userName;
       state.isLoggedIn = true;
-      state.isLoading = false;
       state.error = false;
     },
     registerUserFailed(state) {
-      state.isLoading = false;
       state.error = true;
     },
     logInUser(state, action) {
@@ -37,16 +35,13 @@ export const userSlice = createSlice({
     },
     logInUserSuccess(state, action) {
       state.userName = action.payload.userName;
-      state.isLoading = false;
       state.isLoggedIn = true;
       state.error = false;
     },
     logInUserFailed(state) {
-      state.isLoading = false;
       state.error = true;
     },
     logOutUser(state) {
-      state.isLoading = false;
       state.isLoggedIn = false;
       state.userName = '';
     },

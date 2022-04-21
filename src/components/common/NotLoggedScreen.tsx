@@ -22,7 +22,6 @@ const NotLoggedScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -32,6 +31,7 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius: 30,
     borderWidth: 2,
+    ...commonStyles.shadow,
   },
   title: {
     marginBottom: 10,

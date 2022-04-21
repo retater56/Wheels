@@ -132,160 +132,155 @@ const CreateAd = ({navigation}: Props) => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={[styles.title, {color: colors.text}]}>Add a photo</Text>
-        <View style={styles.centerContainer}>
-          {values.imgSourceBase64 !== '' ? (
-            <TouchableOpacity onPress={onChoosePhoto}>
-              <Image
-                source={memoImageSource}
-                style={[
-                  styles.photoData,
-                  {
-                    backgroundColor: colors.background,
-                    borderColor: colors.secondary,
-                    width: 350,
-                  },
-                ]}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
+    <ScrollView style={styles.container}>
+      <Text style={[styles.title, {color: colors.text}]}>Add a photo</Text>
+      <View style={styles.centerContainer}>
+        {values.imgSourceBase64 !== '' ? (
+          <TouchableOpacity onPress={onChoosePhoto}>
+            <Image
+              source={memoImageSource}
               style={[
                 styles.photoData,
                 {
                   backgroundColor: colors.background,
                   borderColor: colors.secondary,
+                  width: 350,
                 },
               ]}
-              onPress={onChoosePhoto}>
-              <View
-                style={[
-                  styles.photoDataCircle,
-                  {borderColor: colors.secondary},
-                ]}>
-                <Icon name="plus" size={70} color={colors.secondary} />
-              </View>
-            </TouchableOpacity>
-          )}
-          {errors.imgSourceBase64 && (
-            <Text style={styles.errors}>{errors.imgSourceBase64}</Text>
-          )}
-        </View>
-        <Text style={[styles.title, {color: colors.text}]}>
-          Set Mark and Model
-        </Text>
-        <View style={styles.centerContainer}>
-          {errors.mark && <Text style={styles.errors}>{errors.mark}</Text>}
-          <CustomTouchableOpacity onPress={onPressMark}>
-            {values.mark ? (
-              <Text>{values.mark}</Text>
-            ) : (
-              <Text style={{color: colors.gray}}>Mark</Text>
-            )}
-          </CustomTouchableOpacity>
-          {errors.model && <Text style={styles.errors}>{errors.model}</Text>}
-          <CustomTouchableOpacity onPress={onPressModel}>
-            {values.model ? (
-              <Text>{values.model}</Text>
-            ) : (
-              <Text style={{color: colors.gray}}>Model</Text>
-            )}
-          </CustomTouchableOpacity>
-        </View>
-        <Text style={[styles.title, {color: colors.text}]}>Specifications</Text>
-        <View style={styles.centerContainer}>
-          {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
-          <PickerSelect
-            value={values.fuel}
-            style={memoStyle}
-            onValueChange={handleChange('fuel')}
-            placeholder={{label: 'Choose fuel type...', value: ''}}
-            items={fuelData}
-          />
-          {errors.doors && <Text style={styles.errors}>{errors.doors}</Text>}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Doors"
-            onChangeText={handleChange('doors')}>
-            {values.doors}
-          </CustomTextInput>
-          {errors.transmission && (
-            <Text style={styles.errors}>{errors.transmission}</Text>
-          )}
-          <PickerSelect
-            value={values.transmission}
-            style={memoStyle}
-            onValueChange={handleChange('transmission')}
-            placeholder={{label: 'Choose transmission type...', value: ''}}
-            items={transmissionData}
-          />
-          {errors.seats && <Text style={styles.errors}>{errors.seats}</Text>}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Seats"
-            onChangeText={handleChange('seats')}>
-            {values.seats}
-          </CustomTextInput>
-          {errors.baggageCapacity && (
-            <Text style={styles.errors}>{errors.baggageCapacity}</Text>
-          )}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Baggage Capacity"
-            onChangeText={handleChange('baggageCapacity')}>
-            {values.baggageCapacity}
-          </CustomTextInput>
-          {errors.capacity && (
-            <Text style={styles.errors}>{errors.capacity}</Text>
-          )}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Capacity"
-            onChangeText={handleChange('capacity')}>
-            {values.capacity}
-          </CustomTextInput>
-          {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Your cost"
-            onChangeText={handleChange('cost')}>
-            {values.cost}
-          </CustomTextInput>
-        </View>
-        <Text style={[styles.title, {color: colors.text}]}>Car place</Text>
-        <View style={styles.centerContainer}>
-          {errors.position && (
-            <Text style={styles.errors}>{errors.position}</Text>
-          )}
-          <CustomTouchableOpacity onPress={onPressMap}>
-            {values.position ? (
-              <Text>Position setted</Text>
-            ) : (
-              <Text style={{color: colors.gray}}>Position</Text>
-            )}
-          </CustomTouchableOpacity>
-        </View>
-        <Text style={[styles.title, {color: colors.text}]}>
-          Your description...
-        </Text>
-        <View style={styles.centerContainer}>
-          <TextInput
-            onChangeText={handleChange('description')}
-            value={values.description}
+            />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
             style={[
-              styles.inputDescription,
-              {backgroundColor: colors.background, color: colors.text},
+              styles.photoData,
+              {
+                backgroundColor: colors.background,
+                borderColor: colors.secondary,
+              },
             ]}
-            multiline
-            placeholderTextColor={colors.gray}
-            placeholder="Please, give some description about your add..."></TextInput>
-          {errors.description && (
-            <Text style={styles.errors}>{errors.description}</Text>
+            onPress={onChoosePhoto}>
+            <View
+              style={[styles.photoDataCircle, {borderColor: colors.secondary}]}>
+              <Icon name="plus" size={70} color={colors.secondary} />
+            </View>
+          </TouchableOpacity>
+        )}
+        {errors.imgSourceBase64 && (
+          <Text style={styles.errors}>{errors.imgSourceBase64}</Text>
+        )}
+      </View>
+      <Text style={[styles.title, {color: colors.text}]}>
+        Set Mark and Model
+      </Text>
+      <View style={styles.centerContainer}>
+        <CustomTouchableOpacity onPress={onPressMark}>
+          {values.mark ? (
+            <Text>{values.mark}</Text>
+          ) : (
+            <Text style={{color: colors.gray}}>Mark</Text>
           )}
-          <CustomButton title="Create Ad" onPress={onSubmit} />
-        </View>
+        </CustomTouchableOpacity>
+        {errors.mark && <Text style={styles.errors}>{errors.mark}</Text>}
+        <CustomTouchableOpacity onPress={onPressModel}>
+          {values.model ? (
+            <Text>{values.model}</Text>
+          ) : (
+            <Text style={{color: colors.gray}}>Model</Text>
+          )}
+        </CustomTouchableOpacity>
+        {errors.model && <Text style={styles.errors}>{errors.model}</Text>}
+      </View>
+      <Text style={[styles.title, {color: colors.text}]}>Specifications</Text>
+      <View style={styles.centerContainer}>
+        <PickerSelect
+          value={values.fuel}
+          style={memoStyle}
+          onValueChange={handleChange('fuel')}
+          placeholder={{label: 'Choose fuel type...', value: ''}}
+          items={fuelData}
+        />
+        {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Doors"
+          onChangeText={handleChange('doors')}>
+          {values.doors}
+        </CustomTextInput>
+        {errors.doors && <Text style={styles.errors}>{errors.doors}</Text>}
+        <PickerSelect
+          value={values.transmission}
+          style={memoStyle}
+          onValueChange={handleChange('transmission')}
+          placeholder={{label: 'Choose transmission type...', value: ''}}
+          items={transmissionData}
+        />
+        {errors.transmission && (
+          <Text style={styles.errors}>{errors.transmission}</Text>
+        )}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Seats"
+          onChangeText={handleChange('seats')}>
+          {values.seats}
+        </CustomTextInput>
+        {errors.seats && <Text style={styles.errors}>{errors.seats}</Text>}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Baggage Capacity"
+          onChangeText={handleChange('baggageCapacity')}>
+          {values.baggageCapacity}
+        </CustomTextInput>
+        {errors.baggageCapacity && (
+          <Text style={styles.errors}>{errors.baggageCapacity}</Text>
+        )}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Capacity"
+          onChangeText={handleChange('capacity')}>
+          {values.capacity}
+        </CustomTextInput>
+        {errors.capacity && (
+          <Text style={styles.errors}>{errors.capacity}</Text>
+        )}
+        <CustomTextInput
+          keyboardType={'numeric'}
+          placeholder="Your cost"
+          onChangeText={handleChange('cost')}>
+          {values.cost}
+        </CustomTextInput>
+        {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
+      </View>
+      <Text style={[styles.title, {color: colors.text}]}>Car place</Text>
+      <View style={styles.centerContainer}>
+        <CustomTouchableOpacity onPress={onPressMap}>
+          {values.position ? (
+            <Text>Position setted</Text>
+          ) : (
+            <Text style={{color: colors.gray}}>Position</Text>
+          )}
+        </CustomTouchableOpacity>
+        {errors.position && (
+          <Text style={styles.errors}>{errors.position}</Text>
+        )}
+      </View>
+      <Text style={[styles.title, {color: colors.text}]}>
+        Your description...
+      </Text>
+      <View style={styles.centerContainer}>
+        <TextInput
+          onChangeText={handleChange('description')}
+          value={values.description}
+          style={[
+            styles.inputDescription,
+            {backgroundColor: colors.background, color: colors.text},
+          ]}
+          multiline
+          placeholderTextColor={colors.gray}
+          placeholder="Please, give some description about your add..."></TextInput>
+        {errors.description && (
+          <Text style={styles.errors}>{errors.description}</Text>
+        )}
+        <CustomButton title="Create Add" onPress={onSubmit} />
       </View>
     </ScrollView>
   );
@@ -295,7 +290,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    paddingBottom: 30,
   },
   centerContainer: {
     alignItems: 'center',
