@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     alignItems: 'center',
-    paddingBottom: 50,
+    paddingBottom: 50
   },
   image: {
     width: '95%',

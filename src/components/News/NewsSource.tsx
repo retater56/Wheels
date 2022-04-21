@@ -14,7 +14,7 @@ const NewsSource = () => {
   const {colors} = useTheme();
   const dispatch = useDispatch();
 
-  const onChoose = useCallback((item) => {
+  const onChoose = useCallback(item => {
     navigation.goBack();
     dispatch(fetchNews(item.keyword));
   }, []);
@@ -37,7 +37,7 @@ const NewsSource = () => {
       <FlatList
         data={newsSourceArray}
         renderItem={renderLinks}
-        keyExtractor={(item) => item.keyword}
+        keyExtractor={item => item.keyword}
       />
     </>
   );
