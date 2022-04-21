@@ -23,7 +23,7 @@ const NewsItem = ({item}: any) => {
 
   return (
     <TouchableOpacity
-      style={[styles.card, {backgroundColor: colors.backgroundLight}]}
+      style={[styles.card, {backgroundColor: colors.background}]}
       key={publishedAt}
       onPress={() => {
         navigation.navigate('NewsDetails', {item: item});

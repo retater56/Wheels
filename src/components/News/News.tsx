@@ -5,14 +5,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import NewsItem from './NewsItem';
 import {getNews, getNewsIsFetching, getNewsTheme} from '../../constants';
 import {fetchNews} from '../../redux/reducers/newsReducer';
-import {useTheme} from '../../ThemeProvider';
 import LoadingScreen from '../common/LoadingScreen';
+import {SafeAreaView} from 'react-native';
+import OrientationContainer from '../common/OrientationContainer';
 
 const News = () => {
   const news = useSelector(getNews);
   const theme = useSelector(getNewsTheme);
   const isFetching = useSelector(getNewsIsFetching);
-  const {colors} = useTheme();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,21 +34,23 @@ const News = () => {
   }
 
   return (
-    <View style={[styles.container, {backgroundColor: colors.background}]}>
-      <FlatList
-        data={news}
-        renderItem={renderItem}
-        keyExtractor={keyItem}
-        onRefresh={onRefresh}
-        refreshing={isFetching}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <OrientationContainer>
+        <FlatList
+          data={news}
+          renderItem={renderItem}
+          keyExtractor={keyItem}
+          onRefresh={onRefresh}
+          refreshing={isFetching}
+        />
+      </OrientationContainer>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    alignItems: 'center',
   },
 });
 

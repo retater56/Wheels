@@ -1,10 +1,19 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, Text, View, Image, ScrollView, Linking} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Linking,
+  SafeAreaView,
+} from 'react-native';
 import {useTheme} from '../../ThemeProvider';
 import {RootTabParamList} from '../../types';
 import CustomButton from '../common/CustomButton';
+import OrientationContainer from '../common/OrientationContainer';
 import commonStyles from '../common/styles';
 import {Navigation} from '../Search/types';
 
@@ -27,39 +36,43 @@ const NewsDetails = ({route}: Props) => {
   const onPressBack = useCallback(() => navigation.goBack(), []);
 
   return (
-    <ScrollView>
-      <View style={[styles.container, {backgroundColor: colors.background}]}>
-        <Text style={[styles.textTitle, {color: colors.text}]}>"{title}"</Text>
-        {urlToImage && <Image style={styles.image} source={memoImageSource} />}
-        <Text style={[styles.textInfo, {color: colors.secondaryText}]}>
-          Author: {source.name}
-        </Text>
-        {description ? (
-          <Text style={[styles.textDescription, {color: colors.secondaryText}]}>
-            {description}
-          </Text>
-        ) : (
-          <></>
-        )}
-        {content ? (
-          <Text style={[styles.textContent, {color: colors.text}]}>
-            {content}
-          </Text>
-        ) : (
-          <></>
-        )}
-        <CustomButton title="Read From Source" onPress={onPressLink} />
-        <CustomButton title="Back To News" onPress={onPressBack} />
-      </View>
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={[styles.container]}>
+          <OrientationContainer style={styles.container}>
+            <Text style={[styles.textTitle, {color: colors.text}]}>
+              "{title}"
+            </Text>
+            {urlToImage && (
+              <Image style={styles.image} source={memoImageSource} />
+            )}
+            <Text style={[styles.textInfo, {color: colors.secondaryText}]}>
+              Author: {source.name}
+            </Text>
+            {description && (
+              <Text
+                style={[styles.textDescription, {color: colors.secondaryText}]}>
+                {description}
+              </Text>
+            )}
+            {content && (
+              <Text style={[styles.textContent, {color: colors.text}]}>
+                {content}
+              </Text>
+            )}
+            <CustomButton title="Read From Source" onPress={onPressLink} />
+            <CustomButton title="Back To News" onPress={onPressBack} />
+          </OrientationContainer>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     alignItems: 'center',
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   image: {
     width: '95%',

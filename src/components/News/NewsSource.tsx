@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import {fetchNews} from '../../redux/reducers/newsReducer';
 import {useTheme} from '../../ThemeProvider';
 import CustomTouchableOpacity from '../common/CustomTouchableOpacity';
+import OrientationContainer from '../common/OrientationContainer';
 import commonStyles from '../common/styles';
 import {Navigation} from '../Search/types';
 import newsSourceArray from './constants';
@@ -14,7 +15,7 @@ const NewsSource = () => {
   const {colors} = useTheme();
   const dispatch = useDispatch();
 
-  const onChoose = useCallback(item => {
+  const onChoose = useCallback((item) => {
     navigation.goBack();
     dispatch(fetchNews(item.keyword));
   }, []);
@@ -30,23 +31,24 @@ const NewsSource = () => {
   }, []);
 
   return (
-    <>
-      <Text style={[styles.text, {color: colors.text}]}>
-        You can choose another news topic
-      </Text>
-      <FlatList
-        data={newsSourceArray}
-        renderItem={renderLinks}
-        keyExtractor={item => item.keyword}
-      />
-    </>
+    <View style={styles.container}>
+      <OrientationContainer>
+        <Text style={[styles.text, {color: colors.text}]}>
+          You can choose another news topic
+        </Text>
+        <FlatList
+          data={newsSourceArray}
+          renderItem={renderLinks}
+          keyExtractor={(item) => item.keyword}
+        />
+      </OrientationContainer>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
   },
   text: {
     textAlign: 'center',
