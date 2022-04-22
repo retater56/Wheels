@@ -5,6 +5,7 @@ import {
   Text,
   TouchableWithoutFeedback,
   Keyboard,
+  SafeAreaView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useFormik} from 'formik';
@@ -14,6 +15,7 @@ import CustomTextInput from '../common/CustomTextInput';
 import CustomButton from '../common/CustomButton';
 import commonStyles from '../common/styles';
 import {useTheme} from '../../ThemeProvider';
+import OrientationContainer from '../common/OrientationContainer';
 
 const Registration = () => {
   const {colors} = useTheme();
@@ -41,41 +43,48 @@ const Registration = () => {
   }, []);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <SafeAreaView>
       <View style={styles.container}>
-        <Text style={[styles.textTitle, {color: colors.text}]}>
-          Create An Account!
-        </Text>
-        <CustomTextInput
-          placeholder="Full Name"
-          onChangeText={handleChange('userName')}
-        />
-        {errors.userName && (
-          <Text style={styles.errors}>{errors.userName}</Text>
-        )}
-        <CustomTextInput
-          placeholder="Email"
-          autoCapitalize="none"
-          onChangeText={handleChange('email')}
-        />
-        {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
-        <CustomTextInput
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={handleChange('password')}
-        />
-        {errors.password && (
-          <Text style={styles.errors}>{errors.password}</Text>
-        )}
-        <CustomButton title="Sign Up" onPress={onSubmit} />
+        <OrientationContainer style={styles.container} scroll={true}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <>
+              <Text style={[styles.textTitle, {color: colors.text}]}>
+                Create An Account!
+              </Text>
+              <CustomTextInput
+                placeholder="Full Name"
+                onChangeText={handleChange('userName')}
+              />
+              {errors.userName && (
+                <Text style={styles.errors}>{errors.userName}</Text>
+              )}
+              <CustomTextInput
+                placeholder="Email"
+                autoCapitalize="none"
+                onChangeText={handleChange('email')}
+              />
+              {errors.email && (
+                <Text style={styles.errors}>{errors.email}</Text>
+              )}
+              <CustomTextInput
+                placeholder="Password"
+                secureTextEntry
+                onChangeText={handleChange('password')}
+              />
+              {errors.password && (
+                <Text style={styles.errors}>{errors.password}</Text>
+              )}
+              <CustomButton title="Sign Up" onPress={onSubmit} />
+            </>
+          </TouchableWithoutFeedback>
+        </OrientationContainer>
       </View>
-    </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
   },
   textTitle: {

@@ -9,6 +9,7 @@ import {
 } from '../../redux/reducers/ownerCarsReducer';
 import {useTheme} from '../../ThemeProvider';
 import CustomButton from '../common/CustomButton';
+import OrientationContainer from '../common/OrientationContainer';
 import commonStyles from '../common/styles';
 import {Navigation} from '../Search/types';
 
@@ -50,25 +51,29 @@ const OwnerItem = ({item}: any) => {
   }, []);
 
   return (
-    <View
-      style={[styles.card, {backgroundColor: colors.background}]}
-      key={id + rentTime}>
-      <Text style={[styles.textModel, {color: colors.text}]}>
-        {mark} {model}
-      </Text>
-      {imgSource ? (
-        <Image source={memoImageSource} style={styles.image} />
-      ) : (
-        <></>
-      )}
-      <View style={styles.containerDetails}>
-        <Text style={[styles.textDetails, {color: colors.text}]}>
-          Current cost:
-        </Text>
-        <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
-      </View>
-      <CustomButton title="Change details" onPress={onChangeDetails} />
-      <CustomButton title="Delete car" onPress={onDeleteCar} />
+    <View style={styles.centerContainer}>
+      <OrientationContainer>
+        <View
+          style={[styles.card, {backgroundColor: colors.background}]}
+          key={id + rentTime}>
+          <Text style={[styles.textModel, {color: colors.text}]}>
+            {mark} {model}
+          </Text>
+          {imgSource ? (
+            <Image source={memoImageSource} style={styles.image} />
+          ) : (
+            <></>
+          )}
+          <View style={styles.containerDetails}>
+            <Text style={[styles.textDetails, {color: colors.text}]}>
+              Current cost:
+            </Text>
+            <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
+          </View>
+          <CustomButton title="Change details" onPress={onChangeDetails} />
+          <CustomButton title="Delete car" onPress={onDeleteCar} />
+        </View>
+      </OrientationContainer>
     </View>
   );
 };
@@ -81,6 +86,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
     ...commonStyles.shadow,
+  },
+  centerContainer: {
+    alignItems: 'center',
   },
   image: {
     width: '100%',

@@ -7,6 +7,7 @@ import {RootTabParamList} from '../../types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../styles/colors';
 import {exampleUserLocation} from '../../constants';
+import OrientationContainer from '../common/OrientationContainer';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'CreateAdMap'>;
 
@@ -41,7 +42,9 @@ const CreateAdMap = ({route, navigation}: Props) => {
         <Icon name="flag" size={40} color={colors.secondary} />
       </View>
       <SafeAreaView style={styles.footer}>
-        <CustomButton title="Pick Location" onPress={onPosition} />
+        <OrientationContainer style={styles.center}>
+          <CustomButton title="Pick Location" onPress={onPosition} />
+        </OrientationContainer>
       </SafeAreaView>
     </View>
   );
@@ -58,9 +61,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '50%',
   },
+  center: {
+    alignItems: 'center',
+  },
   footer: {
     alignItems: 'center',
-    bottom: 30,
+    bottom: 20,
     position: 'absolute',
     width: '100%',
   },

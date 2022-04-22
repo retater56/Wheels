@@ -6,6 +6,7 @@ import {
   Text,
   Keyboard,
   TouchableWithoutFeedback,
+  SafeAreaView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootTabParamList} from '../../types';
@@ -17,7 +18,8 @@ import CustomButton from '../common/CustomButton';
 import {useTheme} from '../../ThemeProvider';
 import commonStyles from '../common/styles';
 import LoadingScreen from '../common/LoadingScreen';
-import { getUserIsFetching } from '../../constants';
+import {getUserIsFetching} from '../../constants';
+import OrientationContainer from '../common/OrientationContainer';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 
@@ -55,36 +57,46 @@ const SignIn = ({navigation}: Props) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <Text style={[styles.textTitle, {color: colors.text}]}>
-          Welcome Back!
-        </Text>
-        <CustomTextInput
-          placeholder="Email"
-          autoCapitalize="none"
-          onChangeText={handleChange('email')}
-          value={values.email}
-        />
-        {errors.email && <Text style={styles.errors}>{errors.email}</Text>}
-        <CustomTextInput
-          placeholder="Password"
-          secureTextEntry
-          onChangeText={handleChange('password')}
-        />
-        {errors.password && (
-          <Text style={styles.errors}>{errors.password}</Text>
-        )}
-        <CustomButton title="Log In" onPress={onSubmit} />
-        <CustomButton title="Don't Have Account?" onPress={toRegistration} />
+    <SafeAreaView>
+      <View style={[styles.container, {width: '100%'}]}>
+        <OrientationContainer style={styles.container} scroll={true}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <>
+              <Text style={[styles.textTitle, {color: colors.text}]}>
+                Welcome Back!
+              </Text>
+              <CustomTextInput
+                placeholder="Email"
+                autoCapitalize="none"
+                onChangeText={handleChange('email')}
+                value={values.email}
+              />
+              {errors.email && (
+                <Text style={styles.errors}>{errors.email}</Text>
+              )}
+              <CustomTextInput
+                placeholder="Password"
+                secureTextEntry
+                onChangeText={handleChange('password')}
+              />
+              {errors.password && (
+                <Text style={styles.errors}>{errors.password}</Text>
+              )}
+              <CustomButton title="Log In" onPress={onSubmit} />
+              <CustomButton
+                title="Don't Have Account?"
+                onPress={toRegistration}
+              />
+            </>
+          </TouchableWithoutFeedback>
+        </OrientationContainer>
       </View>
-    </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
   },
   textTitle: {
@@ -97,5 +109,3 @@ const styles = StyleSheet.create({
 });
 
 export default SignIn;
-
-

@@ -1,10 +1,11 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useMemo} from 'react';
-import {TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
+import React, {useCallback, useMemo} from 'react';
+import {TouchableOpacity, Image, Text, StyleSheet, View} from 'react-native';
 import {Navigation} from '../Search/types';
 import moment from 'moment';
 import {useTheme} from '../../ThemeProvider';
 import commonStyles from '../common/styles';
+import OrientationContainer from '../common/OrientationContainer';
 
 const NewsItem = ({item}: any) => {
   const navigation = useNavigation<Navigation>();
@@ -21,28 +22,37 @@ const NewsItem = ({item}: any) => {
     return moment(publishedAt).format('YYYY-MM-DD h:mm a');
   }, [publishedAt]);
 
+  const toNewsDetails = useCallback(() => {
+    navigation.navigate('NewsDetails', {item: item});
+  }, []);
+
   return (
-    <TouchableOpacity
-      style={[styles.card, {backgroundColor: colors.backgroundLight}]}
-      key={publishedAt}
-      onPress={() => {
-        navigation.navigate('NewsDetails', {item: item});
-      }}>
-      {urlToImage && (
-        <Image
-          style={[styles.image, {borderColor: colors.secondary}]}
-          source={memoImageSource}
-        />
-      )}
-      <Text style={[styles.text, {color: colors.text}]}>{title}</Text>
-      <Text style={[styles.textInfo, {color: colors.secondaryText}]}>
-        {date}
-      </Text>
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <OrientationContainer>
+        <TouchableOpacity
+          style={[styles.card, {backgroundColor: colors.background}]}
+          key={publishedAt}
+          onPress={toNewsDetails}>
+          {urlToImage && (
+            <Image
+              style={[styles.image, {borderColor: colors.secondary}]}
+              source={memoImageSource}
+            />
+          )}
+          <Text style={[styles.text, {color: colors.text}]}>{title}</Text>
+          <Text style={[styles.textInfo, {color: colors.secondaryText}]}>
+            {date}
+          </Text>
+        </TouchableOpacity>
+      </OrientationContainer>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
   card: {
     margin: 10,
     borderRadius: 30,
