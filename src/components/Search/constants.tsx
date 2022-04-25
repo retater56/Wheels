@@ -8,6 +8,13 @@ export const rentData = [
   {label: '08:00 am - 12:00 pm', value: 'fifthPart'},
 ];
 
+export const searchSortArray = [
+  {name: 'Price: low to hight', link: '?_sort=cost'},
+  {name: 'Price: hight to low', link: '?_sort=mark_order=desc'},
+  {name: 'Marks: A - Z', link: '?_sort=mark'},
+  {name: 'Marks: Z - A', link: '?_sort=mark&_order=desc'},
+];
+
 export const today = moment().toDate();
 export const currentYear = moment().get('year').toString();
 export const endOfYear = moment(`${currentYear}-12-31`).toDate();
