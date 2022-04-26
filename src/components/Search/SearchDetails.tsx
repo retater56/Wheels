@@ -15,6 +15,7 @@ import {useTheme} from '../../ThemeProvider';
 import {RootTabParamList} from '../../types';
 import OrientationContainer from '../common/OrientationContainer';
 import commonStyles from '../common/styles';
+import SearchMap from './SearchMap';
 import SearchRent from './SearchRent';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'SearchDetails'>;
@@ -33,6 +34,8 @@ const SearchDetails = ({route}: Props) => {
     seats,
     baggageCapacity,
     capacity,
+    description,
+    position,
     cost,
   } = item;
   const [imgSource, setImgSource] = useState('');
@@ -150,6 +153,18 @@ const SearchDetails = ({route}: Props) => {
                   </Text>
                 </View>
               </View>
+              <Text style={[styles.textTitle, {color: colors.text}]}>
+                Description
+              </Text>
+              <View>
+                <Text style={[styles.textDesc, , {color: colors.text}]}>
+                  {description}
+                </Text>
+              </View>
+              <Text style={[styles.textTitle, {color: colors.text}]}>
+                Position
+              </Text>
+              <SearchMap pos={position} />
               <View
                 style={[
                   styles.containerCost,
@@ -216,6 +231,11 @@ const styles = StyleSheet.create({
     ...commonStyles.largeText,
   },
   textInfo: {
+    ...commonStyles.mediumText,
+  },
+  textDesc: {
+    textAlign: 'center',
+    padding: 10,
     ...commonStyles.mediumText,
   },
   containerCost: {
