@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getLoggedIn,
@@ -35,36 +35,36 @@ const OwnerAds = () => {
     return <OwnerItem item={item} />;
   }, []);
 
-  const keyItem = useCallback(item => item.id, []);
+  const keyItem = useCallback((item) => item.id, []);
 
   if (!isLoggedIn) {
     return <NotLoggedScreen />;
   }
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
       {cars.length === 0 ? (
         <Text style={[styles.text, {color: colors.text}]}>
           Your own cars will be displayed here...
         </Text>
       ) : (
-        <View style={styles.container}>
-          <FlatList
-            data={cars}
-            renderItem={renderItem}
-            keyExtractor={keyItem}
-            onRefresh={onRefresh}
-            refreshing={isFetching}
-          />
-        </View>
+        <FlatList
+          style={{width: '100%'}}
+          data={cars}
+          renderItem={renderItem}
+          keyExtractor={keyItem}
+          onRefresh={onRefresh}
+          refreshing={isFetching}
+        />
       )}
-    </>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
   },
   text: {
     textAlign: 'center',

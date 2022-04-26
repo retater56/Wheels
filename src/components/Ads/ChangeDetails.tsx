@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import PickerSelect from 'react-native-picker-select';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -21,18 +22,18 @@ import CustomButton from '../common/CustomButton';
 import CustomTextInput from '../common/CustomTextInput';
 import CustomTouchableOpacity from '../common/CustomTouchableOpacity';
 import {useTheme} from '../../ThemeProvider';
-import commonStyles, {
-  pickerStyleDark,
-  pickerStyleLight,
-} from '../common/styles';
+import commonStyles, {checkUserPref} from '../common/styles';
 import NotLoggedScreen from '../common/NotLoggedScreen';
 import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
+import OrientationContainer from '../common/OrientationContainer';
+import useOrientation from '../common/useOrientation';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'ChangeDetails'>;
 
 const ChangeDetails = ({navigation, route}: Props) => {
   const dispatch = useDispatch();
   const {item} = route.params;
+  const portrait = useOrientation();
   const {
     id,
     imgSourceBase64,
@@ -81,14 +82,13 @@ const ChangeDetails = ({navigation, route}: Props) => {
     },
   );
 
-  const memoImageSource = useMemo(
-    () => uriImgBase64(values.imgSourceBase64!),
-    [values.imgSourceBase64],
-  );
+  const memoImageSource = useMemo(() => uriImgBase64(values.imgSourceBase64!), [
+    values.imgSourceBase64,
+  ]);
 
   const memoStyle = useMemo(() => {
-    return isDark ? pickerStyleDark : pickerStyleLight;
-  }, [isDark]);
+    return checkUserPref(isDark);
+  }, [portrait, isDark]);
 
   const onPressMark = useCallback(() => {
     navigation.navigate('CreateAdDetails', {
@@ -131,143 +131,165 @@ const ChangeDetails = ({navigation, route}: Props) => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.centerContainer}>
-          <Image
-            source={memoImageSource}
-            style={[
-              styles.photoData,
-              {
-                backgroundColor: colors.background,
-                borderColor: colors.secondary,
-                width: 350,
-              },
-            ]}
-          />
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.container}>
+          <OrientationContainer>
+            <View style={styles.centerContainer}>
+              <Image
+                source={memoImageSource}
+                style={[
+                  styles.photoData,
+                  {
+                    backgroundColor: colors.background,
+                    borderColor: colors.secondary,
+                    width: 350,
+                  },
+                ]}
+              />
+            </View>
+            <Text style={[styles.title, {color: colors.text}]}>
+              Set Mark and Model
+            </Text>
+            <View style={styles.centerContainer}>
+              <CustomTouchableOpacity onPress={onPressMark}>
+                {values.mark ? (
+                  <Text>{values.mark}</Text>
+                ) : (
+                  <Text style={{color: colors.gray}}>Mark</Text>
+                )}
+              </CustomTouchableOpacity>
+              {errors.mark && <Text style={styles.errors}>{errors.mark}</Text>}
+              <CustomTouchableOpacity onPress={onPressModel}>
+                {values.model ? (
+                  <Text>{values.model}</Text>
+                ) : (
+                  <Text style={{color: colors.gray}}>Model</Text>
+                )}
+              </CustomTouchableOpacity>
+              {errors.model && (
+                <Text style={styles.errors}>{errors.model}</Text>
+              )}
+            </View>
+            <Text style={[styles.title, {color: colors.text}]}>
+              Specifications
+            </Text>
+            <View style={styles.centerContainer}>
+              <View style={styles.pickerView}>
+                <PickerSelect
+                  value={values.fuel}
+                  style={memoStyle}
+                  onValueChange={handleChange('fuel')}
+                  placeholder={{label: 'Choose fuel type...', value: ''}}
+                  items={fuelData}
+                />
+                {errors.fuel && (
+                  <Text style={styles.errors}>{errors.fuel}</Text>
+                )}
+              </View>
+              <CustomTextInput
+                keyboardType={'numeric'}
+                placeholder="Doors"
+                onChangeText={handleChange('doors')}>
+                {values.doors}
+              </CustomTextInput>
+              {errors.doors && (
+                <Text style={styles.errors}>{errors.doors}</Text>
+              )}
+              <View style={styles.pickerView}>
+                <PickerSelect
+                  value={values.transmission}
+                  style={memoStyle}
+                  onValueChange={handleChange('transmission')}
+                  placeholder={{
+                    label: 'Choose transmission type...',
+                    value: '',
+                  }}
+                  items={transmissionData}
+                />
+                {errors.transmission && (
+                  <Text style={styles.errors}>{errors.transmission}</Text>
+                )}
+              </View>
+              <CustomTextInput
+                keyboardType={'numeric'}
+                placeholder="Seats"
+                onChangeText={handleChange('seats')}>
+                {values.seats}
+              </CustomTextInput>
+              {errors.seats && (
+                <Text style={styles.errors}>{errors.seats}</Text>
+              )}
+              <CustomTextInput
+                keyboardType={'numeric'}
+                placeholder="Baggage Capacity"
+                onChangeText={handleChange('baggageCapacity')}>
+                {values.baggageCapacity}
+              </CustomTextInput>
+              {errors.baggageCapacity && (
+                <Text style={styles.errors}>{errors.baggageCapacity}</Text>
+              )}
+              <CustomTextInput
+                keyboardType={'numeric'}
+                placeholder="Capacity"
+                onChangeText={handleChange('capacity')}>
+                {values.capacity}
+              </CustomTextInput>
+              {errors.capacity && (
+                <Text style={styles.errors}>{errors.capacity}</Text>
+              )}
+              <CustomTextInput
+                keyboardType={'numeric'}
+                placeholder="Your cost"
+                onChangeText={handleChange('cost')}>
+                {values.cost}
+              </CustomTextInput>
+              {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
+            </View>
+            <Text style={[styles.title, {color: colors.text}]}>Car place</Text>
+            <View style={styles.centerContainer}>
+              <CustomTouchableOpacity onPress={onPressMap}>
+                {values.position ? (
+                  <Text>Position setted</Text>
+                ) : (
+                  <Text style={{color: colors.gray}}>Position</Text>
+                )}
+              </CustomTouchableOpacity>
+              {errors.position && (
+                <Text style={styles.errors}>{errors.position}</Text>
+              )}
+            </View>
+            <Text style={[styles.title, {color: colors.text}]}>
+              Your description...
+            </Text>
+            <View style={styles.centerContainer}>
+              <TextInput
+                onChangeText={handleChange('description')}
+                value={values.description}
+                style={[
+                  styles.inputDescription,
+                  {backgroundColor: colors.background, color: colors.text},
+                ]}
+                multiline
+                placeholderTextColor={colors.gray}
+                placeholder="Please, give some description about your add..."></TextInput>
+              {errors.description && (
+                <Text style={styles.errors}>{errors.description}</Text>
+              )}
+              <CustomButton title="Save changes" onPress={onSubmit} />
+            </View>
+          </OrientationContainer>
         </View>
-        <Text style={[styles.title, {color: colors.text}]}>
-          Set Mark and Model
-        </Text>
-        <View style={styles.centerContainer}>
-          <CustomTouchableOpacity onPress={onPressMark}>
-            {values.mark ? (
-              <Text>{values.mark}</Text>
-            ) : (
-              <Text style={{color: colors.gray}}>Mark</Text>
-            )}
-          </CustomTouchableOpacity>
-          {errors.mark && <Text style={styles.errors}>{errors.mark}</Text>}
-          <CustomTouchableOpacity onPress={onPressModel}>
-            {values.model ? (
-              <Text>{values.model}</Text>
-            ) : (
-              <Text style={{color: colors.gray}}>Model</Text>
-            )}
-          </CustomTouchableOpacity>
-          {errors.model && <Text style={styles.errors}>{errors.model}</Text>}
-        </View>
-        <Text style={[styles.title, {color: colors.text}]}>Specifications</Text>
-        <View style={styles.centerContainer}>
-          <PickerSelect
-            value={values.fuel}
-            style={memoStyle}
-            onValueChange={handleChange('fuel')}
-            placeholder={{label: 'Choose fuel type...', value: ''}}
-            items={fuelData}
-          />
-          {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Doors"
-            onChangeText={handleChange('doors')}>
-            {values.doors}
-          </CustomTextInput>
-          {errors.doors && <Text style={styles.errors}>{errors.doors}</Text>}
-          <PickerSelect
-            value={values.transmission}
-            style={memoStyle}
-            onValueChange={handleChange('transmission')}
-            placeholder={{label: 'Choose transmission type...', value: ''}}
-            items={transmissionData}
-          />
-          {errors.transmission && (
-            <Text style={styles.errors}>{errors.transmission}</Text>
-          )}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Seats"
-            onChangeText={handleChange('seats')}>
-            {values.seats}
-          </CustomTextInput>
-          {errors.seats && <Text style={styles.errors}>{errors.seats}</Text>}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Baggage Capacity"
-            onChangeText={handleChange('baggageCapacity')}>
-            {values.baggageCapacity}
-          </CustomTextInput>
-          {errors.baggageCapacity && (
-            <Text style={styles.errors}>{errors.baggageCapacity}</Text>
-          )}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Capacity"
-            onChangeText={handleChange('capacity')}>
-            {values.capacity}
-          </CustomTextInput>
-          {errors.capacity && (
-            <Text style={styles.errors}>{errors.capacity}</Text>
-          )}
-          <CustomTextInput
-            keyboardType={'numeric'}
-            placeholder="Your cost"
-            onChangeText={handleChange('cost')}>
-            {values.cost}
-          </CustomTextInput>
-          {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
-        </View>
-        <Text style={[styles.title, {color: colors.text}]}>Car place</Text>
-        <View style={styles.centerContainer}>
-          <CustomTouchableOpacity onPress={onPressMap}>
-            {values.position ? (
-              <Text>Position setted</Text>
-            ) : (
-              <Text style={{color: colors.gray}}>Position</Text>
-            )}
-          </CustomTouchableOpacity>
-          {errors.position && (
-            <Text style={styles.errors}>{errors.position}</Text>
-          )}
-        </View>
-        <Text style={[styles.title, {color: colors.text}]}>
-          Your description...
-        </Text>
-        <View style={styles.centerContainer}>
-          <TextInput
-            onChangeText={handleChange('description')}
-            value={values.description}
-            style={[
-              styles.inputDescription,
-              {backgroundColor: colors.background, color: colors.text},
-            ]}
-            multiline
-            placeholderTextColor={colors.gray}
-            placeholder="Please, give some description about your add..."></TextInput>
-          {errors.description && (
-            <Text style={styles.errors}>{errors.description}</Text>
-          )}
-          <CustomButton title="Save changes" onPress={onSubmit} />
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    width: '100%',
+    paddingTop: 10,
+    alignItems: 'center',
     marginBottom: 50,
   },
   centerContainer: {
@@ -301,6 +323,9 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     borderRadius: 5,
     ...commonStyles.shadow,
+  },
+  pickerView: {
+    width: '90%',
   },
   errors: {
     ...commonStyles.errorText,

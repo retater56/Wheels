@@ -1,11 +1,19 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo, useState} from 'react';
-import {ScrollView, Text, StyleSheet, Image, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
 import {getImgSource, getLoggedIn, uriImg} from '../../constants';
 import {useTheme} from '../../ThemeProvider';
 import {RootTabParamList} from '../../types';
+import OrientationContainer from '../common/OrientationContainer';
 import commonStyles from '../common/styles';
 import SearchRent from './SearchRent';
 
@@ -37,96 +45,138 @@ const SearchDetails = ({route}: Props) => {
   const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);
 
   return (
-    <ScrollView>
-      <View style={[styles.container, {backgroundColor: colors.background}]}>
-        <View
-          style={[
-            styles.imgContainer,
-            {backgroundColor: colors.backgroundLight},
-          ]}>
-          {imgSource !== '' ? (
-            <Image source={memoImageSource} style={styles.image} />
-          ) : (
-            <></>
-          )}
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.container}>
+          <OrientationContainer>
+            <View
+              style={[styles.container, {backgroundColor: colors.background}]}>
+              <OrientationContainer
+                style={[
+                  styles.imgContainer,
+                  {backgroundColor: colors.backgroundLight},
+                ]}>
+                {imgSource ? (
+                  <Image source={memoImageSource} style={styles.image} />
+                ) : (
+                  <></>
+                )}
+                <Text style={[styles.textTitle, {color: colors.text}]}>
+                  {mark} {model}
+                </Text>
+              </OrientationContainer>
+              <Text style={[styles.textTitle, {color: colors.text}]}>
+                Specifications
+              </Text>
+              <View style={styles.specContainer}>
+                <View
+                  style={[
+                    styles.specBox,
+                    {backgroundColor: colors.backgroundLight},
+                  ]}>
+                  <Icon name={'fuel'} size={50} color={colors.backgroundDark} />
+                  <Text style={[styles.textInfo, {color: colors.text}]}>
+                    {fuel}
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.specBox,
+                    {backgroundColor: colors.backgroundLight},
+                  ]}>
+                  <Icon
+                    name={'car-door'}
+                    size={50}
+                    color={colors.backgroundDark}
+                  />
+                  <Text style={[styles.textInfo, {color: colors.text}]}>
+                    {doors} Doors
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.specBox,
+                    {backgroundColor: colors.backgroundLight},
+                  ]}>
+                  <Icon
+                    name={'car-cog'}
+                    size={50}
+                    color={colors.backgroundDark}
+                  />
+                  <Text style={[styles.textInfo, {color: colors.text}]}>
+                    {transmission}
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.specBox,
+                    {backgroundColor: colors.backgroundLight},
+                  ]}>
+                  <Icon
+                    name={'car-seat'}
+                    size={50}
+                    color={colors.backgroundDark}
+                  />
+                  <Text style={[styles.textInfo, {color: colors.text}]}>
+                    {seats} Seats
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.specBox,
+                    {backgroundColor: colors.backgroundLight},
+                  ]}>
+                  <Icon
+                    name={'bag-personal-outline'}
+                    size={50}
+                    color={colors.backgroundDark}
+                  />
+                  <Text style={[styles.textInfo, {color: colors.text}]}>
+                    {baggageCapacity} Stars
+                  </Text>
+                </View>
+                <View
+                  style={[
+                    styles.specBox,
+                    {backgroundColor: colors.backgroundLight},
+                  ]}>
+                  <Icon
+                    name={'speedometer'}
+                    size={50}
+                    color={colors.backgroundDark}
+                  />
+                  <Text style={[styles.textInfo, {color: colors.text}]}>
+                    {capacity}
+                  </Text>
+                </View>
+              </View>
+              <View
+                style={[
+                  styles.containerCost,
+                  {backgroundColor: colors.secondary},
+                ]}>
+                <Text style={[styles.textCost, {color: colors.white}]}>
+                  {cost}$ / 4 Hours
+                </Text>
+              </View>
+            </View>
+          </OrientationContainer>
+        </View>
+        {isLoggedIn ? (
+          <SearchRent carId={id} />
+        ) : (
           <Text style={[styles.textTitle, {color: colors.text}]}>
-            {mark} {model}
+            You aren't authorized for rent this car
           </Text>
-        </View>
-        <Text style={[styles.textTitle, {color: colors.text}]}>
-          Specifications
-        </Text>
-        <View style={styles.specContainer}>
-          <View
-            style={[styles.specBox, {backgroundColor: colors.backgroundLight}]}>
-            <Icon name={'fuel'} size={50} color={colors.backgroundDark} />
-            <Text style={[styles.textInfo, {color: colors.text}]}>{fuel}</Text>
-          </View>
-          <View
-            style={[styles.specBox, {backgroundColor: colors.backgroundLight}]}>
-            <Icon name={'car-door'} size={50} color={colors.backgroundDark} />
-            <Text style={[styles.textInfo, {color: colors.text}]}>
-              {doors} Doors
-            </Text>
-          </View>
-          <View
-            style={[styles.specBox, {backgroundColor: colors.backgroundLight}]}>
-            <Icon name={'car-cog'} size={50} color={colors.backgroundDark} />
-            <Text style={[styles.textInfo, {color: colors.text}]}>
-              {transmission}
-            </Text>
-          </View>
-          <View
-            style={[styles.specBox, {backgroundColor: colors.backgroundLight}]}>
-            <Icon name={'car-seat'} size={50} color={colors.backgroundDark} />
-            <Text style={[styles.textInfo, {color: colors.text}]}>
-              {seats} Seats
-            </Text>
-          </View>
-          <View
-            style={[styles.specBox, {backgroundColor: colors.backgroundLight}]}>
-            <Icon
-              name={'bag-personal-outline'}
-              size={50}
-              color={colors.backgroundDark}
-            />
-            <Text style={[styles.textInfo, {color: colors.text}]}>
-              {baggageCapacity} Stars
-            </Text>
-          </View>
-          <View
-            style={[styles.specBox, {backgroundColor: colors.backgroundLight}]}>
-            <Icon
-              name={'speedometer'}
-              size={50}
-              color={colors.backgroundDark}
-            />
-            <Text style={[styles.textInfo, {color: colors.text}]}>
-              {capacity}
-            </Text>
-          </View>
-        </View>
-        <View
-          style={[styles.containerCost, {backgroundColor: colors.secondary}]}>
-          <Text style={[styles.textCost, {color: colors.white}]}>
-            {cost}$ / 4 Hours
-          </Text>
-        </View>
-      </View>
-      {isLoggedIn ? (
-        <SearchRent carId={id} />
-      ) : (
-        <Text style={[styles.textTitle, {color: colors.text}]}>
-          You aren't authorized for rent this car
-        </Text>
-      )}
-    </ScrollView>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    alignItems: 'center',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
     ...commonStyles.shadow,
@@ -169,6 +219,7 @@ const styles = StyleSheet.create({
     ...commonStyles.mediumText,
   },
   containerCost: {
+    width: '100%',
     padding: 10,
     alignItems: 'center',
     borderRadius: 30,

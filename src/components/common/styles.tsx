@@ -2,54 +2,6 @@ import colors from '../../styles/colors';
 import fontSizes from '../../styles/fontSizes';
 import {StyleSheet} from 'react-native';
 
-export const pickerStyleLight = {
-  inputIOS: {
-    padding: 10,
-    height: 40,
-    color: colors.black,
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    borderRadius: 5,
-    backgroundColor: colors.white,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-  inputAndroid: {
-    color: 'black',
-  },
-};
-
-export const pickerStyleDark = {
-  inputIOS: {
-    padding: 10,
-    height: 40,
-    color: colors.white,
-    paddingHorizontal: 20,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    borderRadius: 5,
-    backgroundColor: colors.darkBackground,
-    shadowColor: colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.27,
-    shadowRadius: 4.65,
-    elevation: 6,
-  },
-  inputAndroid: {
-    color: 'black',
-  },
-};
-
 const commonStyles = StyleSheet.create({
   shadow: {
     shadowColor: colors.black,
@@ -81,5 +33,59 @@ const commonStyles = StyleSheet.create({
     color: colors.red,
   },
 });
+
+const IOSsettings = {modalViewMiddle: {paddingHorizontal: 30}};
+
+const IOSStyle = {
+  padding: 10,
+  height: 40,
+  paddingHorizontal: 20,
+  marginBottom: 20,
+  borderRadius: 5,
+};
+
+const androidStyle = {
+  padding: 10,
+  height: 40,
+  paddingHorizontal: 20,
+  marginBottom: 30,
+  borderRadius: 5,
+};
+
+export const checkUserPref = (isDark: boolean) => {
+  return isDark ? pickerStyleDark : pickerStyleLight;
+};
+
+export const pickerStyleLight = {
+  inputIOS: {
+    color: colors.black,
+    backgroundColor: colors.background,
+    ...commonStyles.shadow,
+    ...IOSStyle,
+  },
+  inputAndroid: {
+    color: colors.black,
+    backgroundColor: colors.background,
+    ...commonStyles.shadow,
+    ...androidStyle,
+  },
+  ...IOSsettings,
+};
+
+export const pickerStyleDark = {
+  inputIOS: {
+    color: colors.white,
+    backgroundColor: colors.darkBackground,
+    ...commonStyles.shadow,
+    ...IOSStyle,
+  },
+  inputAndroid: {
+    color: colors.white,
+    backgroundColor: colors.darkBackground,
+    ...commonStyles.shadow,
+    ...androidStyle,
+  },
+  ...IOSsettings,
+};
 
 export default commonStyles;

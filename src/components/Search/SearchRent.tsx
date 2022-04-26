@@ -19,16 +19,17 @@ import CustomTextInput from '../common/CustomTextInput';
 import CustomButton from '../common/CustomButton';
 import CustomTouchableOpacity from '../common/CustomTouchableOpacity';
 import {useTheme} from '../../ThemeProvider';
-import commonStyles, {
-  pickerStyleDark,
-  pickerStyleLight,
-} from '../common/styles';
+import commonStyles, {checkUserPref} from '../common/styles';
+import OrientationContainer from '../common/OrientationContainer';
+import useOrientation from '../common/useOrientation';
+import {SafeAreaView} from 'react-native';
 
 const SearchRent = ({carId}: any) => {
   const bookedTime = useSelector(getBookedTime);
   const customerName = useSelector(getUserName);
   const bookError = useSelector(getCustomerCarsError);
   const {colors, isDark} = useTheme();
+  const portrait = useOrientation();
   const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -72,7 +73,7 @@ const SearchRent = ({carId}: any) => {
   }, [values.rentDate]);
 
   const memoStyle = useMemo(() => {
-    return isDark ? pickerStyleDark : pickerStyleLight;
+    return checkUserPref(isDark);
   }, [isDark]);
 
   const onOpenModal = useCallback(() => {
@@ -83,7 +84,7 @@ const SearchRent = ({carId}: any) => {
     setOpen(false);
   }, []);
 
-  const onConfirmModal = useCallback(date => {
+  const onConfirmModal = useCallback((date) => {
     setOpen(false);
     setFieldValue('rentDate', date);
   }, []);
@@ -93,47 +94,55 @@ const SearchRent = ({carId}: any) => {
   }, []);
 
   return (
-    <>
+    <SafeAreaView>
       <Text style={[styles.textTitle, {color: colors.text}]}>Take a car</Text>
       <View style={styles.container}>
-        <CustomTouchableOpacity onPress={onOpenModal}>
-          {memoDate}
-        </CustomTouchableOpacity>
-        <DatePicker
-          modal
-          open={open}
-          maximumDate={endOfYear}
-          minimumDate={today}
-          mode={'date'}
-          date={today}
-          onConfirm={onConfirmModal}
-          onCancel={onCloseModal}
-        />
-        {errors.rentDate && (
-          <Text style={styles.errors}>{errors.rentDate}</Text>
-        )}
-        <PickerSelect
-          value={values.rentTime}
-          style={memoStyle}
-          onValueChange={handleChange('rentTime')}
-          placeholder={{label: 'Select a time...', value: ''}}
-          items={bookedTime}
-        />
-        {errors.rentTime && (
-          <Text style={styles.errors}>{errors.rentTime}</Text>
-        )}
-        <CustomTextInput
-          value={values.customerPhone}
-          placeholder="Your Phone"
-          keyboardType="numeric"
-          onChangeText={handleChange('customerPhone')}
-        />
-        {errors.customerPhone && (
-          <Text style={styles.errors}>{errors.customerPhone}</Text>
-        )}
-        <CustomButton title="Rent" onPress={onSubmit} />
+        <OrientationContainer style={styles.container}>
+          {portrait && (
+            <CustomTouchableOpacity onPress={onOpenModal}>
+              {memoDate}
+            </CustomTouchableOpacity>
+          )}
+          <DatePicker
+            modal={portrait ? true : false}
+            open={open}
+            textColor={isDark ? colors.white : colors.backgroundDark}
+            maximumDate={endOfYear}
+            minimumDate={today}
+            mode={'date'}
+            date={today}
+            onConfirm={onConfirmModal}
+            onCancel={onCloseModal}
+          />
+          {errors.rentDate && (
+            <Text style={styles.errors}>{errors.rentDate}</Text>
+          )}
+          <View style={styles.pickerView}>
+            <PickerSelect
+              value={values.rentTime}
+              style={memoStyle}
+              onValueChange={handleChange('rentTime')}
+              placeholder={{label: 'Select a time...', value: ''}}
+              items={bookedTime}
+            />
+
+            {errors.rentTime && (
+              <Text style={styles.errors}>{errors.rentTime}</Text>
+            )}
+          </View>
+          <CustomTextInput
+            value={values.customerPhone}
+            placeholder="Your Phone"
+            keyboardType="numeric"
+            onChangeText={handleChange('customerPhone')}
+          />
+          {errors.customerPhone && (
+            <Text style={styles.errors}>{errors.customerPhone}</Text>
+          )}
+          <CustomButton title="Rent" onPress={onSubmit} />
+        </OrientationContainer>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
@@ -151,6 +160,9 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  pickerView: {
+    width: '90%',
   },
   errors: {
     ...commonStyles.errorText,

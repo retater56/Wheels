@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList} from 'react-native';
+import {Text, View, StyleSheet, FlatList, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getLoggedIn,
@@ -35,30 +35,28 @@ const Booked = () => {
     return <BookedItem item={item} />;
   }, []);
 
-  const keyItem = useCallback(item => item.id + item.rentTime, []);
+  const keyItem = useCallback((item) => item.id + item.rentTime, []);
 
   if (!isLoggedIn) {
     return <NotLoggedScreen />;
   }
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
       {cars.length === 0 ? (
         <Text style={[styles.text, {color: colors.text}]}>
           Your booked cars will be displayed here...
         </Text>
       ) : (
-        <View style={[styles.container]}>
-          <FlatList
-            data={cars}
-            renderItem={renderItem}
-            keyExtractor={keyItem}
-            onRefresh={onRefresh}
-            refreshing={isFetching}
-          />
-        </View>
+        <FlatList
+          data={cars}
+          renderItem={renderItem}
+          keyExtractor={keyItem}
+          onRefresh={onRefresh}
+          refreshing={isFetching}
+        />
       )}
-    </>
+    </SafeAreaView>
   );
 };
 

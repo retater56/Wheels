@@ -1,18 +1,17 @@
 import React, {useCallback, useEffect} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import INewsDetail from './types';
 import {useDispatch, useSelector} from 'react-redux';
 import NewsItem from './NewsItem';
 import {getNews, getNewsIsFetching, getNewsTheme} from '../../constants';
 import {fetchNews} from '../../redux/reducers/newsReducer';
-import {useTheme} from '../../ThemeProvider';
+import {SafeAreaView} from 'react-native';
 import LoadingScreen from '../common/LoadingScreen';
 
 const News = () => {
   const news = useSelector(getNews);
   const theme = useSelector(getNewsTheme);
   const isFetching = useSelector(getNewsIsFetching);
-  const {colors} = useTheme();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,20 +33,24 @@ const News = () => {
   }
 
   return (
-    <View style={[styles.container, {backgroundColor: colors.background}]}>
+    <SafeAreaView style={styles.container}>
       <FlatList
+        style={styles.list}
         data={news}
         renderItem={renderItem}
         keyExtractor={keyItem}
         onRefresh={onRefresh}
         refreshing={isFetching}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
+  },
+  list: {
     width: '100%',
   },
 });

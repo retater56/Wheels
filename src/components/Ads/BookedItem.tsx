@@ -6,6 +6,7 @@ import {cancelBooking} from '../../redux/reducers/cancelBookingReducer';
 import {fetchCustomerCars} from '../../redux/reducers/customerCarsReducer';
 import {useTheme} from '../../ThemeProvider';
 import CustomButton from '../common/CustomButton';
+import OrientationContainer from '../common/OrientationContainer';
 import commonStyles from '../common/styles';
 import {formatDate, rentData} from '../Search/constants';
 
@@ -26,7 +27,7 @@ const BookedItem = ({item}: any) => {
   const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);
 
   const memoRentTime = useMemo(() => {
-    const rentDataObj = rentData.find(per => per.value === rentTime);
+    const rentDataObj = rentData.find((per) => per.value === rentTime);
     return rentDataObj?.label;
   }, [rentTime]);
 
@@ -40,33 +41,41 @@ const BookedItem = ({item}: any) => {
   }, []);
 
   return (
-    <View
-      style={[styles.card, {backgroundColor: colors.background}]}
-      key={id + rentTime}>
-      <Text style={[styles.textDate, {color: colors.text}]}>
-        {memoRentDate}
-      </Text>
-      {imgSource !== '' ? (
-        <Image source={memoImageSource} style={styles.image} />
-      ) : (
-        <></>
-      )}
-      <Text style={[styles.textModel, {color: colors.text}]}>
-        {mark} {model}
-      </Text>
+    <View style={styles.centerContainer}>
+      <OrientationContainer>
+        <View
+          style={[styles.card, {backgroundColor: colors.background}]}
+          key={id + rentTime}>
+          <Text style={[styles.textDate, {color: colors.text}]}>
+            {memoRentDate}
+          </Text>
+          {imgSource ? (
+            <Image source={memoImageSource} style={styles.image} />
+          ) : (
+            <></>
+          )}
+          <Text style={[styles.textModel, {color: colors.text}]}>
+            {mark} {model}
+          </Text>
 
-      <Text style={[styles.textSubTitle, {color: colors.text}]}>Details</Text>
-      <View style={styles.containerDetails}>
-        <Text style={[styles.textDetails, {color: colors.text}]}>
-          Picked time:
-        </Text>
-        <Text style={{color: colors.text}}>{memoRentTime}</Text>
-      </View>
-      <View style={styles.containerDetails}>
-        <Text style={[styles.textDetails, {color: colors.text}]}>Cost:</Text>
-        <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
-      </View>
-      <CustomButton title="Cancel rent" onPress={onCancelRent} />
+          <Text style={[styles.textSubTitle, {color: colors.text}]}>
+            Details
+          </Text>
+          <View style={styles.containerDetails}>
+            <Text style={[styles.textDetails, {color: colors.text}]}>
+              Picked time:
+            </Text>
+            <Text style={{color: colors.text}}>{memoRentTime}</Text>
+          </View>
+          <View style={styles.containerDetails}>
+            <Text style={[styles.textDetails, {color: colors.text}]}>
+              Cost:
+            </Text>
+            <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
+          </View>
+          <CustomButton title="Cancel rent" onPress={onCancelRent} />
+        </View>
+      </OrientationContainer>
     </View>
   );
 };
@@ -79,6 +88,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
     ...commonStyles.shadow,
+  },
+  centerContainer: {
+    alignItems: 'center',
   },
   image: {
     width: '100%',
