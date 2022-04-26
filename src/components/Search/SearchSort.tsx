@@ -17,7 +17,7 @@ const SearchSort = () => {
 
   const onChoose = useCallback((item) => {
     navigation.goBack();
-    dispatch(fetchSortedCars(item.link));
+    dispatch(fetchSortedCars(item.value));
   }, []);
 
   const renderLinks = useCallback(({item}) => {
@@ -25,7 +25,7 @@ const SearchSort = () => {
       <View style={styles.container}>
         <OrientationContainer style={styles.container}>
           <CustomTouchableOpacity onPress={() => onChoose(item)}>
-            {item.name}
+            {item.label}
           </CustomTouchableOpacity>
         </OrientationContainer>
       </View>
@@ -41,7 +41,7 @@ const SearchSort = () => {
         style={styles.list}
         data={searchSortArray}
         renderItem={renderLinks}
-        keyExtractor={(item) => item.link}
+        keyExtractor={(item) => item.value}
       />
     </SafeAreaView>
   );

@@ -9,10 +9,10 @@ export const rentData = [
 ];
 
 export const searchSortArray = [
-  {name: 'Price: low to hight', link: '?_sort=cost'},
-  {name: 'Price: hight to low', link: '?_sort=mark_order=desc'},
-  {name: 'Marks: A - Z', link: '?_sort=mark'},
-  {name: 'Marks: Z - A', link: '?_sort=mark&_order=desc'},
+  {label: 'Price: low to hight', value: 'sortCosts'},
+  {label: 'Price: hight to low', value: 'sortCostsDesc'},
+  {label: 'Marks: A - Z', value: 'sortMarks'},
+  {label: 'Marks: Z - A', value: 'sortMarksDesc'},
 ];
 
 export const today = moment().toDate();

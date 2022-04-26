@@ -1,6 +1,6 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {ICar} from '../../components/Search/types';
-import {API_CARS} from '../../constants';
+import {API_CARS, API_GET_SORTED_CARS_BY_COST, API_GET_SORTED_CARS_BY_COST_DESC, API_GET_SORTED_CARS_BY_MARK, API_GET_SORTED_CARS_BY_MARK_DESC} from '../../constants';
 import {
   fetchCars,
   fetchSortedCars,
@@ -23,12 +23,22 @@ function* fetchCarsAsync() {
 }
 
 function* fetchSortedCarsAsync(action: ReturnType<typeof fetchSortedCars>) {
-  const sortLink = action.payload;
+  let sortedCars: string;
+  
+  if (action.payload === 'sortCosts') {
+    sortedCars = API_GET_SORTED_CARS_BY_COST
+  } else if (action.payload === 'sortCostsDesc') {
+    sortedCars = API_GET_SORTED_CARS_BY_COST_DESC
+  } else if (action.payload === 'sortMarks') {
+    sortedCars = API_GET_SORTED_CARS_BY_MARK
+  } else if (action.payload === 'sortMarksDesc') {
+    sortedCars = API_GET_SORTED_CARS_BY_MARK_DESC
+  }
 
   try {
     console.log('fetchSortedCarsAsync');
     const carsData: ICar[] = yield call(async () => {
-      const response = await fetch(`${API_CARS}${sortLink}`);
+      const response = await fetch(sortedCars);
       const responseData = await response.json();
       return responseData;
     });
