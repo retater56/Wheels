@@ -34,6 +34,11 @@ export const API_GET_USER_BY_ID = (id: string) => {
   return `${API_LINK}/users/${id}`;
 };
 
+export const API_GET_SORTED_CARS_BY_COST = `${API_CARS}?_sort=cost`;
+export const API_GET_SORTED_CARS_BY_COST_DESC = `${API_CARS}?_sort=cost_order=desc`;
+export const API_GET_SORTED_CARS_BY_MARK = `${API_CARS}?_sort=mark`;
+export const API_GET_SORTED_CARS_BY_MARK_DESC = `${API_CARS}?_sort=mark&_order=desc`;
+
 export const getNews = (state: RootState) => state.news.dataNews;
 export const getNewsTheme = (state: RootState) => state.news.currentTheme;
 export const getNewsIsFetching = (state: RootState) =>

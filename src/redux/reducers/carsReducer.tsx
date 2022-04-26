@@ -4,10 +4,12 @@ import {ICar} from '../../components/Search/types';
 const defaultState: {
   carsIsFething: boolean;
   dataCars: ICar[];
+  sort: string;
   error: boolean;
 } = {
   carsIsFething: false,
   dataCars: [],
+  sort: '',
   error: false,
 };
 
@@ -18,6 +20,11 @@ export const carsSlice = createSlice({
     fetchCars(state) {
       state.carsIsFething = true;
       state.error = false;
+    },
+    fetchSortedCars(state, action) {
+      state.carsIsFething = true;
+      state.error = false;
+      state.sort = action.payload;
     },
     requestCarsSuccess(state, action) {
       state.dataCars = action.payload;
@@ -33,6 +40,6 @@ export const carsSlice = createSlice({
 
 const {actions, reducer} = carsSlice;
 
-export const {fetchCars, requestCarsSuccess, requestCarsError} = actions;
+export const {fetchCars, fetchSortedCars, requestCarsSuccess, requestCarsError} = actions;
 
 export default reducer;

@@ -13,6 +13,7 @@ export type RootTabParamList = {
     item: ICar;
   };
   SearchItem: undefined;
+  SearchSort: undefined;
   Ads: undefined;
   ChangeDetails: {
     item: ICar;
