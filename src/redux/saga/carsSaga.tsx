@@ -18,7 +18,6 @@ import {
 
 function* fetchCarsAsync() {
   try {
-    console.log('fetchCarsAsync');
     const carsData: ICar[] = yield call(async () => {
       const response = await fetch(API_CARS);
       const responseData = await response.json();
@@ -48,7 +47,6 @@ function* fetchSortedCarsAsync(action: ReturnType<typeof fetchSortedCars>) {
   }
 
   try {
-    console.log('fetchSortedCarsAsync');
     const carsData: ICar[] = yield call(async () => {
       const response = await fetch(sortedCars);
       const responseData = await response.json();
@@ -61,7 +59,6 @@ function* fetchSortedCarsAsync(action: ReturnType<typeof fetchSortedCars>) {
 }
 
 export function* watchFetchCars() {
-  console.log('watchFetchCars');
   yield takeEvery(fetchCars, fetchCarsAsync);
   yield takeEvery(fetchSortedCars, fetchSortedCarsAsync);
 }

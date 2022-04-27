@@ -13,8 +13,6 @@ import {
 import { fetchCustomerCars } from '../reducers/customerCarsReducer';
 
 function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
-  console.log('cancelBookingAsync');
-
   const carData = action.payload.item;
   const userName = action.payload.userName;
 
@@ -93,6 +91,5 @@ function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
 }
 
 export function* watchCancelBooking() {
-  console.log('watchCancelBooking');
   yield takeEvery(cancelBooking, cancelBookingAsync);
 }

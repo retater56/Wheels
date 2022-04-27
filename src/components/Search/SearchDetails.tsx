@@ -1,4 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {validateYupSchema} from 'formik';
 import React, {useEffect, useMemo, useState} from 'react';
 import {
   ScrollView,
@@ -149,7 +150,7 @@ const SearchDetails = ({route}: Props) => {
                     color={colors.backgroundDark}
                   />
                   <Text style={[styles.textInfo, {color: colors.text}]}>
-                    {capacity}
+                    {capacity} {fuel === 'Electric' ? 'kWh' : 'L'}
                   </Text>
                 </View>
               </View>

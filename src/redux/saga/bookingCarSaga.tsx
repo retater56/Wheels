@@ -16,8 +16,6 @@ import {rentData} from '../../components/Search/constants';
 import {fetchCustomerCars} from '../reducers/customerCarsReducer';
 
 function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
-  console.log('bookingCarAsync');
-
   const customerData = action.payload;
 
   const {rentDate, rentTime, customerName, carId} = customerData;
@@ -48,11 +46,9 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
 
   try {
     const userBookingData: ICar[] = yield call(async () => {
-      console.log('userBookingData');
       const response = await fetch(API_GET_USER_NAME(customerName));
       const responseData = await response.json();
       const prevRentUserDate = responseData[0].booked[rentDate];
-      console.log(prevRentUserDate);
       let commonBookings = {};
       if (prevRentUserDate) {
         if (prevRentUserDate[rentTime]) {
@@ -63,7 +59,6 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
           ...customerRentDataCar,
         };
       } else {
-        console.log(`no prevRentUserDate` + prevRentUserDate);
         commonBookings = {
           ...customerRentDataCar,
         };
@@ -71,7 +66,6 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
       bookingUserData[`${rentDate}`] = {...commonBookings};
       return bookingUserData;
     });
-    console.log(JSON.stringify(userBookingData));
     const responseUser: ICar = yield call(async () => {
       const getUserData = await fetch(API_GET_USER_NAME(customerName));
       const userData = await getUserData.json();
@@ -89,7 +83,6 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
         }),
       });
       const res = await data.json();
-      console.log(res);
       // return response;
     });
     const carBookingData: ICar[] = yield call(async () => {
@@ -103,7 +96,6 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
           ...customerRentData,
         };
       } else {
-        console.log(`no rentCarDate` + rentCarDate);
         commonBookings = {
           ...customerRentData,
         };
@@ -125,20 +117,16 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
         }),
       });
       const res = await data.json();
-      console.log(res);
       // return response;
     });
     yield put(bookingCarSuccess());
     yield put(fetchCustomerCars(customerName));
   } catch (error: any) {
-    console.log(error.message);
     yield put(bookingCarFailed(error.message));
   }
 }
 
 function* bookingDateDataAsync(action: ReturnType<typeof bookingDateData>) {
-  console.log('bookingDateDataAsync');
-
   const {carId, rentDateFormat} = action.payload;
 
   const carBookingData: ICar[] = yield call(async () => {
@@ -150,7 +138,6 @@ function* bookingDateDataAsync(action: ReturnType<typeof bookingDateData>) {
       const freeTime = rentData.filter(
         (time) => !arrDates.includes(time.value),
       );
-      console.log(freeTime);
       return freeTime;
     } else {
       return rentData;
@@ -160,7 +147,6 @@ function* bookingDateDataAsync(action: ReturnType<typeof bookingDateData>) {
 }
 
 export function* watchBookingCar() {
-  console.log('watchBookingCar');
   yield takeEvery(bookingCar, bookingCarAsync);
   yield takeEvery(bookingDateData, bookingDateDataAsync);
 }

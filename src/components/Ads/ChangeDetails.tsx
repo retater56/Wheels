@@ -90,6 +90,10 @@ const ChangeDetails = ({navigation, route}: Props) => {
     return checkUserPref(isDark);
   }, [portrait, isDark]);
 
+  const memoCapacity = useMemo(() => {
+    return values.capacity.split(' ')[0];
+  }, []);
+
   const onPressMark = useCallback(() => {
     navigation.navigate('CreateAdDetails', {
       paramType: 'mark',
@@ -231,23 +235,16 @@ const ChangeDetails = ({navigation, route}: Props) => {
               )}
               <CustomTextInput
                 keyboardType={'numeric'}
-                placeholder="Capacity"
+                placeholder="Capacity , L (kWh)"
                 onChangeText={handleChange('capacity')}>
                 {values.capacity}
-              </CustomTextInput>
-              {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
-              <CustomTextInput
-                keyboardType={'numeric'}
-                placeholder="Your cost , $"
-                onChangeText={handleChange('cost')}>
-                {values.cost}
               </CustomTextInput>
             </View>
             <Text style={[styles.title, {color: colors.text}]}>Rent cost</Text>
             <View style={styles.centerContainer}>
               <CustomTextInput
                 keyboardType={'numeric'}
-                placeholder="Your cost"
+                placeholder="Your cost , $"
                 onChangeText={handleChange('cost')}>
                 {values.cost}
               </CustomTextInput>

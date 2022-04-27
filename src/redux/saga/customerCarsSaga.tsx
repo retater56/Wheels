@@ -14,12 +14,10 @@ function* fetchCustomerCarsAsync(action: ReturnType<typeof fetchCustomerCars>) {
   const customer = action.payload;
 
   try {
-    console.log('fetchCustomerCarsAsync');
     const carsData: ICar[] = yield call(async () => {
       const response = await fetch(API_GET_CUSTOMER_CARS_BY_NAME(customer));
       const responseData = await response.json();
       const customerBooked = responseData[0].booked;
-      console.log(customerBooked);
       let carsArray = [];
       for (let date in customerBooked) {
         let carId = '';
@@ -44,6 +42,5 @@ function* fetchCustomerCarsAsync(action: ReturnType<typeof fetchCustomerCars>) {
 }
 
 export function* watchFetchCustomerCars() {
-  console.log('watchFetchCustomerCars');
   yield takeEvery(fetchCustomerCars, fetchCustomerCarsAsync);
 }

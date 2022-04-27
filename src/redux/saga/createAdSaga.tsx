@@ -10,25 +10,10 @@ import {
 } from '../reducers/createAdReducer';
 
 function* addCarAsync(action: ReturnType<typeof addCar>) {
-  console.log('addCarAsync');
-
-  let carData = {};
-
-  if (action.payload.fuel === 'Electric') {
-    carData = {
-      ...action.payload,
-      ...{capacity: `${action.payload.capacity} kWh`},
-    };
-  } else {
-    carData = {
-      ...action.payload,
-      ...{capacity: `${action.payload.capacity} L`},
-    };
-  }
+  const carData = {...action.payload};
 
   try {
     const response: ICar = yield call(async () => {
-      console.log(carData);
       const data = await fetch(API_CARS, {
         method: 'POST',
         headers: {
@@ -37,7 +22,6 @@ function* addCarAsync(action: ReturnType<typeof addCar>) {
         body: JSON.stringify({...carData}),
       });
       const response = await data.json();
-      console.log(response);
       return response;
     });
     yield put(addCarSuccess());
@@ -48,10 +32,6 @@ function* addCarAsync(action: ReturnType<typeof addCar>) {
 }
 
 function* updateCarAsync(action: ReturnType<typeof updateCar>) {
-  console.log('updateCarAsync');
-
-  action.payload.capacity = `${action.payload.capacity} L`;
-
   const carData = {...action.payload};
 
   try {
@@ -64,7 +44,6 @@ function* updateCarAsync(action: ReturnType<typeof updateCar>) {
         body: JSON.stringify({...carData}),
       });
       const response = await data.json();
-      console.log(response);
       return response;
     });
     yield put(addCarSuccess());
@@ -75,7 +54,6 @@ function* updateCarAsync(action: ReturnType<typeof updateCar>) {
 }
 
 export function* watchCreateAd() {
-  console.log('watchCreateAd');
   yield takeEvery(addCar, addCarAsync);
   yield takeEvery(updateCar, updateCarAsync);
 }

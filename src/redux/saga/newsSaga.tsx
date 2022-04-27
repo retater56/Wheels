@@ -8,7 +8,6 @@ import {
 } from '../reducers/newsReducer';
 
 function* fetchNewsAsync(action: ReturnType<typeof fetchNews>) {
-  console.log('fetchNewsAsync');
   const keyword = action.payload;
 
   try {
@@ -17,7 +16,6 @@ function* fetchNewsAsync(action: ReturnType<typeof fetchNews>) {
       const res = await data.json();
       return res.articles;
     });
-    // console.log(newsData);
     yield put(requestNewsSuccess(newsData));
   } catch (error) {
     yield put(requestNewsError());
@@ -25,6 +23,5 @@ function* fetchNewsAsync(action: ReturnType<typeof fetchNews>) {
 }
 
 export function* watchFetchNews() {
-  console.log('watchFetchNews');
   yield takeEvery(fetchNews, fetchNewsAsync);
 }

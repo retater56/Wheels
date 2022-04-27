@@ -22,11 +22,9 @@ export interface IUser {
 }
 
 function* registerUserAsync(action: ReturnType<typeof registerUser>) {
-  console.log('registerUserAsync');
   const userData = {...action.payload};
   try {
     const response: IUser = yield call(async () => {
-      console.log(userData);
       const data = await fetch(API_USER_REGISTER, {
         method: 'POST',
         headers: {
@@ -47,13 +45,11 @@ function* registerUserAsync(action: ReturnType<typeof registerUser>) {
     });
     yield put(registerUserSuccess(user[0]));
   } catch (error: any) {
-    console.log(error.message);
     yield put(registerUserFailed(error.message));
   }
 }
 
 function* logInUserAsync(payload: any) {
-  console.log('logInUserAsync');
   const userData = {...payload.payload};
   try {
     const response: IUser = yield call(async () => {
@@ -84,7 +80,6 @@ function* logInUserAsync(payload: any) {
 }
 
 export function* watchUser() {
-  console.log('watchFetchUser');
   yield takeEvery(registerUser, registerUserAsync);
   yield takeEvery(logInUser, logInUserAsync);
 }

@@ -9,15 +9,17 @@ const defaultState: {
 } = {
   isLoading: false,
   item: {
+    id: '',
     imgSourceBase64: '',
     mark: '',
     model: '',
     fuel: '',
-    doors: '',
+    vehicleType: '',
     transmission: '',
     seats: '',
-    baggageCapacity: '',
+    maxSpeed: '',
     capacity: '',
+    position: '',
     cost: '',
     description: '',
     booking: {},
@@ -48,7 +50,10 @@ export const cancelBookingSlice = createSlice({
 
 const {actions, reducer} = cancelBookingSlice;
 
-export const {cancelBooking, cancelBookingSuccess, cancelBookingFailed} =
-  actions;
+export const {
+  cancelBooking,
+  cancelBookingSuccess,
+  cancelBookingFailed,
+} = actions;
 
 export default reducer;

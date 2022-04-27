@@ -13,7 +13,6 @@ function* fetchOwnerCarsAsync(action: ReturnType<typeof fetchOwnerCars>) {
   const owner = action.payload;
 
   try {
-    console.log('fetchOwnerCarsAsync');
     const carsData: ICar[] = yield call(async () => {
       const response = await fetch(API_CARS);
       const responseData = await response.json();
@@ -38,7 +37,6 @@ function* deleteOwnerCarAsync(action: ReturnType<typeof deleteOwnerCar>) {
         method: 'DELETE',
       });
       const response = await data.json();
-      console.log(response);
       return response;
     });
   } catch (error) {
@@ -47,7 +45,6 @@ function* deleteOwnerCarAsync(action: ReturnType<typeof deleteOwnerCar>) {
 }
 
 export function* watchFetchOwnerCars() {
-  console.log('watchFetchOwnerCars');
   yield takeEvery(fetchOwnerCars, fetchOwnerCarsAsync);
   yield takeEvery(deleteOwnerCar, deleteOwnerCarAsync);
 }
