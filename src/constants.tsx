@@ -35,9 +35,11 @@ export const API_GET_USER_BY_ID = (id: string) => {
 };
 
 export const API_GET_SORTED_CARS_BY_COST = `${API_CARS}?_sort=cost`;
-export const API_GET_SORTED_CARS_BY_COST_DESC = `${API_CARS}?_sort=cost_order=desc`;
+export const API_GET_SORTED_CARS_BY_COST_DESC = `${API_CARS}?_sort=cost&_order=desc`;
 export const API_GET_SORTED_CARS_BY_MARK = `${API_CARS}?_sort=mark`;
 export const API_GET_SORTED_CARS_BY_MARK_DESC = `${API_CARS}?_sort=mark&_order=desc`;
+export const API_GET_SORTED_CARS_BY_SPEED = `${API_CARS}?_sort=maxSpeed`;
+export const API_GET_SORTED_CARS_BY_SPEED_DESC = `${API_CARS}?_sort=maxSpeed&_order=desc`;
 
 export const getNews = (state: RootState) => state.news.dataNews;
 export const getNewsTheme = (state: RootState) => state.news.currentTheme;
@@ -52,6 +54,9 @@ export const getCarsError = (state: RootState) => state.cars.error;
 export const getUserName = (state: RootState) => state.user.userName;
 export const getLoggedIn = (state: RootState) => state.user.isLoggedIn;
 export const getUserIsFetching = (state: RootState) => state.user.isLoading;
+export const getUserError = (state: RootState) => state.user.error;
+export const getUserErrorMessage = (state: RootState) =>
+  state.user.errorMessage;
 
 export const getOwnerCars = (state: RootState) => state.ownerCars.dataCars;
 export const getOwnerCarsIsFetching = (state: RootState) =>
@@ -64,6 +69,12 @@ export const getCustomerCarsIsFetching = (state: RootState) =>
   state.customerCars.carsIsFething;
 export const getCustomerCarsError = (state: RootState) =>
   state.customerCars.error;
+
+export const getBookingError = (state: RootState) => state.bookingCar.error;
+export const getBookingErrorMessage = (state: RootState) =>
+  state.bookingCar.errorMessage;
+export const getBookingSuccess = (state: RootState) =>
+  state.bookingCar.carBooked;
 
 export const getBookedTime = (state: RootState) => state.bookingCar.bookedTime;
 

@@ -5,26 +5,21 @@ export const CreateAdSchema = Yup.object().shape({
   mark: Yup.string().required('Required'),
   model: Yup.string().required('Required'),
   fuel: Yup.string().required('Required'),
-  doors: Yup.number()
-  .min(2, 'Fix doors count!')
-  .max(8, 'Fix doors count!')
-  .required('Required'),
+  vehicleType: Yup.string().required('Required'),
   transmission: Yup.string().required('Required'),
   seats: Yup.number()
-  .min(2, 'Fix seats count!')
-  .max(8, 'Fix seats count!')
-  .required('Required'),
-  baggageCapacity: Yup.number()
-  .min(0, 'Fix baggage capacity count!')
-  .max(20, 'Fix baggage capacity count!')
-  .required('Required'),
+    .min(2, 'Fix seats count!')
+    .max(8, 'Fix seats count!')
+    .required('Required'),
+  maxSpeed: Yup.number()
+    .min(45, 'Fix minimum spped!')
+    .max(450, 'Fix maximum spped!')
+    .required('Required'),
   capacity: Yup.number()
-  .min(1, 'Fix capacity count!')
-  .max(12, 'Fix capacity count!')
-  .required('Required'),
-  cost: Yup.number()
-  .min(1, 'Fix cost!')
-  .required('Required'),
+    .min(0, 'Fix capacity count!')
+    .max(100, 'Fix capacity count!')
+    .required('Required'),
+  cost: Yup.number().min(1, 'Fix cost!').required('Required'),
   position: Yup.string().required('Required'),
-  description: Yup.string().min(10, 'Too short!').required('Required')
+  description: Yup.string().min(10, 'Too short!').required('Required'),
 });

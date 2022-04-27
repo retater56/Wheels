@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import NewsNavigation from './NewsNavigation';
 import AuthNavigation from './AuthNavigation';
@@ -7,16 +7,46 @@ import SearchNavigation from './SearchNavigation';
 import {RootTabParamList} from '../types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CreateAdNavigation from './CreateAdNavigation';
-Icon.loadFont();
+import IntroNavigation from './IntroNavigation';
+import {getFirstOpen} from '../components/Intro/checkFirstInstall';
+import LoadingScreen from '../components/common/LoadingScreen';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const MainTabNavigation = () => {
+  const [opened, setOpened] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  const checkUser = async () => {
+    const val = await getFirstOpen();
+    setOpened(val!);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
       }}>
+      {opened == '' && (
+        <Tab.Screen
+          name="IntroNavigation"
+          component={IntroNavigation}
+          options={{
+            tabBarShowLabel: false,
+            headerShown: false,
+            tabBarStyle: {display: 'none'},
+          }}
+        />
+      )}
       <Tab.Screen
         name="News"
         component={NewsNavigation}

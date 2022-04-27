@@ -5,9 +5,10 @@ import CustomButton from '../common/CustomButton';
 import {setFirstOpen} from './checkFirstInstall';
 import introStyles from './introStyles';
 
-const IntroSecond = () => {
+const IntroSecond = ({navigation}: any) => {
   const onStartUsing = useCallback(() => {
     setFirstOpen('true');
+    navigation.navigate('News');
   }, []);
 
   return (

@@ -21,7 +21,7 @@ import {RootTabParamList} from '../../types';
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreateAdSchema} from './validation';
-import {fuelData, transmissionData} from './constants';
+import {fuelData, transmissionData, vehicleTypes} from './constants';
 import {getLoggedIn, getUserName, uriImgBase64} from '../../constants';
 import {addCar} from '../../redux/reducers/createAdReducer';
 import CustomButton from '../common/CustomButton';
@@ -32,7 +32,6 @@ import commonStyles, {checkUserPref} from '../common/styles';
 import NotLoggedScreen from '../common/NotLoggedScreen';
 import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 import OrientationContainer from '../common/OrientationContainer';
-import useOrientation from '../common/useOrientation';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 
@@ -49,10 +48,10 @@ const CreateAd = ({navigation}: Props) => {
         mark: '',
         model: '',
         fuel: '',
-        doors: '',
+        vehicleType: '',
         transmission: '',
         seats: '',
-        baggageCapacity: '',
+        maxSpeed: '',
         capacity: '',
         cost: '',
         position: '',
@@ -63,6 +62,7 @@ const CreateAd = ({navigation}: Props) => {
       validateOnBlur: false,
       validationSchema: CreateAdSchema,
       onSubmit: (values, {resetForm}) => {
+        Alert.alert('Add was created', '', [{text: 'OK'}]);
         dispatch(addCar({...values, owner}));
         dispatch(fetchOwnerCars(owner));
         resetForm();
@@ -181,6 +181,7 @@ const CreateAd = ({navigation}: Props) => {
               Set Mark and Model
             </Text>
             <View style={styles.centerContainer}>
+              {errors.mark && <Text style={styles.errors}>{errors.mark}</Text>}
               <CustomTouchableOpacity onPress={onPressMark}>
                 {values.mark ? (
                   <Text>{values.mark}</Text>
@@ -188,7 +189,9 @@ const CreateAd = ({navigation}: Props) => {
                   <Text style={{color: colors.gray}}>Mark</Text>
                 )}
               </CustomTouchableOpacity>
-              {errors.mark && <Text style={styles.errors}>{errors.mark}</Text>}
+              {errors.model && (
+                <Text style={styles.errors}>{errors.model}</Text>
+              )}
               <CustomTouchableOpacity onPress={onPressModel}>
                 {values.model ? (
                   <Text>{values.model}</Text>
@@ -196,15 +199,15 @@ const CreateAd = ({navigation}: Props) => {
                   <Text style={{color: colors.gray}}>Model</Text>
                 )}
               </CustomTouchableOpacity>
-              {errors.model && (
-                <Text style={styles.errors}>{errors.model}</Text>
-              )}
             </View>
             <Text style={[styles.title, {color: colors.text}]}>
               Specifications
             </Text>
             <View style={styles.centerContainer}>
               <View style={styles.pickerView}>
+                {errors.fuel && (
+                  <Text style={styles.errors}>{errors.fuel}</Text>
+                )}
                 <PickerSelect
                   value={values.fuel}
                   style={memoStyle}
@@ -212,20 +215,23 @@ const CreateAd = ({navigation}: Props) => {
                   placeholder={{label: 'Choose fuel type...', value: ''}}
                   items={fuelData}
                 />
+              </View>
+              <View style={styles.pickerView}>
                 {errors.fuel && (
                   <Text style={styles.errors}>{errors.fuel}</Text>
                 )}
+                <PickerSelect
+                  value={values.vehicleType}
+                  style={memoStyle}
+                  onValueChange={handleChange('vehicleType')}
+                  placeholder={{label: 'Choose vehicle type...', value: ''}}
+                  items={vehicleTypes}
+                />
               </View>
-              <CustomTextInput
-                keyboardType={'numeric'}
-                placeholder="Doors"
-                onChangeText={handleChange('doors')}>
-                {values.doors}
-              </CustomTextInput>
-              {errors.doors && (
-                <Text style={styles.errors}>{errors.doors}</Text>
-              )}
               <View style={styles.pickerView}>
+                {errors.transmission && (
+                  <Text style={styles.errors}>{errors.transmission}</Text>
+                )}
                 <PickerSelect
                   value={values.transmission}
                   style={memoStyle}
@@ -236,47 +242,50 @@ const CreateAd = ({navigation}: Props) => {
                   }}
                   items={transmissionData}
                 />
-                {errors.transmission && (
-                  <Text style={styles.errors}>{errors.transmission}</Text>
-                )}
               </View>
+              {errors.seats && (
+                <Text style={styles.errors}>{errors.seats}</Text>
+              )}
               <CustomTextInput
                 keyboardType={'numeric'}
                 placeholder="Seats"
                 onChangeText={handleChange('seats')}>
                 {values.seats}
               </CustomTextInput>
-              {errors.seats && (
-                <Text style={styles.errors}>{errors.seats}</Text>
+              {errors.maxSpeed && (
+                <Text style={styles.errors}>{errors.maxSpeed}</Text>
               )}
               <CustomTextInput
                 keyboardType={'numeric'}
-                placeholder="Baggage Capacity"
-                onChangeText={handleChange('baggageCapacity')}>
-                {values.baggageCapacity}
-              </CustomTextInput>
-              {errors.baggageCapacity && (
-                <Text style={styles.errors}>{errors.baggageCapacity}</Text>
-              )}
-              <CustomTextInput
-                keyboardType={'numeric'}
-                placeholder="Capacity"
-                onChangeText={handleChange('capacity')}>
-                {values.capacity}
+                placeholder="Maximum speed , mph"
+                onChangeText={handleChange('maxSpeed')}>
+                {values.maxSpeed}
               </CustomTextInput>
               {errors.capacity && (
                 <Text style={styles.errors}>{errors.capacity}</Text>
               )}
               <CustomTextInput
                 keyboardType={'numeric'}
-                placeholder="Your cost"
+                placeholder="Capacity , L (kWh)"
+                onChangeText={handleChange('capacity')}>
+                {values.capacity}
+              </CustomTextInput>
+            </View>
+            <Text style={[styles.title, {color: colors.text}]}>Rent cost</Text>
+            <View style={styles.centerContainer}>
+              {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
+              <CustomTextInput
+                keyboardType={'numeric'}
+                placeholder="Your cost , $"
                 onChangeText={handleChange('cost')}>
                 {values.cost}
               </CustomTextInput>
-              {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
             </View>
             <Text style={[styles.title, {color: colors.text}]}>Car place</Text>
             <View style={styles.centerContainer}>
+              {errors.position && (
+                <Text style={styles.errors}>{errors.position}</Text>
+              )}
               <CustomTouchableOpacity onPress={onPressMap}>
                 {values.position ? (
                   <Text>Position setted</Text>
@@ -284,9 +293,6 @@ const CreateAd = ({navigation}: Props) => {
                   <Text style={{color: colors.gray}}>Position</Text>
                 )}
               </CustomTouchableOpacity>
-              {errors.position && (
-                <Text style={styles.errors}>{errors.position}</Text>
-              )}
             </View>
             <Text style={[styles.title, {color: colors.text}]}>
               Your description...
@@ -355,6 +361,7 @@ export const styles = StyleSheet.create({
     ...commonStyles.shadow,
   },
   pickerView: {
+    alignItems: 'center',
     width: '90%',
   },
   errors: {

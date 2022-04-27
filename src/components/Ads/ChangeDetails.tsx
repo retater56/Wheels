@@ -15,7 +15,7 @@ import {RootTabParamList} from '../../types';
 import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreateAdSchema} from '../CreateAd/validation';
-import {fuelData, transmissionData} from '../CreateAd/constants';
+import {fuelData, transmissionData, vehicleTypes} from '../CreateAd/constants';
 import {getLoggedIn, getUserName, uriImgBase64} from '../../constants';
 import {updateCar} from '../../redux/reducers/createAdReducer';
 import CustomButton from '../common/CustomButton';
@@ -40,10 +40,10 @@ const ChangeDetails = ({navigation, route}: Props) => {
     mark,
     model,
     fuel,
-    doors,
+    vehicleType,
     transmission,
     seats,
-    baggageCapacity,
+    maxSpeed,
     capacity,
     cost,
     position,
@@ -61,10 +61,10 @@ const ChangeDetails = ({navigation, route}: Props) => {
         mark: mark,
         model: model,
         fuel: fuel,
-        doors: doors,
+        vehicleType: vehicleType,
         transmission: transmission,
         seats: seats,
-        baggageCapacity: baggageCapacity,
+        maxSpeed: maxSpeed,
         capacity: capacity,
         cost: cost,
         position: position,
@@ -159,7 +159,6 @@ const ChangeDetails = ({navigation, route}: Props) => {
                   <Text style={{color: colors.gray}}>Mark</Text>
                 )}
               </CustomTouchableOpacity>
-              {errors.mark && <Text style={styles.errors}>{errors.mark}</Text>}
               <CustomTouchableOpacity onPress={onPressModel}>
                 {values.model ? (
                   <Text>{values.model}</Text>
@@ -167,14 +166,12 @@ const ChangeDetails = ({navigation, route}: Props) => {
                   <Text style={{color: colors.gray}}>Model</Text>
                 )}
               </CustomTouchableOpacity>
-              {errors.model && (
-                <Text style={styles.errors}>{errors.model}</Text>
-              )}
             </View>
             <Text style={[styles.title, {color: colors.text}]}>
               Specifications
             </Text>
             <View style={styles.centerContainer}>
+              {errors.fuel && <Text style={styles.errors}>{errors.fuel}</Text>}
               <View style={styles.pickerView}>
                 <PickerSelect
                   value={values.fuel}
@@ -183,20 +180,23 @@ const ChangeDetails = ({navigation, route}: Props) => {
                   placeholder={{label: 'Choose fuel type...', value: ''}}
                   items={fuelData}
                 />
-                {errors.fuel && (
-                  <Text style={styles.errors}>{errors.fuel}</Text>
-                )}
               </View>
-              <CustomTextInput
-                keyboardType={'numeric'}
-                placeholder="Doors"
-                onChangeText={handleChange('doors')}>
-                {values.doors}
-              </CustomTextInput>
-              {errors.doors && (
-                <Text style={styles.errors}>{errors.doors}</Text>
+              {errors.vehicleType && (
+                <Text style={styles.errors}>{errors.vehicleType}</Text>
               )}
               <View style={styles.pickerView}>
+                <PickerSelect
+                  value={values.vehicleType}
+                  style={memoStyle}
+                  onValueChange={handleChange('vehicleType')}
+                  placeholder={{label: 'Choose vehicle type...', value: ''}}
+                  items={vehicleTypes}
+                />
+              </View>
+              <View style={styles.pickerView}>
+                {errors.transmission && (
+                  <Text style={styles.errors}>{errors.transmission}</Text>
+                )}
                 <PickerSelect
                   value={values.transmission}
                   style={memoStyle}
@@ -207,27 +207,27 @@ const ChangeDetails = ({navigation, route}: Props) => {
                   }}
                   items={transmissionData}
                 />
-                {errors.transmission && (
-                  <Text style={styles.errors}>{errors.transmission}</Text>
-                )}
               </View>
+              {errors.seats && (
+                <Text style={styles.errors}>{errors.seats}</Text>
+              )}
               <CustomTextInput
                 keyboardType={'numeric'}
                 placeholder="Seats"
                 onChangeText={handleChange('seats')}>
                 {values.seats}
               </CustomTextInput>
-              {errors.seats && (
-                <Text style={styles.errors}>{errors.seats}</Text>
+              {errors.maxSpeed && (
+                <Text style={styles.errors}>{errors.maxSpeed}</Text>
               )}
               <CustomTextInput
                 keyboardType={'numeric'}
-                placeholder="Baggage Capacity"
-                onChangeText={handleChange('baggageCapacity')}>
-                {values.baggageCapacity}
+                placeholder="Maximum speed"
+                onChangeText={handleChange('maxSpeed')}>
+                {values.maxSpeed}
               </CustomTextInput>
-              {errors.baggageCapacity && (
-                <Text style={styles.errors}>{errors.baggageCapacity}</Text>
+              {errors.capacity && (
+                <Text style={styles.errors}>{errors.capacity}</Text>
               )}
               <CustomTextInput
                 keyboardType={'numeric'}
@@ -235,16 +235,22 @@ const ChangeDetails = ({navigation, route}: Props) => {
                 onChangeText={handleChange('capacity')}>
                 {values.capacity}
               </CustomTextInput>
-              {errors.capacity && (
-                <Text style={styles.errors}>{errors.capacity}</Text>
-              )}
+              {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
+              <CustomTextInput
+                keyboardType={'numeric'}
+                placeholder="Your cost , $"
+                onChangeText={handleChange('cost')}>
+                {values.cost}
+              </CustomTextInput>
+            </View>
+            <Text style={[styles.title, {color: colors.text}]}>Rent cost</Text>
+            <View style={styles.centerContainer}>
               <CustomTextInput
                 keyboardType={'numeric'}
                 placeholder="Your cost"
                 onChangeText={handleChange('cost')}>
                 {values.cost}
               </CustomTextInput>
-              {errors.cost && <Text style={styles.errors}>{errors.cost}</Text>}
             </View>
             <Text style={[styles.title, {color: colors.text}]}>Car place</Text>
             <View style={styles.centerContainer}>
@@ -255,9 +261,6 @@ const ChangeDetails = ({navigation, route}: Props) => {
                   <Text style={{color: colors.gray}}>Position</Text>
                 )}
               </CustomTouchableOpacity>
-              {errors.position && (
-                <Text style={styles.errors}>{errors.position}</Text>
-              )}
             </View>
             <Text style={[styles.title, {color: colors.text}]}>
               Your description...
@@ -325,6 +328,7 @@ const styles = StyleSheet.create({
     ...commonStyles.shadow,
   },
   pickerView: {
+    alignItems: 'center',
     width: '90%',
   },
   errors: {

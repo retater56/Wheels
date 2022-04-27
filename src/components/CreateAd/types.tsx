@@ -11,10 +11,10 @@ export interface ICar {
   mark: string;
   model: string;
   fuel: string;
-  doors: string;
+  vehicleType: string;
   transmission: string;
   seats: string;
-  baggageCapacity: string;
+  maxSpeed: string;
   capacity: string;
   cost: string;
   position: string;

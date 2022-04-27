@@ -13,7 +13,7 @@ import {
   API_GET_USER_NAME,
 } from '../../constants';
 import {rentData} from '../../components/Search/constants';
-import { fetchCustomerCars } from '../reducers/customerCarsReducer';
+import {fetchCustomerCars} from '../reducers/customerCarsReducer';
 
 function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
   console.log('bookingCarAsync');
@@ -129,10 +129,10 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
       // return response;
     });
     yield put(bookingCarSuccess());
-    yield put(fetchCustomerCars(customerName))
-  } catch (error) {
-    console.log(error);
-    yield put(bookingCarFailed());
+    yield put(fetchCustomerCars(customerName));
+  } catch (error: any) {
+    console.log(error.message);
+    yield put(bookingCarFailed(error.message));
   }
 }
 
@@ -147,7 +147,9 @@ function* bookingDateDataAsync(action: ReturnType<typeof bookingDateData>) {
     const rentCarDate = responseData.booking[rentDateFormat];
     if (rentCarDate) {
       const arrDates = Object.keys(rentCarDate);
-      const freeTime = rentData.filter(time => !arrDates.includes(time.value));
+      const freeTime = rentData.filter(
+        (time) => !arrDates.includes(time.value),
+      );
       console.log(freeTime);
       return freeTime;
     } else {

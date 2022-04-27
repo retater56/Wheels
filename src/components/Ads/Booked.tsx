@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList, SafeAreaView} from 'react-native';
+import {Text, StyleSheet, FlatList, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getLoggedIn,
@@ -35,7 +35,7 @@ const Booked = () => {
     return <BookedItem item={item} />;
   }, []);
 
-  const keyItem = useCallback((item) => item.id + item.rentTime, []);
+  const keyItem = useCallback((item) => item.rentDate + item.rentTime, []);
 
   if (!isLoggedIn) {
     return <NotLoggedScreen />;

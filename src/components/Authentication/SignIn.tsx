@@ -7,18 +7,23 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootTabParamList} from '../../types';
 import {useFormik} from 'formik';
 import {SignInSchema} from './validation';
-import {logInUser} from '../../redux/reducers/userReducer';
+import {clearError, logInUser} from '../../redux/reducers/userReducer';
 import CustomTextInput from '../common/CustomTextInput';
 import CustomButton from '../common/CustomButton';
 import {useTheme} from '../../ThemeProvider';
 import commonStyles from '../common/styles';
 import LoadingScreen from '../common/LoadingScreen';
-import {getUserIsFetching} from '../../constants';
+import {
+  getUserError,
+  getUserErrorMessage,
+  getUserIsFetching,
+} from '../../constants';
 import OrientationContainer from '../common/OrientationContainer';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
@@ -26,6 +31,8 @@ type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 const SignIn = ({navigation}: Props) => {
   const dispatch = useDispatch();
   const isFetching = useSelector(getUserIsFetching);
+  const error = useSelector(getUserError);
+  const errorMessage = useSelector(getUserErrorMessage);
   const {colors} = useTheme();
 
   const {handleChange, handleSubmit, values, errors} = useFormik({
@@ -56,6 +63,12 @@ const SignIn = ({navigation}: Props) => {
     return <LoadingScreen />;
   }
 
+  if (error) {
+    Alert.alert('Error', errorMessage, [
+      {text: 'OK', onPress: () => dispatch(clearError())},
+    ]);
+  }
+
   return (
     <SafeAreaView>
       <View style={[styles.container, {width: '100%'}]}>
@@ -65,23 +78,24 @@ const SignIn = ({navigation}: Props) => {
               <Text style={[styles.textTitle, {color: colors.text}]}>
                 Welcome Back!
               </Text>
+              {errors.email && (
+                <Text style={styles.errors}>{errors.email}</Text>
+              )}
               <CustomTextInput
                 placeholder="Email"
                 autoCapitalize="none"
                 onChangeText={handleChange('email')}
                 value={values.email}
               />
-              {errors.email && (
-                <Text style={styles.errors}>{errors.email}</Text>
+              {errors.password && (
+                <Text style={styles.errors}>{errors.password}</Text>
               )}
               <CustomTextInput
                 placeholder="Password"
                 secureTextEntry
                 onChangeText={handleChange('password')}
+                value={values.password}
               />
-              {errors.password && (
-                <Text style={styles.errors}>{errors.password}</Text>
-              )}
               <CustomButton title="Log In" onPress={onSubmit} />
               <CustomButton
                 title="Don't Have Account?"

@@ -1,6 +1,14 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {ICar} from '../../components/Search/types';
-import {API_CARS, API_GET_SORTED_CARS_BY_COST, API_GET_SORTED_CARS_BY_COST_DESC, API_GET_SORTED_CARS_BY_MARK, API_GET_SORTED_CARS_BY_MARK_DESC} from '../../constants';
+import {
+  API_CARS,
+  API_GET_SORTED_CARS_BY_COST,
+  API_GET_SORTED_CARS_BY_COST_DESC,
+  API_GET_SORTED_CARS_BY_MARK,
+  API_GET_SORTED_CARS_BY_MARK_DESC,
+  API_GET_SORTED_CARS_BY_SPEED,
+  API_GET_SORTED_CARS_BY_SPEED_DESC,
+} from '../../constants';
 import {
   fetchCars,
   fetchSortedCars,
@@ -24,15 +32,19 @@ function* fetchCarsAsync() {
 
 function* fetchSortedCarsAsync(action: ReturnType<typeof fetchSortedCars>) {
   let sortedCars: string;
-  
+
   if (action.payload === 'sortCosts') {
-    sortedCars = API_GET_SORTED_CARS_BY_COST
+    sortedCars = API_GET_SORTED_CARS_BY_COST;
   } else if (action.payload === 'sortCostsDesc') {
-    sortedCars = API_GET_SORTED_CARS_BY_COST_DESC
+    sortedCars = API_GET_SORTED_CARS_BY_COST_DESC;
   } else if (action.payload === 'sortMarks') {
-    sortedCars = API_GET_SORTED_CARS_BY_MARK
+    sortedCars = API_GET_SORTED_CARS_BY_MARK;
   } else if (action.payload === 'sortMarksDesc') {
-    sortedCars = API_GET_SORTED_CARS_BY_MARK_DESC
+    sortedCars = API_GET_SORTED_CARS_BY_MARK_DESC;
+  } else if (action.payload === 'sortMaxSpeed') {
+    sortedCars = API_GET_SORTED_CARS_BY_SPEED;
+  } else if (action.payload === 'sortMaxSpeedDesc') {
+    sortedCars = API_GET_SORTED_CARS_BY_SPEED_DESC;
   }
 
   try {

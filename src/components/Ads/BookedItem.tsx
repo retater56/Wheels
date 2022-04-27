@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {StyleSheet, Image, Text, View} from 'react-native';
+import {StyleSheet, Image, Text, View, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getImgSource, getUserName, uriImg} from '../../constants';
 import {cancelBooking} from '../../redux/reducers/cancelBookingReducer';
@@ -8,7 +8,7 @@ import {useTheme} from '../../ThemeProvider';
 import CustomButton from '../common/CustomButton';
 import OrientationContainer from '../common/OrientationContainer';
 import commonStyles from '../common/styles';
-import {formatDate, rentData} from '../Search/constants';
+import {formatDateBooking, rentData} from '../Search/constants';
 
 const BookedItem = ({item}: any) => {
   const dispatch = useDispatch();
@@ -32,12 +32,23 @@ const BookedItem = ({item}: any) => {
   }, [rentTime]);
 
   const memoRentDate = useMemo(() => {
-    return formatDate(rentDate);
+    return formatDateBooking(rentDate);
   }, [rentDate]);
 
-  const onCancelRent = useCallback(() => {
-    dispatch(cancelBooking({item, userName}));
-    dispatch(fetchCustomerCars(userName));
+  const onDeleteCar = useCallback(() => {
+    Alert.alert('Cancel rent?', '', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Yes',
+        onPress: () => {
+          dispatch(cancelBooking({item, userName}));
+          dispatch(fetchCustomerCars(userName));
+        },
+      },
+    ]);
   }, []);
 
   return (
@@ -73,7 +84,7 @@ const BookedItem = ({item}: any) => {
             </Text>
             <Text style={{color: colors.text}}>{cost}$ / 4 hours</Text>
           </View>
-          <CustomButton title="Cancel rent" onPress={onCancelRent} />
+          <CustomButton title="Cancel rent" onPress={onDeleteCar} />
         </View>
       </OrientationContainer>
     </View>

@@ -1,28 +1,31 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {today} from '../../components/Search/constants';
 
 const defaultState: {
   bookingIsLoading: boolean;
   bookedTime: any[];
+  error: boolean;
+  carBooked: boolean;
+  errorMessage: string;
   dataCustomer: {
-    rentDate: Date;
     rentTime: string;
+    rentDate: string;
     customerName: string;
     customerPhone: string;
     carId: string;
   };
-  error: boolean;
 } = {
   bookingIsLoading: false,
   bookedTime: [],
+  error: false,
+  carBooked: false,
+  errorMessage: '',
   dataCustomer: {
-    rentDate: today,
+    rentDate: '',
     rentTime: '',
     customerName: '',
     customerPhone: '',
     carId: '',
   },
-  error: false,
 };
 
 export const bookingCarSlice = createSlice({
@@ -41,11 +44,21 @@ export const bookingCarSlice = createSlice({
       state.error = false;
     },
     bookingCarSuccess(state) {
+      state.carBooked = true;
       state.bookingIsLoading = false;
     },
-    bookingCarFailed(state) {
+    bookingCarFailed(state, action) {
       state.bookingIsLoading = false;
+      state.errorMessage = action.payload;
       state.error = true;
+    },
+    clearError(state) {
+      state.error = false;
+      state.errorMessage = '';
+      state.bookingIsLoading = false;
+    },
+    clearBooked(state) {
+      state.carBooked = false;
     },
   },
 });
@@ -58,6 +71,8 @@ export const {
   bookingCar,
   bookingCarSuccess,
   bookingCarFailed,
+  clearError,
+  clearBooked,
 } = actions;
 
 export default reducer;

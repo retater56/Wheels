@@ -2,6 +2,7 @@ import INewsDetail from './components/News/types';
 import {ICar} from './components/Search/types';
 
 export type RootTabParamList = {
+  IntroNavigation: undefined;
   News: undefined;
   NewsDetails: {
     item: INewsDetail;

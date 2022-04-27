@@ -4,6 +4,8 @@ import {
   API_USER_LOGIN,
   API_USER_REGISTER,
 } from '../../constants';
+import {fetchCustomerCars} from '../reducers/customerCarsReducer';
+import {fetchOwnerCars} from '../reducers/ownerCarsReducer';
 import {
   IUserData,
   logInUser,
@@ -33,7 +35,9 @@ function* registerUserAsync(action: ReturnType<typeof registerUser>) {
         body: JSON.stringify(userData),
       });
       const response = await data.json();
-      console.log(response);
+      if (!response.accessToken) {
+        throw new Error(response);
+      }
       return response;
     });
     const user: IUserData[] = yield call(async () => {
@@ -43,7 +47,8 @@ function* registerUserAsync(action: ReturnType<typeof registerUser>) {
     });
     yield put(registerUserSuccess(user[0]));
   } catch (error: any) {
-    yield put(registerUserFailed());
+    console.log(error.message);
+    yield put(registerUserFailed(error.message));
   }
 }
 
@@ -60,7 +65,9 @@ function* logInUserAsync(payload: any) {
         body: JSON.stringify(userData),
       });
       const res = await data.json();
-      // console.log(res);
+      if (!res.accessToken) {
+        throw new Error(res);
+      }
       return res;
     });
     const user: IUserData[] = yield call(async () => {
@@ -69,8 +76,10 @@ function* logInUserAsync(payload: any) {
       return res;
     });
     yield put(logInUserSuccess(user[0]));
+    yield put(fetchOwnerCars(user[0].userName));
+    yield put(fetchCustomerCars(user[0].userName));
   } catch (error: any) {
-    yield put(logInUserFailed());
+    yield put(logInUserFailed(error.message));
   }
 }
 

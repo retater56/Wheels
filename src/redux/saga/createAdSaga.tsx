@@ -1,14 +1,30 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
 import {ICar} from '../../components/CreateAd/types';
 import {API_CARS, API_GET_CAR_BY_ID} from '../../constants';
-import {addCar, addCarFailed, addCarSuccess, updateCar} from '../reducers/createAdReducer';
+import {fetchCars} from '../reducers/carsReducer';
+import {
+  addCar,
+  addCarFailed,
+  addCarSuccess,
+  updateCar,
+} from '../reducers/createAdReducer';
 
 function* addCarAsync(action: ReturnType<typeof addCar>) {
   console.log('addCarAsync');
 
-  action.payload.capacity = `${action.payload.capacity} L`;
+  let carData = {};
 
-  const carData = {...action.payload};
+  if (action.payload.fuel === 'Electric') {
+    carData = {
+      ...action.payload,
+      ...{capacity: `${action.payload.capacity} kWh`},
+    };
+  } else {
+    carData = {
+      ...action.payload,
+      ...{capacity: `${action.payload.capacity} L`},
+    };
+  }
 
   try {
     const response: ICar = yield call(async () => {
@@ -25,6 +41,7 @@ function* addCarAsync(action: ReturnType<typeof addCar>) {
       return response;
     });
     yield put(addCarSuccess());
+    yield put(fetchCars());
   } catch (error) {
     yield put(addCarFailed());
   }
@@ -51,6 +68,7 @@ function* updateCarAsync(action: ReturnType<typeof updateCar>) {
       return response;
     });
     yield put(addCarSuccess());
+    yield put(fetchCars());
   } catch (error) {
     yield put(addCarFailed());
   }

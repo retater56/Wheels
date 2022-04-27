@@ -4,6 +4,7 @@ const defaultState = {
   isLoading: false,
   isLoggedIn: false,
   error: false,
+  errorMessage: '',
   userName: '',
 };
 
@@ -27,8 +28,9 @@ export const userSlice = createSlice({
       state.isLoggedIn = true;
       state.error = false;
     },
-    registerUserFailed(state) {
+    registerUserFailed(state, action) {
       state.error = true;
+      state.errorMessage = action.payload;
     },
     logInUser(state, action) {
       state.isLoading = true;
@@ -38,12 +40,20 @@ export const userSlice = createSlice({
       state.isLoggedIn = true;
       state.error = false;
     },
-    logInUserFailed(state) {
+    logInUserFailed(state, action) {
       state.error = true;
+      state.isLoading = false;
+      state.errorMessage = action.payload;
     },
     logOutUser(state) {
+      state.isLoading = false;
       state.isLoggedIn = false;
       state.userName = '';
+    },
+    clearError(state) {
+      state.error = false;
+      state.errorMessage = '';
+      state.isLoading = false;
     },
   },
 });
@@ -58,6 +68,7 @@ export const {
   logInUserSuccess,
   logInUserFailed,
   logOutUser,
+  clearError,
 } = actions;
 
 export default reducer;

@@ -6,22 +6,26 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   SafeAreaView,
+  Alert,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useFormik} from 'formik';
 import {RegistrationSchema} from './validation';
-import {registerUser} from '../../redux/reducers/userReducer';
+import {clearError, registerUser} from '../../redux/reducers/userReducer';
 import CustomTextInput from '../common/CustomTextInput';
 import CustomButton from '../common/CustomButton';
 import commonStyles from '../common/styles';
 import {useTheme} from '../../ThemeProvider';
 import OrientationContainer from '../common/OrientationContainer';
+import {getUserError, getUserErrorMessage} from '../../constants';
 
 const Registration = () => {
   const {colors} = useTheme();
+  const error = useSelector(getUserError);
+  const errorMessage = useSelector(getUserErrorMessage);
   const dispatch = useDispatch();
 
-  const {handleChange, handleSubmit, errors} = useFormik({
+  const {handleChange, handleSubmit, values, errors} = useFormik({
     initialValues: {
       userName: '',
       email: '',
@@ -42,6 +46,12 @@ const Registration = () => {
     handleSubmit();
   }, []);
 
+  if (error) {
+    Alert.alert('Error', errorMessage, [
+      {text: 'OK', onPress: () => dispatch(clearError())},
+    ]);
+  }
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -51,29 +61,32 @@ const Registration = () => {
               <Text style={[styles.textTitle, {color: colors.text}]}>
                 Create An Account!
               </Text>
-              <CustomTextInput
-                placeholder="Full Name"
-                onChangeText={handleChange('userName')}
-              />
               {errors.userName && (
                 <Text style={styles.errors}>{errors.userName}</Text>
               )}
               <CustomTextInput
-                placeholder="Email"
-                autoCapitalize="none"
-                onChangeText={handleChange('email')}
+                placeholder="Full Name"
+                onChangeText={handleChange('userName')}
+                value={values.userName}
               />
               {errors.email && (
                 <Text style={styles.errors}>{errors.email}</Text>
               )}
               <CustomTextInput
-                placeholder="Password"
-                secureTextEntry
-                onChangeText={handleChange('password')}
+                placeholder="Email"
+                autoCapitalize="none"
+                onChangeText={handleChange('email')}
+                value={values.email}
               />
               {errors.password && (
                 <Text style={styles.errors}>{errors.password}</Text>
               )}
+              <CustomTextInput
+                placeholder="Password"
+                secureTextEntry
+                onChangeText={handleChange('password')}
+                value={values.password}
+              />
               <CustomButton title="Sign Up" onPress={onSubmit} />
             </>
           </TouchableWithoutFeedback>

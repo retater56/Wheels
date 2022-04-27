@@ -29,10 +29,10 @@ const SearchDetails = ({route}: Props) => {
     mark,
     model,
     fuel,
-    doors,
+    vehicleType,
     transmission,
     seats,
-    baggageCapacity,
+    maxSpeed,
     capacity,
     description,
     position,
@@ -88,12 +88,12 @@ const SearchDetails = ({route}: Props) => {
                     {backgroundColor: colors.backgroundLight},
                   ]}>
                   <Icon
-                    name={'car-door'}
+                    name={'car-info'}
                     size={50}
                     color={colors.backgroundDark}
                   />
                   <Text style={[styles.textInfo, {color: colors.text}]}>
-                    {doors} Doors
+                    {vehicleType}
                   </Text>
                 </View>
                 <View
@@ -102,7 +102,7 @@ const SearchDetails = ({route}: Props) => {
                     {backgroundColor: colors.backgroundLight},
                   ]}>
                   <Icon
-                    name={'car-cog'}
+                    name={'car-shift-pattern'}
                     size={50}
                     color={colors.backgroundDark}
                   />
@@ -130,12 +130,12 @@ const SearchDetails = ({route}: Props) => {
                     {backgroundColor: colors.backgroundLight},
                   ]}>
                   <Icon
-                    name={'bag-personal-outline'}
+                    name={'speedometer'}
                     size={50}
                     color={colors.backgroundDark}
                   />
                   <Text style={[styles.textInfo, {color: colors.text}]}>
-                    {baggageCapacity} Stars
+                    {maxSpeed} mph
                   </Text>
                 </View>
                 <View
@@ -144,7 +144,7 @@ const SearchDetails = ({route}: Props) => {
                     {backgroundColor: colors.backgroundLight},
                   ]}>
                   <Icon
-                    name={'speedometer'}
+                    name={'car-cog'}
                     size={50}
                     color={colors.backgroundDark}
                   />
