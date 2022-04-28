@@ -21,7 +21,7 @@ const SearchNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Cars"
+        name="Search"
         component={Search}
         options={{
           headerRight: settingsButton,

@@ -22,14 +22,13 @@ import {useFormik} from 'formik';
 import {useDispatch, useSelector} from 'react-redux';
 import {CreateAdSchema} from './validation';
 import {fuelData, transmissionData, vehicleTypes} from './constants';
-import {getLoggedIn, getUserName, uriImgBase64} from '../../constants';
+import {getUserName, uriImgBase64} from '../../constants';
 import {addCar} from '../../redux/reducers/createAdReducer';
 import CustomButton from '../common/CustomButton';
 import CustomTextInput from '../common/CustomTextInput';
 import CustomTouchableOpacity from '../common/CustomTouchableOpacity';
 import {useTheme} from '../../ThemeProvider';
 import commonStyles, {checkUserPref} from '../common/styles';
-import NotLoggedScreen from '../common/NotLoggedScreen';
 import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 import OrientationContainer from '../common/OrientationContainer';
 
@@ -38,7 +37,6 @@ type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 const CreateAd = ({navigation}: Props) => {
   const dispatch = useDispatch();
   const owner = useSelector(getUserName);
-  const isLoggedIn = useSelector(getLoggedIn);
   const {colors, isDark} = useTheme();
 
   const {handleChange, handleSubmit, setFieldValue, values, errors} = useFormik(
@@ -126,10 +124,6 @@ const CreateAd = ({navigation}: Props) => {
       }
     });
   };
-
-  if (!isLoggedIn) {
-    return <NotLoggedScreen />;
-  }
 
   return (
     <SafeAreaView>

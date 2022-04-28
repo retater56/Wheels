@@ -5,7 +5,6 @@ import Registration from '../components/Authentication/Registration';
 import LogOut from '../components/Authentication/LogOut';
 import {useSelector} from 'react-redux';
 import {getLoggedIn} from '../constants';
-import UserMap from '../components/Authentication/UserMap/UserMap';
 import LogoHeader from '../components/common/LogoHeader';
 import UserSettings from '../components/Authentication/UserSettings/UserSettings';
 import {useNavigation} from '@react-navigation/native';
@@ -32,13 +31,6 @@ const AuthNavigation = () => {
             component={LogOut}
             options={{
               headerRight: settingsButton,
-            }}
-          />
-          <Stack.Screen
-            name="UserMap"
-            component={UserMap}
-            options={{
-              headerTitle: LogoHeader,
             }}
           />
           <Stack.Screen

@@ -2,21 +2,18 @@ import React, {useCallback, useEffect} from 'react';
 import {Text, StyleSheet, FlatList, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  getLoggedIn,
   getCustomerCars,
   getUserName,
   getCustomerCarsIsFetching,
 } from '../../constants';
 import {fetchCustomerCars} from '../../redux/reducers/customerCarsReducer';
 import {useTheme} from '../../ThemeProvider';
-import NotLoggedScreen from '../common/NotLoggedScreen';
 import commonStyles from '../common/styles';
 import {ICar} from '../CreateAd/types';
 import BookedItem from './BookedItem';
 
 const Booked = () => {
   const cars = useSelector(getCustomerCars);
-  const isLoggedIn = useSelector(getLoggedIn);
   const userName = useSelector(getUserName);
   const isFetching = useSelector(getCustomerCarsIsFetching);
   const {colors} = useTheme();
@@ -36,10 +33,6 @@ const Booked = () => {
   }, []);
 
   const keyItem = useCallback((item) => item.rentDate + item.rentTime, []);
-
-  if (!isLoggedIn) {
-    return <NotLoggedScreen />;
-  }
 
   return (
     <SafeAreaView style={styles.container}>

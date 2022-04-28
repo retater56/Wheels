@@ -15,7 +15,7 @@ export type RootTabParamList = {
   };
   SearchItem: undefined;
   SearchSort: undefined;
-  Ads: undefined;
+  Cars: undefined;
   ChangeDetails: {
     item: ICar;
   };
@@ -28,7 +28,7 @@ export type RootTabParamList = {
     onSelect: (paramType: string, item: string) => void;
   };
   LogOut: undefined;
-  UserMap: undefined;
+  Map: undefined;
   CreateAdMap: {
     paramLocation: string;
     onSelect: (paramLocation: string, item: string) => void;

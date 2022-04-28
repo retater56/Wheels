@@ -2,21 +2,18 @@ import React, {useCallback, useEffect} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  getLoggedIn,
   getOwnerCars,
   getOwnerCarsIsFetching,
   getUserName,
 } from '../../constants';
 import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 import {useTheme} from '../../ThemeProvider';
-import NotLoggedScreen from '../common/NotLoggedScreen';
 import commonStyles from '../common/styles';
 import {ICar} from '../CreateAd/types';
 import OwnerItem from './OwnerItem';
 
 const OwnerAds = () => {
   const cars = useSelector(getOwnerCars);
-  const isLoggedIn = useSelector(getLoggedIn);
   const userName = useSelector(getUserName);
   const isFetching = useSelector(getOwnerCarsIsFetching);
   const {colors} = useTheme();
@@ -36,10 +33,6 @@ const OwnerAds = () => {
   }, []);
 
   const keyItem = useCallback((item) => item.id, []);
-
-  if (!isLoggedIn) {
-    return <NotLoggedScreen />;
-  }
 
   return (
     <SafeAreaView style={styles.container}>

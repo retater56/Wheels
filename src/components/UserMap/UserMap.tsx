@@ -5,8 +5,8 @@ import {
   exampleUserLocation,
   getOwnerCars,
   getUserName,
-} from '../../../constants';
-import {fetchOwnerCars} from '../../../redux/reducers/ownerCarsReducer';
+} from '../../constants';
+import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 import CustomMarker from './CustomMarker';
 import {StyleSheet} from 'react-native';
 

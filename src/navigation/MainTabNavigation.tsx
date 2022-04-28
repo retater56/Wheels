@@ -10,11 +10,16 @@ import CreateAdNavigation from './CreateAdNavigation';
 import IntroNavigation from './IntroNavigation';
 import {getFirstOpen} from '../components/Intro/checkFirstInstall';
 import LoadingScreen from '../components/common/LoadingScreen';
+import {useSelector} from 'react-redux';
+import {getLoggedIn} from '../constants';
+import UserMap from '../components/UserMap/UserMap';
+import LogoHeader from '../components/common/LogoHeader';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const MainTabNavigation = () => {
   const [opened, setOpened] = useState<string>('');
+  const isLoggedIn = useSelector(getLoggedIn);
   const [isLoading, setIsLoading] = useState(true);
 
   const checkUser = async () => {
@@ -48,15 +53,6 @@ const MainTabNavigation = () => {
         />
       )}
       <Tab.Screen
-        name="News"
-        component={NewsNavigation}
-        options={{
-          tabBarIcon: ({size, color}) => (
-            <Icon name={'newspaper-o'} color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
         name="Search"
         component={SearchNavigation}
         options={{
@@ -65,31 +61,58 @@ const MainTabNavigation = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="Create"
-        component={CreateAdNavigation}
-        options={{
-          tabBarIcon: ({size, color}) => (
-            <Icon name={'plus-square-o'} color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Ads"
-        component={AdsNavigation}
-        options={{
-          headerShown: true,
-          tabBarIcon: ({size, color}) => (
-            <Icon name={'folder-o'} color={color} size={size} />
-          ),
-        }}
-      />
+      {isLoggedIn ? (
+        <Tab.Screen
+          name="Map"
+          component={UserMap}
+          options={{
+            headerShown: true,
+            headerTitle: LogoHeader,
+            tabBarIcon: ({size, color}) => (
+              <Icon name={'map'} color={color} size={size} />
+            ),
+          }}
+        />
+      ) : (
+        <Tab.Screen
+          name="News"
+          component={NewsNavigation}
+          options={{
+            tabBarIcon: ({size, color}) => (
+              <Icon name={'newspaper-o'} color={color} size={size} />
+            ),
+          }}
+        />
+      )}
+      {isLoggedIn && (
+        <>
+          <Tab.Screen
+            name="Create"
+            component={CreateAdNavigation}
+            options={{
+              tabBarIcon: ({size, color}) => (
+                <Icon name={'plus-square-o'} color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Cars"
+            component={AdsNavigation}
+            options={{
+              headerShown: true,
+              tabBarIcon: ({size, color}) => (
+                <Icon name={'folder'} color={color} size={size} />
+              ),
+            }}
+          />
+        </>
+      )}
       <Tab.Screen
         name="Account"
         component={AuthNavigation}
         options={{
           tabBarIcon: ({size, color}) => (
-            <Icon name={'user-o'} color={color} size={size} />
+            <Icon name={'user'} color={color} size={size} />
           ),
         }}
       />
