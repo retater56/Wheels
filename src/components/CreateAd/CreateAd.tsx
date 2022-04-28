@@ -31,11 +31,13 @@ import {useTheme} from '../../ThemeProvider';
 import commonStyles, {checkUserPref} from '../common/styles';
 import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 import OrientationContainer from '../common/OrientationContainer';
+import useKeyboard from '../common/useKeyboard';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Create'>;
 
 const CreateAd = ({navigation}: Props) => {
   const dispatch = useDispatch();
+  const isKeyBoardOpen = useKeyboard();
   const owner = useSelector(getUserName);
   const {colors, isDark} = useTheme();
 
@@ -128,7 +130,8 @@ const CreateAd = ({navigation}: Props) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={styles.container}>
+        <View
+          style={[styles.container, {marginBottom: isKeyBoardOpen ? 250 : 30}]}>
           <OrientationContainer>
             <Text style={[styles.title, {color: colors.text}]}>
               Add a photo
@@ -320,7 +323,6 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
     width: '100%',
     alignItems: 'center',
-    marginBottom: 50,
   },
   centerContainer: {
     alignItems: 'center',

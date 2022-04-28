@@ -27,8 +27,10 @@ import commonStyles, {checkUserPref} from '../common/styles';
 import OrientationContainer from '../common/OrientationContainer';
 import useOrientation from '../common/useOrientation';
 import {SafeAreaView} from 'react-native';
+import useKeyboard from '../common/useKeyboard';
 
 const SearchRent = ({carId}: any) => {
+  const isKeyBoardOpen = useKeyboard();
   const bookedTime = useSelector(getBookedTime);
   const customerName = useSelector(getUserName);
   const error = useSelector(getBookingError);
@@ -115,7 +117,8 @@ const SearchRent = ({carId}: any) => {
     <SafeAreaView>
       <Text style={[styles.textTitle, {color: colors.text}]}>Take a car</Text>
       <View style={styles.container}>
-        <OrientationContainer style={styles.container}>
+        <OrientationContainer
+          style={[styles.container, {marginBottom: isKeyBoardOpen ? 220 : 30}]}>
           {errors.rentDate && (
             <Text style={styles.errors}>{errors.rentDate}</Text>
           )}

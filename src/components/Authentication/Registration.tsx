@@ -18,9 +18,11 @@ import commonStyles from '../common/styles';
 import {useTheme} from '../../ThemeProvider';
 import OrientationContainer from '../common/OrientationContainer';
 import {getUserError, getUserErrorMessage} from '../../constants';
+import useKeyboard from '../common/useKeyboard';
 
 const Registration = () => {
   const {colors} = useTheme();
+  const isKeyBoardOpen = useKeyboard();
   const error = useSelector(getUserError);
   const errorMessage = useSelector(getUserErrorMessage);
   const dispatch = useDispatch();
@@ -55,7 +57,9 @@ const Registration = () => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <OrientationContainer style={styles.container} scroll={true}>
+        <OrientationContainer
+          style={[styles.container, {paddingBottom: isKeyBoardOpen ? 120 : 0}]}
+          scroll={true}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <>
               <Text style={[styles.textTitle, {color: colors.text}]}>

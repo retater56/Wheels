@@ -25,11 +25,13 @@ import {
   getUserIsFetching,
 } from '../../constants';
 import OrientationContainer from '../common/OrientationContainer';
+import useKeyboard from '../common/useKeyboard';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'Registration'>;
 
 const SignIn = ({navigation}: Props) => {
   const dispatch = useDispatch();
+  const isKeyBoardOpen = useKeyboard();
   const isFetching = useSelector(getUserIsFetching);
   const error = useSelector(getUserError);
   const errorMessage = useSelector(getUserErrorMessage);
@@ -71,7 +73,8 @@ const SignIn = ({navigation}: Props) => {
 
   return (
     <SafeAreaView>
-      <View style={[styles.container, {width: '100%'}]}>
+      <View
+        style={[styles.container, {paddingBottom: isKeyBoardOpen ? 100 : 0}]}>
         <OrientationContainer style={styles.container} scroll={true}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <>
@@ -111,6 +114,7 @@ const SignIn = ({navigation}: Props) => {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     alignItems: 'center',
   },
   textTitle: {

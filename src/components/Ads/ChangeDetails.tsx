@@ -27,12 +27,14 @@ import NotLoggedScreen from '../common/NotLoggedScreen';
 import {fetchOwnerCars} from '../../redux/reducers/ownerCarsReducer';
 import OrientationContainer from '../common/OrientationContainer';
 import useOrientation from '../common/useOrientation';
+import useKeyboard from '../common/useKeyboard';
 
 type Props = NativeStackScreenProps<RootTabParamList, 'ChangeDetails'>;
 
 const ChangeDetails = ({navigation, route}: Props) => {
   const dispatch = useDispatch();
   const {item} = route.params;
+  const isKeyBoardOpen = useKeyboard();
   const portrait = useOrientation();
   const {
     id,
@@ -90,10 +92,6 @@ const ChangeDetails = ({navigation, route}: Props) => {
     return checkUserPref(isDark);
   }, [portrait, isDark]);
 
-  const memoCapacity = useMemo(() => {
-    return values.capacity.split(' ')[0];
-  }, []);
-
   const onPressMark = useCallback(() => {
     navigation.navigate('CreateAdDetails', {
       paramType: 'mark',
@@ -137,7 +135,8 @@ const ChangeDetails = ({navigation, route}: Props) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={styles.container}>
+        <View
+          style={[styles.container, {marginBottom: isKeyBoardOpen ? 250 : 30}]}>
           <OrientationContainer>
             <View style={styles.centerContainer}>
               <Image
@@ -289,7 +288,7 @@ const ChangeDetails = ({navigation, route}: Props) => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingTop: 10,
+    padding: 10,
     alignItems: 'center',
     marginBottom: 50,
   },
