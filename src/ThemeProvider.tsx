@@ -36,7 +36,6 @@ export const ThemeProvider = ({children}: Props) => {
 
   const checkTheme = async () => {
     const theme = await getUserTheme();
-    console.log('systemTheme' + theme);
     if (theme === 'system') {
       const systemTheme = Appearance.getColorScheme();
       setIsDark(systemTheme === 'dark');
@@ -50,7 +49,6 @@ export const ThemeProvider = ({children}: Props) => {
   const checkChangeAppearance = async () => {
     const theme = await getUserTheme();
     if (theme === 'system') {
-      console.log('phoneAppearence changed');
       const systemTheme = Appearance.getColorScheme();
       setIsDark(systemTheme === 'dark');
       setIsLoading(false);

@@ -46,7 +46,6 @@ const SignIn = ({navigation}: Props) => {
     validateOnBlur: false,
     validationSchema: SignInSchema,
     onSubmit: (values, {resetForm}) => {
-      console.log(values);
       dispatch(logInUser(values));
       resetForm();
     },

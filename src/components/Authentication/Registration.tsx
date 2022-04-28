@@ -38,7 +38,6 @@ const Registration = () => {
     validateOnBlur: false,
     validationSchema: RegistrationSchema,
     onSubmit: (values, {resetForm}) => {
-      console.log(values);
       dispatch(registerUser(values));
       resetForm();
     },

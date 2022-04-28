@@ -108,9 +108,8 @@ const SearchRent = ({carId}: any) => {
   }
 
   if (carBooked) {
-    Alert.alert('Car was booked', '', [
-      {text: 'OK', onPress: () => dispatch(clearBooked())},
-    ]);
+    dispatch(clearBooked());
+    Alert.alert('Car was booked', '', [{text: 'OK'}]);
   }
 
   return (

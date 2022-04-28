@@ -27,7 +27,6 @@ const MainTabNavigation = () => {
   const checkUser = async () => {
     const opened = await getFirstOpen();
     const user = await getUserData();
-    console.log(user);
     if (user) {
       const userData = await JSON.parse(user);
       dispatch(logInUser(userData));
