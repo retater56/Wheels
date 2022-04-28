@@ -265,14 +265,15 @@ const ChangeDetails = ({navigation, route}: Props) => {
             <View style={styles.centerContainer}>
               <TextInput
                 onChangeText={handleChange('description')}
-                value={values.description}
                 style={[
                   styles.inputDescription,
                   {backgroundColor: colors.background, color: colors.text},
                 ]}
                 multiline
                 placeholderTextColor={colors.gray}
-                placeholder="Please, give some description about your add..."></TextInput>
+                placeholder="Please, give some description about your add...">
+                {values.description}
+              </TextInput>
               {errors.description && (
                 <Text style={styles.errors}>{errors.description}</Text>
               )}
