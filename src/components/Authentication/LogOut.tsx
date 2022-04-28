@@ -13,6 +13,7 @@ import CustomButton from '../common/CustomButton';
 import OrientationContainer from '../common/OrientationContainer';
 import commonStyles from '../common/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {clearUserData} from '../Intro/checkFirstInstall';
 
 const LogOut = () => {
   const userName = useSelector(getUserName);
@@ -23,6 +24,7 @@ const LogOut = () => {
   const dispatch = useDispatch();
 
   const onLogOut = useCallback(() => {
+    clearUserData();
     dispatch(logOutUser());
   }, []);
 

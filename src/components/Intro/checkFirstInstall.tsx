@@ -21,6 +21,33 @@ export const getFirstOpen = async () => {
   }
 };
 
+export const setUserData = async (value: string) => {
+  try {
+    await AsyncStorage.setItem('userData', value);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getUserData = async () => {
+  try {
+    const user = await AsyncStorage.getItem('userData');
+    if (user) {
+      return user;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const clearUserData = async () => {
+  try {
+    await AsyncStorage.setItem('userData', '');
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const clearStorage = async () => {
   try {
     await AsyncStorage.clear();

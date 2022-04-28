@@ -8,23 +8,31 @@ import {RootTabParamList} from '../types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CreateAdNavigation from './CreateAdNavigation';
 import IntroNavigation from './IntroNavigation';
-import {getFirstOpen} from '../components/Intro/checkFirstInstall';
+import {getFirstOpen, getUserData} from '../components/Intro/checkFirstInstall';
 import LoadingScreen from '../components/common/LoadingScreen';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {getLoggedIn} from '../constants';
 import UserMap from '../components/UserMap/UserMap';
 import LogoHeader from '../components/common/LogoHeader';
+import {logInUser} from '../redux/reducers/userReducer';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 const MainTabNavigation = () => {
   const [opened, setOpened] = useState<string>('');
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(getLoggedIn);
   const [isLoading, setIsLoading] = useState(true);
 
   const checkUser = async () => {
-    const val = await getFirstOpen();
-    setOpened(val!);
+    const opened = await getFirstOpen();
+    const user = await getUserData();
+    console.log(user);
+    if (user) {
+      const userData = await JSON.parse(user);
+      dispatch(logInUser(userData));
+    }
+    setOpened(opened!);
     setIsLoading(false);
   };
 

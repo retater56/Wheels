@@ -1,4 +1,5 @@
 import {call, put, takeEvery} from 'redux-saga/effects';
+import {setUserData} from '../../components/Intro/checkFirstInstall';
 import {
   API_GET_USER_BY_EMAIL,
   API_USER_LOGIN,
@@ -43,6 +44,7 @@ function* registerUserAsync(action: ReturnType<typeof registerUser>) {
       const res = await data.json();
       return res;
     });
+    setUserData(JSON.stringify(userData));
     yield put(registerUserSuccess(user[0]));
   } catch (error: any) {
     yield put(registerUserFailed(error.message));
@@ -71,6 +73,7 @@ function* logInUserAsync(payload: any) {
       const res = await data.json();
       return res;
     });
+    setUserData(JSON.stringify(userData));
     yield put(logInUserSuccess(user[0]));
     yield put(fetchOwnerCars(user[0].userName));
     yield put(fetchCustomerCars(user[0].userName));
