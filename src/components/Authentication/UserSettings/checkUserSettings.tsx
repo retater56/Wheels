@@ -13,6 +13,8 @@ export const getUserTheme = async () => {
     const userTheme = await AsyncStorage.getItem('theme');
     if (userTheme === null) {
       return 'light';
+    } else if (userTheme === 'system') {
+      return 'system';
     }
     const userThemeValue = String(userTheme);
     return userThemeValue;
