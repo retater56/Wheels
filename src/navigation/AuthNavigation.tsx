@@ -27,7 +27,7 @@ const AuthNavigation = () => {
       {isLoggedIn ? (
         <>
           <Stack.Screen
-            name="Log Out"
+            name="User"
             component={LogOut}
             options={{
               headerRight: settingsButton,
