@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginBottom: 20,
     borderRadius: 5,
-    ...commonStyles.shadow
+    ...commonStyles.shadow,
   },
   text: {
     paddingLeft: 20,

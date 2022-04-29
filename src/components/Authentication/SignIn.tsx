@@ -45,8 +45,8 @@ const SignIn = ({navigation}: Props) => {
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: SignInSchema,
-    onSubmit: (values, {resetForm}) => {
-      dispatch(logInUser(values));
+    onSubmit: (userData, {resetForm}) => {
+      dispatch(logInUser(userData));
       resetForm();
     },
   });
@@ -73,7 +73,10 @@ const SignIn = ({navigation}: Props) => {
   return (
     <SafeAreaView>
       <View
-        style={[styles.container, {paddingBottom: isKeyBoardOpen ? 100 : 0}]}>
+        style={[
+          styles.container,
+          isKeyBoardOpen ? styles.keyBoardOpen : styles.keyBoardNotOpen,
+        ]}>
         <OrientationContainer style={styles.container} scroll={true}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <>
@@ -122,6 +125,12 @@ const styles = StyleSheet.create({
   },
   errors: {
     ...commonStyles.errorText,
+  },
+  keyBoardOpen: {
+    paddingBottom: 120,
+  },
+  keyBoardNotOpen: {
+    paddingBottom: 0,
   },
 });
 

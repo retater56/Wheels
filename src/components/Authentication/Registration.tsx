@@ -37,8 +37,8 @@ const Registration = () => {
     validateOnChange: false,
     validateOnBlur: false,
     validationSchema: RegistrationSchema,
-    onSubmit: (values, {resetForm}) => {
-      dispatch(registerUser(values));
+    onSubmit: (userData, {resetForm}) => {
+      dispatch(registerUser(userData));
       resetForm();
     },
   });
@@ -57,7 +57,10 @@ const Registration = () => {
     <SafeAreaView>
       <View style={styles.container}>
         <OrientationContainer
-          style={[styles.container, {paddingBottom: isKeyBoardOpen ? 120 : 0}]}
+          style={[
+            styles.container,
+            isKeyBoardOpen ? styles.keyBoardOpen : styles.keyBoardNotOpen,
+          ]}
           scroll={true}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <>
@@ -109,6 +112,12 @@ const styles = StyleSheet.create({
   },
   errors: {
     ...commonStyles.errorText,
+  },
+  keyBoardOpen: {
+    paddingBottom: 120,
+  },
+  keyBoardNotOpen: {
+    paddingBottom: 0,
   },
 });
 

@@ -42,7 +42,7 @@ const OwnerAds = () => {
         </Text>
       ) : (
         <FlatList
-          style={{width: '100%'}}
+          style={styles.width}
           data={cars}
           renderItem={renderItem}
           keyExtractor={keyItem}
@@ -58,6 +58,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+  },
+  width: {
+    width: '100%',
   },
   text: {
     textAlign: 'center',

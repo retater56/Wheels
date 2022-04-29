@@ -25,13 +25,13 @@ const MainTabNavigation = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const checkUser = async () => {
-    const opened = await getFirstOpen();
+    const isOpened = await getFirstOpen();
     const user = await getUserData();
     if (user) {
       const userData = await JSON.parse(user);
       dispatch(logInUser(userData));
     }
-    setOpened(opened!);
+    setOpened(isOpened!);
     setIsLoading(false);
   };
 
@@ -48,7 +48,7 @@ const MainTabNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      {opened == '' && (
+      {opened === '' && (
         <Tab.Screen
           name="IntroNavigation"
           component={IntroNavigation}

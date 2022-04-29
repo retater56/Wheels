@@ -12,10 +12,12 @@ const Stack = createNativeStackNavigator();
 
 const SearchNavigation = () => {
   const navigation = useNavigation<Navigation>();
-  const settingsNav = useCallback(() => navigation.navigate(SearchSort), []);
+  const settingsNav = useCallback(() => navigation.navigate(SearchSort), [
+    navigation,
+  ]);
   const settingsButton = useCallback(
     () => <CustomHeaderButton onPress={settingsNav} />,
-    [],
+    [settingsNav],
   );
 
   return (

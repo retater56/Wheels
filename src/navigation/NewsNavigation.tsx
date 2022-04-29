@@ -12,10 +12,12 @@ const Stack = createNativeStackNavigator();
 
 const NewsNavigation = () => {
   const navigation = useNavigation<Navigation>();
-  const settingsNav = useCallback(() => navigation.navigate(NewsSource), []);
+  const settingsNav = useCallback(() => navigation.navigate(NewsSource), [
+    navigation,
+  ]);
   const settingsButton = useCallback(
     () => <CustomHeaderButton onPress={settingsNav} />,
-    [],
+    [settingsNav],
   );
 
   return (

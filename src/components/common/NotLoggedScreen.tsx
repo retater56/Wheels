@@ -12,7 +12,7 @@ const NotLoggedScreen = () => {
       <View style={[styles.logoContainer, {borderColor: colors.secondary}]}>
         <LogoSvg />
       </View>
-      <Text style={[styles.title, {color: colors.text, textAlign: 'center'}]}>
+      <Text style={[styles.title, {color: colors.text}]}>
         Sorry, but you aren't authorized yet...
       </Text>
     </View>
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     ...commonStyles.shadow,
   },
   title: {
+    textAlign: 'center',
     marginBottom: 10,
     ...commonStyles.largeText,
   },

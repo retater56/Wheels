@@ -25,7 +25,7 @@ export interface IUser {
 function* registerUserAsync(action: ReturnType<typeof registerUser>) {
   const userData = {...action.payload};
   try {
-    const response: IUser = yield call(async () => {
+    const userResponse: IUser = yield call(async () => {
       const data = await fetch(API_USER_REGISTER, {
         method: 'POST',
         headers: {
@@ -40,7 +40,7 @@ function* registerUserAsync(action: ReturnType<typeof registerUser>) {
       return response;
     });
     const user: IUserData[] = yield call(async () => {
-      const data = await fetch(API_GET_USER_BY_EMAIL(response.user.email));
+      const data = await fetch(API_GET_USER_BY_EMAIL(userResponse.user.email));
       const res = await data.json();
       return res;
     });

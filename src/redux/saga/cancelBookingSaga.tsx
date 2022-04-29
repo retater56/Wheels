@@ -10,13 +10,13 @@ import {
   cancelBookingFailed,
   cancelBookingSuccess,
 } from '../reducers/cancelBookingReducer';
-import { fetchCustomerCars } from '../reducers/customerCarsReducer';
+import {fetchCustomerCars} from '../reducers/customerCarsReducer';
 
 function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
-  const carData = action.payload.item;
+  const carPayload = action.payload.item;
   const userName = action.payload.userName;
 
-  const {rentDate, rentTime, id} = carData;
+  const {rentDate, rentTime, id} = carPayload;
 
   try {
     const updateUserBooking: ICar = yield call(async () => {
@@ -37,11 +37,11 @@ function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
         return {...userDataBooked, ...newUserData};
       }
     });
-    const responseUser: ICar = yield call(async () => {
+    yield call(async () => {
       const getUserData = await fetch(API_GET_USER_NAME(userName));
       const userData = await getUserData.json();
       const userId = userData[0].id;
-      const data = await fetch(API_GET_USER_BY_ID(userId), {
+      await fetch(API_GET_USER_BY_ID(userId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -50,8 +50,6 @@ function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
           booked: {...updateUserBooking},
         }),
       });
-      const res = await data.json();
-      // return response;
     });
     const updateCarBooking: ICar = yield call(async () => {
       const response = await fetch(API_GET_CAR_BY_ID(id));
@@ -70,8 +68,8 @@ function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
         return newCarData;
       }
     });
-    const responseCar: ICar = yield call(async () => {
-      const data = await fetch(API_GET_CAR_BY_ID(id), {
+    yield call(async () => {
+      await fetch(API_GET_CAR_BY_ID(id), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -80,11 +78,9 @@ function* cancelBookingAsync(action: ReturnType<typeof cancelBooking>) {
           booking: {...updateCarBooking},
         }),
       });
-      const res = await data.json();
-      // return responseCar;
     });
     yield put(cancelBookingSuccess());
-    yield put(fetchCustomerCars(userName))
+    yield put(fetchCustomerCars(userName));
   } catch (error) {
     yield put(cancelBookingFailed());
   }

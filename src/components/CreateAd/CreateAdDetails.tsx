@@ -69,7 +69,8 @@ const CreateAdDetails = ({route, navigation}: Props) => {
           style={[styles.item, {backgroundColor: colors.background}]}
           key={item.Model_Name}
           onPress={() => {
-            navigation.goBack(), onSelect(paramType, item.Model_Name);
+            navigation.goBack();
+            onSelect(paramType, item.Model_Name);
           }}>
           <Text style={[styles.text, {color: colors.text}]}>
             {item.Model_Name}
@@ -86,25 +87,25 @@ const CreateAdDetails = ({route, navigation}: Props) => {
 
   return (
     <>
-      {isFetching ? (
+      {isFetching && (
         <View style={styles.loading}>
           <ActivityIndicator />
         </View>
-      ) : (
-        <></>
       )}
       {paramType === 'mark' ? (
         <FlatList
           data={marks}
           renderItem={renderMarks}
-          keyExtractor={item => item}
-          refreshing={isFetching}></FlatList>
+          keyExtractor={(item) => item}
+          refreshing={isFetching}
+        />
       ) : (
         <FlatList
           data={models}
           renderItem={renderModels}
-          keyExtractor={item => item.Model_Name}
-          refreshing={isFetching}></FlatList>
+          keyExtractor={(item) => item.Model_Name}
+          refreshing={isFetching}
+        />
       )}
     </>
   );

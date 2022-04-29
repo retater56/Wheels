@@ -57,7 +57,7 @@ const LogOut = () => {
           <View style={styles.infoImage}>
             <Icon name={'check'} color={colors.secondary} size={50} />
           </View>
-          <View style={{flexDirection: 'column'}}>
+          <View style={styles.columnDirection}>
             <Text style={[styles.textTitle, {color: colors.secondary}]}>
               {ownerCars.length}
             </Text>
@@ -74,7 +74,7 @@ const LogOut = () => {
           <View style={styles.infoImage}>
             <Icon name={'check'} color={colors.secondary} size={50} />
           </View>
-          <View style={{flexDirection: 'column'}}>
+          <View style={styles.columnDirection}>
             <Text style={[styles.textTitle, {color: colors.secondary}]}>
               {customerCars.length}
             </Text>
@@ -91,7 +91,7 @@ const LogOut = () => {
           <View style={styles.infoImage}>
             <Icon name={'info'} color={colors.secondary} size={50} />
           </View>
-          <View style={{flexDirection: 'column'}}>
+          <View style={styles.columnDirection}>
             <Text style={[styles.textTitle, {color: colors.secondary}]}>
               {cars.length}
             </Text>
@@ -131,6 +131,9 @@ const styles = StyleSheet.create({
   },
   center: {
     alignItems: 'center',
+  },
+  columnDirection: {
+    flexDirection: 'column',
   },
   avatar: {
     paddingVertical: 10,

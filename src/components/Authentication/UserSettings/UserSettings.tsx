@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
-import colors from '../../../styles/colors';
+import basicColors from '../../../styles/colors';
 import {useTheme} from '../../../ThemeProvider';
 import commonStyles from '../../common/styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -23,8 +23,8 @@ const UserSettings = () => {
   const [theme, setTheme] = useState('');
 
   const checkTheme = async () => {
-    const theme = await getUserTheme();
-    setTheme(theme!);
+    const userTheme = await getUserTheme();
+    setTheme(userTheme!);
   };
 
   useEffect(() => {
@@ -47,8 +47,8 @@ const UserSettings = () => {
     setTheme(userScheme);
     setUserTheme(userScheme);
     if (userScheme === 'system') {
-      const theme = Appearance.getColorScheme();
-      return setScheme(theme);
+      const userAppearance = Appearance.getColorScheme();
+      return setScheme(userAppearance);
     }
     setScheme(userScheme);
   }, []);
@@ -62,7 +62,7 @@ const UserSettings = () => {
       name={'check-circle'}
       size={22}
       color={colors.secondary}
-      style={{paddingHorizontal: 10}}
+      style={styles.icon}
     />
   );
 
@@ -136,6 +136,9 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
   },
+  icon: {
+    paddingHorizontal: 10,
+  },
   card: {
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
@@ -144,7 +147,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: colors.gray,
+    borderColor: basicColors.gray,
   },
   cardSecondary: {
     width: '70%',
@@ -157,21 +160,21 @@ const styles = StyleSheet.create({
     ...commonStyles.shadow,
   },
   cardLight: {
-    backgroundColor: colors.background,
+    backgroundColor: basicColors.background,
     ...commonStyles.shadow,
   },
   cardLightSecondary: {
-    backgroundColor: colors.white,
+    backgroundColor: basicColors.white,
   },
   cardDark: {
-    backgroundColor: colors.black,
+    backgroundColor: basicColors.black,
   },
   cardDarkSecondary: {
-    backgroundColor: colors.darkBackground,
+    backgroundColor: basicColors.darkBackground,
   },
   cardSystem: {
     flexDirection: 'row',
-    color: colors.background,
+    color: basicColors.background,
     ...commonStyles.shadow,
   },
   cardSystemSec: {
@@ -188,10 +191,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     borderBottomStartRadius: 30,
     borderTopLeftRadius: 30,
-    backgroundColor: colors.black,
+    backgroundColor: basicColors.black,
   },
   systemDarkSec: {
-    backgroundColor: colors.darkBackground,
+    backgroundColor: basicColors.darkBackground,
     borderTopLeftRadius: 30,
   },
   systemLight: {
@@ -201,12 +204,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     borderTopEndRadius: 30,
     borderBottomRightRadius: 30,
-    backgroundColor: colors.background,
+    backgroundColor: basicColors.background,
   },
   systemLightSec: {
     borderTopLeftRadius: 30,
     borderBottomEndRadius: 30,
-    backgroundColor: colors.white,
+    backgroundColor: basicColors.white,
     ...commonStyles.shadow,
   },
   containerCards: {

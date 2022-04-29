@@ -52,10 +52,10 @@ const SearchRent = ({carId}: any) => {
       validateOnChange: false,
       validateOnBlur: false,
       validationSchema: SearchSchema,
-      onSubmit: (values, {resetForm}) => {
+      onSubmit: (rentData, {resetForm}) => {
         dispatch(
           bookingCar({
-            ...values,
+            ...rentData,
             rentDate: formatDateApi(values.rentDate),
             carId: carId,
             customerName: customerName,
@@ -117,7 +117,10 @@ const SearchRent = ({carId}: any) => {
       <Text style={[styles.textTitle, {color: colors.text}]}>Take a car</Text>
       <View style={styles.container}>
         <OrientationContainer
-          style={[styles.container, {marginBottom: isKeyBoardOpen ? 220 : 30}]}>
+          style={[
+            styles.container,
+            isKeyBoardOpen ? styles.keyBoardOpen : styles.keyBoardNotOpen,
+          ]}>
           {errors.rentDate && (
             <Text style={styles.errors}>{errors.rentDate}</Text>
           )}
@@ -192,6 +195,12 @@ const styles = StyleSheet.create({
   },
   errors: {
     ...commonStyles.errorText,
+  },
+  keyBoardOpen: {
+    marginBottom: 220,
+  },
+  keyBoardNotOpen: {
+    marginBottom: 30,
   },
 });
 

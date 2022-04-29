@@ -40,6 +40,11 @@ export const carsSlice = createSlice({
 
 const {actions, reducer} = carsSlice;
 
-export const {fetchCars, fetchSortedCars, requestCarsSuccess, requestCarsError} = actions;
+export const {
+  fetchCars,
+  fetchSortedCars,
+  requestCarsSuccess,
+  requestCarsError,
+} = actions;
 
 export default reducer;

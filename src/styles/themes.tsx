@@ -2,7 +2,7 @@ import colors from './colors';
 
 export interface ICustomTheme {
   white: string;
-  gray: string,
+  gray: string;
   background: string;
   backgroundLight: string;
   backgroundDark: string;

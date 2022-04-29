@@ -1,5 +1,4 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {validateYupSchema} from 'formik';
 import React, {useEffect, useMemo, useState} from 'react';
 import {
   ScrollView,
@@ -42,8 +41,8 @@ const SearchDetails = ({route}: Props) => {
   const [imgSource, setImgSource] = useState('');
 
   useEffect(() => {
-    const imgSource = getImgSource(item);
-    setImgSource(imgSource);
+    const imgSourceFormat = getImgSource(item);
+    setImgSource(imgSourceFormat);
   }, []);
 
   const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);
@@ -158,7 +157,7 @@ const SearchDetails = ({route}: Props) => {
                 Description
               </Text>
               <View>
-                <Text style={[styles.textDesc, , {color: colors.text}]}>
+                <Text style={[styles.textDesc, {color: colors.text}]}>
                   {description}
                 </Text>
               </View>

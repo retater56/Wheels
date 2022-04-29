@@ -66,14 +66,14 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
       bookingUserData[`${rentDate}`] = {...commonBookings};
       return bookingUserData;
     });
-    const responseUser: ICar = yield call(async () => {
+    yield call(async () => {
       const getUserData = await fetch(API_GET_USER_NAME(customerName));
       const userData = await getUserData.json();
       const userId = userData[0].id;
       const response = await fetch(API_GET_USER_BY_ID(userId));
       const responseData = await response.json();
       const prevRentUserDate = responseData.booked;
-      const data = await fetch(API_GET_USER_BY_ID(userId), {
+      await fetch(API_GET_USER_BY_ID(userId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -82,8 +82,6 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
           booked: {...prevRentUserDate, ...userBookingData},
         }),
       });
-      const res = await data.json();
-      // return response;
     });
     const carBookingData: ICar[] = yield call(async () => {
       const response = await fetch(API_GET_CAR_BY_ID(carId));
@@ -103,11 +101,11 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
       bookingData[`${rentDate}`] = {...commonBookings};
       return bookingData;
     });
-    const responseCar: ICar = yield call(async () => {
+    yield call(async () => {
       const getCarData = await fetch(API_GET_CAR_BY_ID(customerData.carId));
       const carData = await getCarData.json();
       const prevBookingData = carData.booking;
-      const data = await fetch(API_GET_CAR_BY_ID(customerData.carId), {
+      await fetch(API_GET_CAR_BY_ID(customerData.carId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -116,8 +114,6 @@ function* bookingCarAsync(action: ReturnType<typeof bookingCar>) {
           booking: {...prevBookingData, ...carBookingData},
         }),
       });
-      const res = await data.json();
-      // return response;
     });
     yield put(bookingCarSuccess());
     yield put(fetchCustomerCars(customerName));

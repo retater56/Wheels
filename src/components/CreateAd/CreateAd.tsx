@@ -61,9 +61,9 @@ const CreateAd = ({navigation}: Props) => {
       validateOnChange: false,
       validateOnBlur: false,
       validationSchema: CreateAdSchema,
-      onSubmit: (values, {resetForm}) => {
+      onSubmit: (carData, {resetForm}) => {
         Alert.alert('Add was created', '', [{text: 'OK'}]);
-        dispatch(addCar({...values, owner}));
+        dispatch(addCar({...carData, owner}));
         dispatch(fetchOwnerCars(owner));
         resetForm();
       },
@@ -131,7 +131,10 @@ const CreateAd = ({navigation}: Props) => {
     <SafeAreaView>
       <ScrollView>
         <View
-          style={[styles.container, {marginBottom: isKeyBoardOpen ? 250 : 30}]}>
+          style={[
+            styles.container,
+            isKeyBoardOpen ? styles.keyBoardOpen : styles.keyBoardNotOpen,
+          ]}>
           <OrientationContainer>
             <Text style={[styles.title, {color: colors.text}]}>
               Add a photo
@@ -143,10 +146,10 @@ const CreateAd = ({navigation}: Props) => {
                     source={memoImageSource}
                     style={[
                       styles.photoData,
+                      styles.imgWidth,
                       {
                         backgroundColor: colors.background,
                         borderColor: colors.secondary,
-                        width: 350,
                       },
                     ]}
                   />
@@ -344,6 +347,9 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 2,
   },
+  imgWidth: {
+    width: 350,
+  },
   title: {
     marginHorizontal: 10,
     marginBottom: 10,
@@ -363,6 +369,12 @@ export const styles = StyleSheet.create({
   },
   errors: {
     ...commonStyles.errorText,
+  },
+  keyBoardOpen: {
+    marginBottom: 250,
+  },
+  keyBoardNotOpen: {
+    marginBottom: 30,
   },
 });
 

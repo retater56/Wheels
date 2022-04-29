@@ -1,11 +1,14 @@
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import {View, Image, Text, StatusBar} from 'react-native';
 import LogoSvg from '../../assets/LogoSvg';
 import CustomButton from '../common/CustomButton';
 import introStyles from './introStyles';
 
 const IntroSecond = ({navigation}: any) => {
-  const onNextScreen = useCallback(() => navigation.navigate('IntroFourth'), []);
+  const onNextScreen = useCallback(
+    () => navigation.navigate('IntroFourth'),
+    [],
+  );
 
   return (
     <View style={introStyles.container}>
@@ -24,7 +27,7 @@ const IntroSecond = ({navigation}: any) => {
           <Text style={introStyles.textTitle}>Choose your target!</Text>
           <Text>Rent A Car Or Create Own Business</Text>
         </View>
-        <CustomButton title="Next" onPress={onNextScreen}/>
+        <CustomButton title="Next" onPress={onNextScreen} />
       </View>
     </View>
   );

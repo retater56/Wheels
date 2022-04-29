@@ -24,8 +24,8 @@ const OwnerItem = ({item}: any) => {
   const [imgSource, setImgSource] = useState('');
 
   useEffect(() => {
-    const imgSource = getImgSource(item);
-    setImgSource(imgSource);
+    const imgSourceFormat = getImgSource(item);
+    setImgSource(imgSourceFormat);
   }, []);
 
   const memoImageSource = useMemo(() => uriImg(imgSource), [imgSource]);

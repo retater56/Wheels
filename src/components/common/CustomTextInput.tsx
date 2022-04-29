@@ -2,10 +2,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import React, {useCallback, useState} from 'react';
 import {
   TextInput,
-  TextInputProps,
   StyleSheet,
   View,
   TouchableOpacity,
+  TextInputProps,
 } from 'react-native';
 import {useTheme} from '../../ThemeProvider';
 import commonStyles from './styles';
@@ -48,7 +48,7 @@ const CustomTextInput = (
 
   const onInputBlur = useCallback(() => {
     setInputFocus({
-      borderColor: colors.background,
+      borderColor: colors.gray,
     });
   }, []);
 

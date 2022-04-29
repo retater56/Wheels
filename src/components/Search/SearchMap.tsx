@@ -1,4 +1,5 @@
 import React, {useMemo} from 'react';
+import {StyleSheet} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 
 const SearchMap = (pos: {pos: string}) => {
@@ -11,7 +12,7 @@ const SearchMap = (pos: {pos: string}) => {
 
   return (
     <MapView
-      style={{width: '90%', height: 200, marginBottom: 20, borderRadius: 10}}
+      style={styles.map}
       initialRegion={{
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
@@ -21,5 +22,14 @@ const SearchMap = (pos: {pos: string}) => {
     </MapView>
   );
 };
+
+const styles = StyleSheet.create({
+  map: {
+    width: '90%',
+    height: 200,
+    marginBottom: 20,
+    borderRadius: 10,
+  },
+});
 
 export default SearchMap;

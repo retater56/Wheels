@@ -75,8 +75,8 @@ const ChangeDetails = ({navigation, route}: Props) => {
       validateOnChange: false,
       validateOnBlur: false,
       validationSchema: CreateAdSchema,
-      onSubmit: (values, {resetForm}) => {
-        dispatch(updateCar({...values, owner}));
+      onSubmit: (carData, {resetForm}) => {
+        dispatch(updateCar({...carData, owner}));
         dispatch(fetchOwnerCars(owner));
         navigation.goBack();
         resetForm();
@@ -117,8 +117,8 @@ const ChangeDetails = ({navigation, route}: Props) => {
     });
   }, []);
 
-  const onSelect = (paramType: string, item: string) => {
-    setFieldValue(paramType, item);
+  const onSelect = (paramType: string, option: string) => {
+    setFieldValue(paramType, option);
     if (paramType === 'mark') {
       setFieldValue('model', '');
     }
@@ -136,17 +136,20 @@ const ChangeDetails = ({navigation, route}: Props) => {
     <SafeAreaView>
       <ScrollView>
         <View
-          style={[styles.container, {marginBottom: isKeyBoardOpen ? 250 : 30}]}>
+          style={[
+            styles.container,
+            isKeyBoardOpen ? styles.keyBoardOpen : styles.keyBoardNotOpen,
+          ]}>
           <OrientationContainer>
             <View style={styles.centerContainer}>
               <Image
                 source={memoImageSource}
                 style={[
                   styles.photoData,
+                  styles.imgWidth,
                   {
                     backgroundColor: colors.background,
                     borderColor: colors.secondary,
-                    width: 350,
                   },
                 ]}
               />
@@ -312,6 +315,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 2,
   },
+  imgWidth: {
+    width: 350,
+  },
   title: {
     marginBottom: 10,
     ...commonStyles.largeText,
@@ -330,6 +336,12 @@ const styles = StyleSheet.create({
   },
   errors: {
     ...commonStyles.errorText,
+  },
+  keyBoardOpen: {
+    marginBottom: 250,
+  },
+  keyBoardNotOpen: {
+    marginBottom: 30,
   },
 });
 

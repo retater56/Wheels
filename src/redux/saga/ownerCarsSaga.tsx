@@ -32,7 +32,7 @@ function* fetchOwnerCarsAsync(action: ReturnType<typeof fetchOwnerCars>) {
 function* deleteOwnerCarAsync(action: ReturnType<typeof deleteOwnerCar>) {
   const id = action.payload;
   try {
-    const response: ICar = yield call(async () => {
+    yield call(async () => {
       const data = await fetch(API_GET_CAR_BY_ID(id), {
         method: 'DELETE',
       });
