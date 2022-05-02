@@ -10,11 +10,18 @@ const Stack = createNativeStackNavigator();
 const CreateAdNavigation = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Create Ad" component={CreateAd} />
+      <Stack.Screen
+        name="Create Ad"
+        component={CreateAd}
+        options={{
+          headerTitleAlign: 'center',
+        }}
+      />
       <Stack.Screen
         name="CreateAdDetails"
         component={CreateAdDetails}
         options={{
+          headerTitleAlign: 'center',
           headerTitle: LogoHeader,
         }}
       />
@@ -22,6 +29,7 @@ const CreateAdNavigation = () => {
         name="CreateAdMap"
         component={CreateAdMap}
         options={{
+          headerTitleAlign: 'center',
           headerTitle: LogoHeader,
         }}
       />

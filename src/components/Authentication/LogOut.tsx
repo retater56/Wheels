@@ -29,7 +29,7 @@ const LogOut = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView >
       <OrientationContainer style={styles.center} scroll={true}>
         <View style={[styles.container, {backgroundColor: colors.background}]}>
           <Icon

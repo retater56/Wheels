@@ -73,6 +73,7 @@ const MainTabNavigation = () => {
           name="Map"
           component={UserMap}
           options={{
+            headerTitleAlign: 'center',
             headerShown: true,
             headerTitle: LogoHeader,
             tabBarIcon: ({size, color}) => (
@@ -106,6 +107,7 @@ const MainTabNavigation = () => {
             name="Cars"
             component={AdsNavigation}
             options={{
+              headerTitleAlign: 'center',
               headerShown: true,
               tabBarIcon: ({size, color}) => (
                 <Icon name={'folder'} color={color} size={size} />

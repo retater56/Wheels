@@ -26,6 +26,7 @@ const NewsNavigation = () => {
         name="Today's news"
         component={News}
         options={{
+          headerTitleAlign: 'center',
           headerRight: settingsButton,
         }}
       />
@@ -33,6 +34,7 @@ const NewsNavigation = () => {
         name="NewsSource"
         component={NewsSource}
         options={{
+          headerTitleAlign: 'center',
           headerTitle: LogoHeader,
           presentation: 'modal',
         }}
@@ -41,6 +43,7 @@ const NewsNavigation = () => {
         name="NewsDetails"
         component={NewsDetails}
         options={{
+          headerTitleAlign: 'center',
           headerTitle: LogoHeader,
           presentation: 'modal',
         }}

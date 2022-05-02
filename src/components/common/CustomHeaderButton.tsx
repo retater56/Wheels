@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../styles/colors';
 
 const CustomHeaderButton = (
   props: JSX.IntrinsicAttributes &
     JSX.IntrinsicClassAttributes<TouchableOpacity> &
+    Readonly<TouchableOpacityProps> &
     Readonly<{children?: React.ReactNode}>,
 ) => {
   return (

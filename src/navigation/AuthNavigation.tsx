@@ -30,6 +30,7 @@ const AuthNavigation = () => {
             name="User"
             component={LogOut}
             options={{
+              headerTitleAlign: 'center',
               headerRight: settingsButton,
             }}
           />
@@ -37,6 +38,7 @@ const AuthNavigation = () => {
             name="UserSettings"
             component={UserSettings}
             options={{
+              headerTitleAlign: 'center',
               headerTitle: LogoHeader,
               presentation: 'modal',
             }}
@@ -48,14 +50,20 @@ const AuthNavigation = () => {
             name="Sign In"
             component={SignIn}
             options={{
+              headerTitleAlign: 'center',
               headerRight: settingsButton,
             }}
           />
-          <Stack.Screen name="Registration" component={Registration} />
+          <Stack.Screen
+            name="Registration"
+            component={Registration}
+            options={{headerTitleAlign: 'center'}}
+          />
           <Stack.Screen
             name="UserSettings"
             component={UserSettings}
             options={{
+              headerTitleAlign: 'center',
               headerTitle: LogoHeader,
               presentation: 'modal',
             }}

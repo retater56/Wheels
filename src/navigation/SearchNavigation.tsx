@@ -26,6 +26,7 @@ const SearchNavigation = () => {
         name="All Cars"
         component={Search}
         options={{
+          headerTitleAlign: 'center',
           headerRight: settingsButton,
         }}
       />
@@ -33,6 +34,7 @@ const SearchNavigation = () => {
         name="SearchDetails"
         component={SearchDetails}
         options={{
+          headerTitleAlign: 'center',
           headerTitle: LogoHeader,
         }}
       />
@@ -40,6 +42,7 @@ const SearchNavigation = () => {
         name="SearchSort"
         component={SearchSort}
         options={{
+          headerTitleAlign: 'center',
           headerTitle: LogoHeader,
           presentation: 'modal',
         }}
