@@ -50,7 +50,7 @@ const SearchDetails = ({route}: Props) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={styles.container}>
+        <View style={[styles.container, {width: '100%'}]}>
           <OrientationContainer>
             <View
               style={[styles.container, {backgroundColor: colors.background}]}>
@@ -194,7 +194,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
-    ...commonStyles.shadow,
   },
   imgContainer: {
     width: '100%',
