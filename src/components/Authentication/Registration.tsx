@@ -89,6 +89,7 @@ const Registration = () => {
               )}
               <CustomTextInput
                 placeholder="Password"
+                autoCapitalize="none"
                 secureTextEntry
                 onChangeText={handleChange('password')}
                 value={values.password}
